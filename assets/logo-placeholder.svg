@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 100" fill="none">
+  <!-- Gradient definitions -->
+  <defs>
+    <linearGradient id="unaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C41C3B"/>
+      <stop offset="100%" stop-color="#831024"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF5A73"/>
+      <stop offset="100%" stop-color="#C41C3B"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#831024" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Logo Mark: Book + Wiki Node Network -->
+  <g transform="translate(10, 10)">
+    <!-- Book Left Page -->
+    <path d="M42 20C32 15 18 15 6 18C4 18.5 2 20.5 2 23V68C2 70.5 4 72 6.5 71.5C18 69 32 69 42 74V20Z" 
+          fill="url(#unaGrad)" filter="url(#shadow)"/>
+    <!-- Book Right Page -->
+    <path d="M46 20C56 15 70 15 82 18C84 18.5 86 20.5 86 23V68C86 70.5 84 72 81.5 71.5C70 69 56 69 46 74V20Z" 
+          fill="url(#accentGrad)" filter="url(#shadow)"/>
+    <!-- Spine center glow -->
+    <path d="M44 19V75" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+
+    <!-- Knowledge / Wiki network dots & lines -->
+    <circle cx="24" cy="40" r="4" fill="#FFFFFF"/>
+    <circle cx="64" cy="40" r="4" fill="#FFFFFF"/>
+    <circle cx="44" cy="48" r="5" fill="#FFE2E6"/>
+    <line x1="24" y1="40" x2="44" y2="48" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+    <line x1="64" y1="40" x2="44" y2="48" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+  </g>
+
+  <!-- Brand Typography -->
+  <g transform="translate(110, 62)">
+    <!-- Wiki text -->
+    <text font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-weight="800" font-size="44" fill="#1E293B" letter-spacing="-1">
+      Wiki
+    </text>
+    <!-- Una text in brand color -->
+    <text x="100" y="0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="44" fill="url(#unaGrad)" letter-spacing="-0.5">
+      Una
+    </text>
+  </g>
+
+  <!-- Subtitle badge -->
+  <g transform="translate(112, 82)">
+    <rect width="180" height="18" rx="4" fill="#F1F5F9"/>
+    <text x="8" y="13" font-family="system-ui, -apple-system, sans-serif" font-weight="600" font-size="10" fill="#64748B" letter-spacing="1">
+      BASE DO CONHECIMENTO
+    </text>
+  </g>
+</svg>
+

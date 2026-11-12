@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wiki Una</title>
+  
+  <!-- Logo no Head / Favicon -->
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="apple-touch-icon" href="assets/logo.png">
+
+  <style>
+    /* Reset básico e ambiente em branco para criação livre */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: #FFFFFF;
+      color: #0F172A;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Barra Superior Discreta de Apoio */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 1.75rem;
+      border-bottom: 1px solid #E2E8F0;
+      background-color: #FFFFFF;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      text-decoration: none;
+      color: #0F172A;
+    }
+
+    .brand-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .brand-name {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #0B132B;
+      letter-spacing: -0.02em;
+    }
+
+    .user-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .user-name-badge {
+      font-size: 0.88rem;
+      color: #64748B;
+      background-color: #F1F5F9;
+      padding: 0.35rem 0.75rem;
+      border-radius: 9999px;
+      font-weight: 500;
+    }
+
+    .btn-logout {
+      background: transparent;
+      border: 1px solid #CBD5E1;
+      padding: 0.35rem 0.85rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #475569;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 150ms ease;
+    }
+
+    .btn-logout:hover {
+      background-color: #FEE2E2;
+      border-color: #FCA5A5;
+      color: #DC2626;
+    }
+
+    /* Área em Branco Principal (Canvas Livre) */
+    .blank-canvas {
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Barra de topo com identificação e logout -->
+  <header class="top-bar">
+    <div class="brand-group">
+      <img src="assets/logo.png" alt="Logo Wiki Una" class="brand-icon">
+      <span class="brand-name">Wiki Una</span>
+    </div>
+
+    <div class="user-actions">
+      <span class="user-name-badge" id="displayUserName">Estudante</span>
+      <button type="button" class="btn-logout" id="btnLogoutPage">Sair</button>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       PÁGINA EM BRANCO (CANVAS LIVRE)
+       Sinta-se à vontade para construir a Wiki Una, criar artigos, menus e etc.
+       ========================================================================== -->
+  <main class="blank-canvas" id="wiki-canvas">
+    <!-- Conteúdo em branco para desenvolvimento livre da Wiki Una -->
+  </main>
+
+  <script>
+    // Gerenciamento de sessão na página interna
+    (function () {
+      const STORAGE_SESSION_KEY = 'wikiuna_active_session';
+      const sessionData = localStorage.getItem(STORAGE_SESSION_KEY);
+
+      if (!sessionData) {
+        // Se não houver sessão ativa, redireciona para a página de login
+        window.location.href = 'index.html';
+        return;
+      }
+
+      try {
+        const user = JSON.parse(sessionData);
+        const nameEl = document.getElementById('displayUserName');
+        if (nameEl && user && user.name) {
+          nameEl.textContent = user.name.split(' ')[0] + ' (' + (user.course || 'Una') + ')';
+        }
+      } catch (e) {
+        window.location.href = 'index.html';
+      }
+
+      // Ação de Sair (Logout)
+      document.getElementById('btnLogoutPage')?.addEventListener('click', function () {
+        localStorage.removeItem(STORAGE_SESSION_KEY);
+        window.location.href = 'index.html';
+      });
+    })();
+  </script>
+</body>
+</html>
+

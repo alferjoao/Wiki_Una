@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wiki Una - Login Acadêmico</title>
+  <meta name="description" content="Acesse a Wiki Una com seu e-mail institucional @ulife.com.br. Plataforma acadêmica colaborativa.">
+  
+  <!-- Logo no Head / Favicon -->
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="apple-touch-icon" href="assets/logo.png">
+  
+  <!-- Folha de Estilos -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Background com Degradê de Roxo em Ondas Diagonais (3 a 4 tons) -->
+  <div class="bg-waves" aria-hidden="true">
+    <svg viewBox="0 0 1440 900" fill="none" preserveAspectRatio="none" class="waves-svg">
+      <defs>
+        <!-- 4 Tons de Roxo em Degradês Diagonais Extraídos da Logo -->
+        <!-- Tom 1 (#1A092E): Roxo Profundo da Base -->
+        <!-- Tom 2 (#3B1366 a #581C87): Roxo Ameixa Médio -->
+        <!-- Tom 3 (#6B21A8 a #7C3AED): Roxo Vibrante da Logo -->
+        <!-- Tom 4 (#8B5CF6 a #A855F7): Lavanda / Roxo Iluminado -->
+        <linearGradient id="waveGradBase" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#1A092E" />
+          <stop offset="100%" stop-color="#2D0F4E" />
+        </linearGradient>
+        <linearGradient id="waveGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#3B1366" />
+          <stop offset="100%" stop-color="#581C87" />
+        </linearGradient>
+        <linearGradient id="waveGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#6B21A8" />
+          <stop offset="100%" stop-color="#7C3AED" />
+        </linearGradient>
+        <linearGradient id="waveGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#8B5CF6" />
+          <stop offset="100%" stop-color="#A855F7" />
+        </linearGradient>
+      </defs>
+
+      <!-- Fundo Base Diagonal (Tom 1) -->
+      <rect width="1440" height="900" fill="url(#waveGradBase)" />
+
+      <!-- Onda Diagonal 1 (Tom 2) -->
+      <path d="M-100 220 C 350 140, 680 440, 1080 260 C 1280 170, 1420 220, 1550 180 L 1550 1000 L -100 1000 Z" fill="url(#waveGrad1)" opacity="0.95" />
+
+      <!-- Onda Diagonal 2 (Tom 3) -->
+      <path d="M-100 440 C 320 300, 740 580, 1140 420 C 1320 340, 1460 380, 1550 340 L 1550 1000 L -100 1000 Z" fill="url(#waveGrad2)" opacity="0.9" />
+
+      <!-- Onda Diagonal 3 (Tom 4) -->
+      <path d="M-100 660 C 380 520, 800 760, 1200 600 C 1360 530, 1480 560, 1550 520 L 1550 1000 L -100 1000 Z" fill="url(#waveGrad3)" opacity="0.75" />
+    </svg>
+  </div>
+
+  <!-- Container Principal Minimalista e Centralizado -->
+  <main class="clean-container">
+    <div class="auth-card">
+
+      <!-- Logo e Identidade Visual Centralizada -->
+      <header class="brand-header" id="authCardHeader">
+        <div class="logo-wrapper">
+          <img src="assets/logo.png" alt="Logo Wiki Una" class="brand-logo" id="mainLogoImg">
+        </div>
+        <h1 class="brand-title">Wiki Una</h1>
+        <p class="brand-subtitle">Base de Conhecimento Acadêmico</p>
+      </header>
+
+      <!-- Alerta Discreto de E-mail Institucional (@ulife.com.br) -->
+      <div class="domain-alert" id="domainAlertBox" role="note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <span>Acesso exclusivo com e-mail institucional <strong>@ulife.com.br</strong></span>
+      </div>
+
+      <!-- Abas Limpas: Entrar x Criar Conta (Nielsen #3) -->
+      <nav class="auth-tabs" id="authTabsNav" aria-label="Modo de autenticação">
+        <button type="button" class="tab-btn active" id="tabLogin" aria-controls="formLogin" aria-selected="true">
+          Entrar
+        </button>
+        <button type="button" class="tab-btn" id="tabRegister" aria-controls="formRegister" aria-selected="false">
+          Criar Conta
+        </button>
+      </nav>
+
+      <!-- ==========================================
+           FORMULÁRIO 1: LOGIN (ENTRAR)
+           ========================================== -->
+      <form class="auth-form active" id="formLogin" novalidate>
+        
+        <!-- E-mail Institucional -->
+        <div class="form-group" id="groupLoginEmail">
+          <label for="loginEmail" class="form-label">
+            <span>E-mail Institucional <span class="required-mark" aria-hidden="true">*</span></span>
+          </label>
+          <div class="input-container">
+            <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            <input 
+              type="email" 
+              id="loginEmail" 
+              class="form-input" 
+              placeholder="seu.nome@ulife.com.br" 
+              required 
+              autocomplete="username"
+              aria-describedby="loginEmailFeedback loginDomainSuggestion"
+            >
+          </div>
+          <!-- Sugestão dinâmica rápida de auto-completar (Nielsen #7) -->
+          <button type="button" class="domain-suggestion" id="loginDomainSuggestion" aria-label="Auto-completar e-mail institucional"></button>
+          <div class="input-feedback" id="loginEmailFeedback" role="alert"></div>
+        </div>
+
+        <!-- Senha -->
+        <div class="form-group" id="groupLoginPassword">
+          <div class="form-label">
+            <label for="loginPassword">
+              Senha <span class="required-mark" aria-hidden="true">*</span>
+            </label>
+            <button type="button" class="text-link" id="btnForgotPass">
+              Esqueci a senha
+            </button>
+          </div>
+          <div class="input-container">
+            <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            <input 
+              type="password" 
+              id="loginPassword" 
+              class="form-input" 
+              placeholder="Digite sua senha" 
+              required 
+              autocomplete="current-password"
+              aria-describedby="loginPasswordFeedback"
+            >
+            <button type="button" class="toggle-password-btn" data-target="loginPassword" aria-label="Ver senha" title="Ver senha">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            </button>
+          </div>
+          <div class="input-feedback" id="loginPasswordFeedback" role="alert"></div>
+        </div>
+
+        <!-- Opção Lembrar e-mail -->
+        <div class="form-options">
+          <label class="checkbox-container">
+            <input type="checkbox" id="loginRemember">
+            <span>Lembrar meu e-mail</span>
+          </label>
+        </div>
+
+        <!-- Botão Entrar -->
+        <button type="submit" class="btn-primary" id="btnLoginSubmit">
+          <span class="btn-text">Entrar</span>
+          <div class="btn-spinner" aria-hidden="true"></div>
+        </button>
+
+        <!-- Acesso Rápido com Perfil de Teste em 1 Clique -->
+        <div class="quick-access-box">
+          <button type="button" class="btn-quick-login" id="btnQuickLogin">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            Entrar Direto com Perfil de Teste
+          </button>
+          <span class="quick-access-cred">Login rápido: <strong>teste@ulife.com.br</strong> • Senha: <strong>123456</strong></span>
+        </div>
+      </form>
+
+      <!-- ==========================================
+           FORMULÁRIO 2: CADASTRO (CRIAR CONTA)
+           ========================================== -->
+      <form class="auth-form" id="formRegister" novalidate>
+        
+        <!-- Nome Completo -->
+        <div class="form-group" id="groupRegName">
+          <label for="regName" class="form-label">
+            <span>Nome Completo <span class="required-mark" aria-hidden="true">*</span></span>
+          </label>
+          <div class="input-container">
+            <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            <input 
+              type="text" 
+              id="regName" 
+              class="form-input" 
+              placeholder="Ex: João da Silva" 
+              required 
+              autocomplete="name"
+            >
+          </div>
+        </div>
+
+        <!-- E-mail Institucional -->
+        <div class="form-group" id="groupRegEmail">
+          <label for="regEmail" class="form-label">
+            <span>E-mail Institucional <span class="required-mark" aria-hidden="true">*</span></span>
+          </label>
+          <div class="input-container">
+            <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            <input 
+              type="email" 
+              id="regEmail" 
+              class="form-input" 
+              placeholder="seu.nome@ulife.com.br" 
+              required 
+              autocomplete="email"
+              aria-describedby="regEmailFeedback regEmailSuggestion"
+            >
+          </div>
+          <button type="button" class="domain-suggestion" id="regEmailSuggestion" aria-label="Auto-completar e-mail institucional"></button>
+          <div class="input-feedback" id="regEmailFeedback" role="alert"></div>
+        </div>
+
+        <!-- Curso / Unidade -->
+        <div class="form-group" id="groupRegCourse">
+          <label for="regCourse" class="form-label">
+            <span>Curso ou Unidade Una</span>
+          </label>
+          <div class="input-container">
+            <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+              <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+            </svg>
+            <input 
+              type="text" 
+              id="regCourse" 
+              class="form-input" 
+              placeholder="Ex: Ciência da Computação" 
+            >
+          </div>
+        </div>
+
+        <!-- Senha com Medidor de Força (Nielsen #6) -->
+        <div class="form-group" id="groupRegPassword">
+          <label for="regPassword" class="form-label">
+            <span>Criar Senha <span class="required-mark" aria-hidden="true">*</span></span>
+          </label>
+          <div class="input-container">
+            <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            <input 
+              type="password" 
+              id="regPassword" 
+              class="form-input" 
+              placeholder="Mínimo 8 caracteres" 
+              required 
+              autocomplete="new-password"
+              aria-describedby="regPasswordFeedback"
+            >
+            <button type="button" class="toggle-password-btn" data-target="regPassword" aria-label="Ver senha" title="Ver senha">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            </button>
+          </div>
+          
+          <!-- Requisitos da Senha -->
+          <div class="password-requirements" aria-live="polite">
+            <div class="strength-bar-container">
+              <div class="strength-bars" aria-hidden="true">
+                <div class="strength-segment"></div>
+                <div class="strength-segment"></div>
+                <div class="strength-segment"></div>
+                <div class="strength-segment"></div>
+              </div>
+              <span class="strength-label" id="strengthLabel">Mínimo 8 caracteres</span>
+            </div>
+            
+            <ul class="requirements-list">
+              <li class="req-item" id="reqLength">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle></svg>
+                8+ caracteres
+              </li>
+              <li class="req-item" id="reqNumber">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle></svg>
+                1 número
+              </li>
+              <li class="req-item" id="reqUpper">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle></svg>
+                Maiúscula
+              </li>
+              <li class="req-item" id="reqSpecial">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle></svg>
+                Especial
+              </li>
+            </ul>
+          </div>
+          <div class="input-feedback" id="regPasswordFeedback" role="alert"></div>
+        </div>
+
+        <!-- Confirmar Senha -->
+        <div class="form-group" id="groupRegConfirmPassword">
+          <label for="regConfirmPassword" class="form-label">
+            <span>Confirmar Senha <span class="required-mark" aria-hidden="true">*</span></span>
+          </label>
+          <div class="input-container">
+            <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+            <input 
+              type="password" 
+              id="regConfirmPassword" 
+              class="form-input" 
+              placeholder="Repita sua senha" 
+              required 
+              autocomplete="new-password"
+              aria-describedby="regConfirmFeedback"
+            >
+            <button type="button" class="toggle-password-btn" data-target="regConfirmPassword" aria-label="Ver confirmação de senha" title="Ver senha">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            </button>
+          </div>
+          <div class="input-feedback" id="regConfirmFeedback" role="alert"></div>
+        </div>
+
+        <!-- Termos de Uso -->
+        <div class="form-options">
+          <label class="checkbox-container">
+            <input type="checkbox" id="regTerms" required>
+            <span>Concordo com os <button type="button" class="text-link" id="btnOpenTerms">Termos Acadêmicos</button></span>
+          </label>
+        </div>
+
+        <!-- Botão Criar Conta -->
+        <button type="submit" class="btn-primary" id="btnRegisterSubmit">
+          <span class="btn-text">Criar Conta</span>
+          <div class="btn-spinner" aria-hidden="true"></div>
+        </button>
+      </form>
+
+      <!-- ==========================================
+           ÁREA PÓS-LOGIN (DASHBOARD SIMULADO)
+           ========================================== -->
+      <div class="user-welcome-screen" id="userWelcomeScreen">
+        <div class="welcome-avatar" id="welcomeAvatar">UN</div>
+        <h2 class="welcome-title">Bem-vindo(a), <span id="welcomeUserName">Estudante</span>!</h2>
+        <div class="welcome-email" id="welcomeUserEmail">estudante@ulife.com.br</div>
+        <div class="welcome-badge">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <span id="welcomeUserCourse">Comunidade Acadêmica Una</span>
+        </div>
+
+        <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:1.5rem;line-height:1.5;">
+          Você está conectado(a) com segurança à Wiki Una! Redirecionando...
+        </p>
+
+        <button type="button" class="btn-secondary" id="btnLogout" style="width:100%;">
+          Sair da Conta (Logout)
+        </button>
+      </div>
+
+      <!-- Barra de Ações Rápidas Minimalista no Rodapé do Card -->
+      <footer class="card-footer-actions">
+        <button type="button" class="btn-subtle" id="btnFillDemo" title="Preencher com e-mail e senha de demonstração">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          Preencher Conta Demo
+        </button>
+        <span class="footer-separator">•</span>
+        <button type="button" class="btn-subtle" id="btnOpenHeuristics">
+          Heurísticas de Nielsen
+        </button>
+      </footer>
+
+    </div>
+  </main>
+
+  <!-- Container de Toasts de Notificação (Nielsen #1) -->
+  <div class="toast-container" id="toastContainer" aria-live="assertive"></div>
+
+  <!-- Modal Centralizado Acessível -->
+  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle">Título</h3>
+        <button type="button" class="modal-close-btn" id="modalCloseBtn" aria-label="Fechar janela">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        Conteúdo...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" id="modalActionBtn">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script da Aplicação -->
+  <script src="js/app.js"></script>
+</body>
+</html>
