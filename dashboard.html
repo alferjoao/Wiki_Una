@@ -3,157 +3,948 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wiki Una</title>
+  <title>Wiki Una – Portal Acadêmico</title>
   
-  <!-- Logo no Head / Favicon -->
+  <!-- Favicon e Ícone -->
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="apple-touch-icon" href="assets/logo.png">
 
-  <style>
-    /* Reset básico e ambiente em branco para criação livre */
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      background-color: #FFFFFF;
-      color: #0F172A;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Barra Superior Discreta de Apoio */
-    .top-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.85rem 1.75rem;
-      border-bottom: 1px solid #E2E8F0;
-      background-color: #FFFFFF;
-    }
-
-    .brand-group {
-      display: flex;
-      align-items: center;
-      gap: 0.65rem;
-      text-decoration: none;
-      color: #0F172A;
-    }
-
-    .brand-icon {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      object-fit: cover;
-    }
-
-    .brand-name {
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: #0B132B;
-      letter-spacing: -0.02em;
-    }
-
-    .user-actions {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .user-name-badge {
-      font-size: 0.88rem;
-      color: #64748B;
-      background-color: #F1F5F9;
-      padding: 0.35rem 0.75rem;
-      border-radius: 9999px;
-      font-weight: 500;
-    }
-
-    .btn-logout {
-      background: transparent;
-      border: 1px solid #CBD5E1;
-      padding: 0.35rem 0.85rem;
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: #475569;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: all 150ms ease;
-    }
-
-    .btn-logout:hover {
-      background-color: #FEE2E2;
-      border-color: #FCA5A5;
-      color: #DC2626;
-    }
-
-    /* Área em Branco Principal (Canvas Livre) */
-    .blank-canvas {
-      flex: 1;
-      width: 100%;
-      height: 100%;
-      padding: 2rem;
-      display: flex;
-      flex-direction: column;
-    }
-  </style>
+  <!-- Estilos do Dashboard Acadêmico uLife Una -->
+  <link rel="stylesheet" href="css/dashboard.css">
 </head>
 <body>
 
-  <!-- Barra de topo com identificação e logout -->
-  <header class="top-bar">
-    <div class="brand-group">
-      <img src="assets/logo.png" alt="Logo Wiki Una" class="brand-icon">
-      <span class="brand-name">Wiki Una</span>
-    </div>
+  <!-- ==========================================================================
+       BARRA SUPERIOR (TOPBAR ESTILO ULIFE UNA)
+       ========================================================================== -->
+  <header class="topbar">
+    <!-- Linha de detalhe degradê roxo no topo -->
+    <div class="topbar-waves-accent"></div>
 
-    <div class="user-actions">
-      <span class="user-name-badge" id="displayUserName">Estudante</span>
-      <button type="button" class="btn-logout" id="btnLogoutPage">Sair</button>
+    <div class="topbar-content">
+      <!-- Lado Esquerdo: Marca Wiki Una / Una -->
+      <div class="topbar-left">
+        <a href="dashboard.html" class="brand-anchor">
+          <img src="assets/logo.png" alt="Logo Wiki Una" class="brand-icon-img">
+          <span class="brand-label-una"><span class="wiki-tag">wiki</span>una</span>
+        </a>
+      </div>
+
+      <!-- Centro: Logo uLife -->
+      <div class="topbar-center">
+        <div class="ulife-logo-badge">
+          <span class="ulife-u">ŭ</span>life
+        </div>
+      </div>
+
+      <!-- Lado Direito: Campus, Acessibilidade, Notificação e Usuário -->
+      <div class="topbar-right">
+        <!-- Seletor de Campus -->
+        <div class="campus-selector-chip" title="Unidade Selecionada">
+          <svg class="campus-pin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+          <span>Una - Centerminas - 533</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </div>
+
+        <!-- Botão Acessibilidade -->
+        <button type="button" class="topbar-icon-btn" title="Acessibilidade" aria-label="Acessibilidade">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <circle cx="12" cy="8" r="1.5"></circle>
+            <path d="M7 11h10M12 11v7M9 20l3-2 3 2"></path>
+          </svg>
+        </button>
+
+        <!-- Sino de Notificações com Badge -->
+        <button type="button" class="topbar-icon-btn" title="Notificações" aria-label="Notificações">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+          </svg>
+          <span class="notif-badge-pill">1</span>
+        </button>
+
+        <!-- Trigger do Perfil do Aluno (Clicável para Ver e Editar) -->
+        <button type="button" class="user-menu-trigger" id="btnOpenProfileModal" title="Clique para ver e editar seu perfil acadêmico" aria-label="Abrir Perfil do Estudante">
+          <div class="user-avatar-circle" id="userAvatarCircle">
+            <span id="userAvatarLetter">U</span>
+            <img src="" alt="Foto de Perfil" id="topbarAvatarImg" class="topbar-avatar-img" style="display:none;">
+          </div>
+          <div class="user-trigger-info">
+            <span class="user-trigger-name" id="userTriggerName">Estudante</span>
+            <span class="user-trigger-hint">Meu Perfil</span>
+          </div>
+          <svg class="user-trigger-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+
+        <!-- Botão Sair (Logout) -->
+        <button type="button" class="btn-quick-logout" id="btnLogout" title="Encerrar Sessão">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span>Sair</span>
+        </button>
+      </div>
     </div>
   </header>
 
   <!-- ==========================================================================
-       PÁGINA EM BRANCO (CANVAS LIVRE)
-       Sinta-se à vontade para construir a Wiki Una, criar artigos, menus e etc.
+       CORPO PRINCIPAL (SIDEBAR COM LOGO + CONTEÚDO)
        ========================================================================== -->
-  <main class="blank-canvas" id="wiki-canvas">
-    <!-- Conteúdo em branco para desenvolvimento livre da Wiki Una -->
-  </main>
+  <div class="portal-layout">
 
+    <!-- Painel Lateral com a Logo do Site, Busca Semântica e Abas -->
+    <aside class="sidebar-panel">
+      <!-- Bloco com a Logo Oficial da Wiki Una -->
+      <div class="panel-brand-box">
+        <div class="panel-logo-wrapper">
+          <img src="assets/logo.png" alt="Logo Wiki Una" class="panel-brand-logo">
+        </div>
+        <div class="panel-brand-info">
+          <span class="panel-brand-title">Wiki Una</span>
+          <span class="panel-brand-subtitle">Base Acadêmica • Una</span>
+        </div>
+      </div>
+
+      <!-- Barra de Busca Semântica (futuramente conectada com IA) -->
+      <div class="semantic-search-box">
+        <div class="search-input-wrapper">
+          <svg class="search-icon-purple" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input 
+            type="search" 
+            id="inputSemanticSearch" 
+            class="semantic-search-input" 
+            placeholder="Busca semântica no portal..."
+            autocomplete="off"
+          >
+        </div>
+        <div class="search-badge-tag">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          Busca com IA • Em breve
+        </div>
+      </div>
+
+      <!-- Abas Oficiais Solicitadas pelo Usuário -->
+      <nav aria-label="Navegação da Wiki Una">
+        <ul class="tabs-nav-list">
+          <!-- 1. Localização -->
+          <li>
+            <button type="button" class="nav-tab-button active" data-tab="localizacao" id="tabBtnLocalizacao">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              <span>Localização</span>
+            </button>
+          </li>
+
+          <!-- 2. Ambiente virtual -->
+          <li>
+            <button type="button" class="nav-tab-button" data-tab="ambiente" id="tabBtnAmbiente">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+              </svg>
+              <span>Ambiente virtual</span>
+            </button>
+          </li>
+
+          <!-- 3. Calendário Acadêmico -->
+          <li>
+            <button type="button" class="nav-tab-button" data-tab="calendario" id="tabBtnCalendario">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              <span>Calendário Acadêmico</span>
+            </button>
+          </li>
+
+          <!-- 4. Projetos -->
+          <li>
+            <button type="button" class="nav-tab-button" data-tab="projetos" id="tabBtnProjetos">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                <polyline points="2 17 12 22 22 17"></polyline>
+                <polyline points="2 12 12 17 22 12"></polyline>
+              </svg>
+              <span>Projetos</span>
+            </button>
+          </li>
+
+          <!-- 5. Ajuda e Suporte -->
+          <li>
+            <button type="button" class="nav-tab-button" data-tab="ajuda" id="tabBtnAjuda">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+              <span>Ajuda e Suporte</span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Conteúdo Central Dinâmico -->
+    <main class="main-canvas">
+
+      <!-- Saudação Dinâmica -->
+      <section class="greeting-section">
+        <h1 class="greeting-title">
+          Olá, <span id="studentGreetingName">Estudante</span>! Veja seus compromissos
+        </h1>
+        <p class="greeting-subtitle">
+          <span id="currentDateString">Segunda-feira, 16 de novembro</span>
+          <span class="greeting-dot">•</span>
+          <a href="#horarios" class="link-horarios">Acessar horário no quadro de aulas</a>
+        </p>
+      </section>
+
+      <!-- Cards de Compromissos Rápidos Estilo uLife -->
+      <section class="commitments-grid">
+        <!-- Card 1: Aula de Hoje -->
+        <article class="compromisso-card">
+          <div class="card-top-icon-strip">
+            <div class="card-illustration-icon icon-blue">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+              </svg>
+            </div>
+            <svg class="card-refresh-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"></path><path d="M1 20v-6h6"></path><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+          </div>
+          <h3 class="compromisso-title">Comunicação e Redes</h3>
+          <p class="compromisso-desc">Fundamentos de arquitetura de redes, protocolos TCP/IP e conectividade.</p>
+          <div class="card-meta-row">
+            <span class="prazo-pill">Horário: 19:00 às 21:50</span>
+            <button type="button" class="btn-card-action">Assistir a aula</button>
+          </div>
+        </article>
+
+        <!-- Card 2: Pesquisa Institucional -->
+        <article class="compromisso-card">
+          <div class="card-top-icon-strip">
+            <div class="card-illustration-icon icon-pink">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="9" y1="15" x2="15" y2="15"></line>
+              </svg>
+            </div>
+            <svg class="card-refresh-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"></path><path d="M1 20v-6h6"></path><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+          </div>
+          <h3 class="compromisso-title">Avaliação Institucional</h3>
+          <p class="compromisso-desc">Compartilhe sua opinião sobre os professores, infraestrutura e atendimento.</p>
+          <div class="card-meta-row">
+            <span class="prazo-pill">Prazo: 24/11/2026</span>
+            <button type="button" class="btn-card-action">Responder agora!</button>
+          </div>
+        </article>
+
+        <!-- Card 3: Felicidade e Desenvolvimento -->
+        <article class="compromisso-card">
+          <div class="card-top-icon-strip">
+            <div class="card-illustration-icon icon-purple">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                <line x1="15" y1="9" x2="15.01" y2="9"></line>
+              </svg>
+            </div>
+            <svg class="card-refresh-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"></path><path d="M1 20v-6h6"></path><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+          </div>
+          <h3 class="compromisso-title">Vamos falar sobre felicidade?</h3>
+          <p class="compromisso-desc">Descubra seu Índice de Felicidade e receba uma recomendação personalizada.</p>
+          <div class="card-meta-row">
+            <span class="prazo-pill">Prazo: 10/12/2026</span>
+            <button type="button" class="btn-card-action">Participar</button>
+          </div>
+        </article>
+      </section>
+
+      <!-- ======================================================================
+           SEÇÕES DE CONTEÚDO DAS 5 ABAS
+           ====================================================================== -->
+
+      <!-- ABA 1: LOCALIZAÇÃO -->
+      <section class="tab-content-panel active" id="content-localizacao">
+        <div class="section-card">
+          <div class="section-header">
+            <div class="section-icon-badge">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            </div>
+            <div>
+              <h2 class="section-heading-title">Localização & Campus Centerminas</h2>
+              <p class="section-heading-subtitle">Guia de salas, laboratórios, auditórios e blocos da Una</p>
+            </div>
+          </div>
+          
+          <p style="font-size:0.9rem;color:var(--una-text-muted);line-height:1.5;">
+            Localizada no Centro de Comércio e Serviços Centerminas (União), a unidade conta com fácil acesso pela Linha Verde e metrô, estacionamento amplo e infraestrutura completa.
+          </p>
+
+          <div class="info-subcards-grid">
+            <div class="subcard-box">
+              <h4>📍 Endereço do Campus</h4>
+              <p>Av. Pastor Anselmo Silvestre, 1495 - Dom Joaquim, Belo Horizonte - MG, CEP 31170-678.</p>
+            </div>
+            <div class="subcard-box">
+              <h4>🏢 Laboratórios de Tecnologia</h4>
+              <p>Bloco B • 3º Andar: Salas de Redes, Desenvolvimento de Software e Inteligência Artificial.</p>
+            </div>
+            <div class="subcard-box">
+              <h4>📚 Biblioteca e Espaço Maker</h4>
+              <p>Bloco A • 2º Andar: Cabines individuais de estudo, acervo físico e salas multimídia.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ABA 2: AMBIENTE VIRTUAL -->
+      <section class="tab-content-panel" id="content-ambiente">
+        <div class="section-card">
+          <div class="section-header">
+            <div class="section-icon-badge">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+            </div>
+            <div>
+              <h2 class="section-heading-title">Ambiente Virtual de Aprendizagem (AVA)</h2>
+              <p class="section-heading-subtitle">Salas virtuais, materiais didáticos, fóruns e gravações das aulas</p>
+            </div>
+          </div>
+          
+          <div class="info-subcards-grid">
+            <div class="subcard-box">
+              <h4>💻 Blackboard & uLife</h4>
+              <p>Acesse suas Unidades Curriculares, cronogramas de atividades e envie seus trabalhos acadêmicos.</p>
+            </div>
+            <div class="subcard-box">
+              <h4>📖 Biblioteca Virtual Pearson</h4>
+              <p>Milhares de títulos acadêmicos atualizados disponíveis 24/7 com seu login @ulife.com.br.</p>
+            </div>
+            <div class="subcard-box">
+              <h4>🎥 Aulas Gravadas & Ao Vivo</h4>
+              <p>Repositório de gravações e links do Teams para encontros síncronos da sua graduação.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ABA 3: CALENDÁRIO ACADÊMICO -->
+      <section class="tab-content-panel" id="content-calendario">
+        <div class="section-card">
+          <div class="section-header">
+            <div class="section-icon-badge">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            </div>
+            <div>
+              <h2 class="section-heading-title">Calendário Acadêmico 2026/2</h2>
+              <p class="section-heading-subtitle">Prazos de avaliações, rematrícula, semanas de provas e feriados</p>
+            </div>
+          </div>
+          
+          <div class="info-subcards-grid">
+            <div class="subcard-box">
+              <h4>🗓️ Avaliações A1 & A2</h4>
+              <p>Período de provas regimentais e entrega das atividades extensionistas integradas.</p>
+            </div>
+            <div class="subcard-box">
+              <h4>📝 Avaliação Substitutiva (A3)</h4>
+              <p>Inscrições e realização das provas substitutivas no Ambiente Virtual de Aprendizagem.</p>
+            </div>
+            <div class="subcard-box">
+              <h4>🎓 Colação de Grau & Férias</h4>
+              <p>Cerimônias institucionais e encerramento do semestre letivo.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ABA 4: PROJETOS -->
+      <section class="tab-content-panel" id="content-projetos">
+        <div class="section-card">
+          <div class="section-header">
+            <div class="section-icon-badge">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+            </div>
+            <div>
+              <h2 class="section-heading-title">Projetos & Extensão Universitária</h2>
+              <p class="section-heading-subtitle">Projetos Integradores, Iniciação Científica, TCC e Startups</p>
+            </div>
+          </div>
+          
+          <div class="info-subcards-grid">
+            <div class="subcard-box">
+              <h4>🚀 Projeto Integrador (A3)</h4>
+              <p>Soluções reais desenvolvidas em equipes multidisciplinares para problemas da comunidade.</p>
+            </div>
+            <div class="subcard-box">
+              <h4>💡 Hub de Inovação Una</h4>
+              <p>Incubação de projetos tecnológicos, mentorias com o mercado e desafios de empreendedorismo.</p>
+            </div>
+            <div class="subcard-box">
+              <h4>📄 Repositório da Wiki Una</h4>
+              <p>Acervo colaborativo de artigos, códigos-fonte e resumos acadêmicos produzidos pelos alunos.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ABA 5: AJUDA E SUPORTE -->
+      <section class="tab-content-panel" id="content-ajuda">
+        <div class="section-card">
+          <div class="section-header">
+            <div class="section-icon-badge">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            </div>
+            <div>
+              <h2 class="section-heading-title">Ajuda e Suporte ao Aluno</h2>
+              <p class="section-heading-subtitle">Central de atendimento, secretaria acadêmica, CAA e suporte de TI</p>
+            </div>
+          </div>
+          
+          <div class="info-subcards-grid">
+            <div class="subcard-box">
+              <h4>💬 Central de Atendimento (CAA)</h4>
+              <p>Requerimentos de declaração de matrícula, financeiro, histórico escolar e dispensas.</p>
+            </div>
+            <div class="subcard-box">
+              <h4>🔑 Suporte de Acesso & E-mail</h4>
+              <p>Redefinição de senha do portal uLife (@ulife.com.br), Wi-Fi do campus e Microsoft 365.</p>
+            </div>
+            <div class="subcard-box">
+              <h4>📞 Contato Direto Una</h4>
+              <p>WhatsApp institucional: (31) 3235-7300 • Atendimento presencial no Bloco A.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Botão Flutuante de Ajuda (Canto Inferior Direito) -->
+  <button type="button" class="floating-help-btn" id="btnHelpFloating" title="Ajuda e Dúvidas" aria-label="Abrir Ajuda">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <circle cx="12" cy="12" r="10"></circle>
+      <line x1="12" y1="16" x2="12" y2="12"></line>
+      <line x1="12" y1="8" x2="12.01" y2="8"></line>
+    </svg>
+  </button>
+
+  <!-- ==========================================================================
+       MODAL DE PERFIL DO ALUNO (Editar Foto e Dados Pessoais / Acadêmicos)
+       ========================================================================== -->
+  <div class="profile-modal-overlay" id="profileModalOverlay" role="dialog" aria-modal="true" aria-labelledby="profileModalTitle">
+    <div class="profile-modal-card">
+      
+      <!-- Cabeçalho do Modal -->
+      <div class="profile-modal-header">
+        <div class="profile-header-title-box">
+          <div class="profile-header-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          <div>
+            <h3 class="profile-modal-title" id="profileModalTitle">Perfil Acadêmico do Estudante</h3>
+            <p class="profile-modal-subtitle">Personalize sua foto e informações na Wiki Una</p>
+          </div>
+        </div>
+        <button type="button" class="profile-modal-close" id="btnProfileModalClose" aria-label="Fechar janela">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Formulário de Edição do Perfil -->
+      <form id="profileEditForm" class="profile-modal-body" novalidate>
+        
+        <!-- Seção de Edição da Foto de Perfil -->
+        <div class="profile-avatar-section">
+          <div class="avatar-edit-container">
+            <div class="avatar-preview-wrapper" id="avatarPreviewWrapper">
+              <span class="avatar-letter-preview" id="avatarLetterPreview">U</span>
+              <img src="" alt="Foto do Estudante" class="avatar-image-preview" id="avatarImagePreview" style="display:none;">
+            </div>
+            <label for="profilePhotoInput" class="avatar-edit-badge" title="Selecionar foto do computador">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                <circle cx="12" cy="13" r="4"></circle>
+              </svg>
+            </label>
+            <input type="file" id="profilePhotoInput" accept="image/png, image/jpeg, image/webp" style="display:none;">
+          </div>
+          <div class="avatar-action-links">
+            <label for="profilePhotoInput" class="btn-change-photo">Alterar foto de perfil</label>
+            <button type="button" class="btn-remove-photo" id="btnRemovePhoto">Remover foto atual</button>
+            <span class="avatar-tip">Formatos recomendados: PNG, JPG ou WEBP.</span>
+          </div>
+        </div>
+
+        <!-- Campos de Dados Pessoais e Acadêmicos -->
+        <div class="profile-fields-grid">
+          
+          <!-- Nome Completo -->
+          <div class="profile-field-group">
+            <label for="editProfileName" class="profile-field-label">Nome Completo *</label>
+            <input type="text" id="editProfileName" class="profile-field-input" placeholder="Seu nome completo" required>
+          </div>
+
+          <!-- E-mail Institucional -->
+          <div class="profile-field-group">
+            <label for="editProfileEmail" class="profile-field-label">E-mail Institucional</label>
+            <input type="email" id="editProfileEmail" class="profile-field-input" placeholder="seu.nome@ulife.com.br" readonly title="E-mail autenticado com domínio @ulife.com.br">
+          </div>
+
+          <!-- Curso de Graduação -->
+          <div class="profile-field-group">
+            <label for="editProfileCourse" class="profile-field-label">Curso de Graduação</label>
+            <input type="text" id="editProfileCourse" class="profile-field-input" placeholder="Ex: Ciência da Computação">
+          </div>
+
+          <!-- Matrícula / RA -->
+          <div class="profile-field-group">
+            <label for="editProfileRA" class="profile-field-label">Matrícula (RA)</label>
+            <input type="text" id="editProfileRA" class="profile-field-input" placeholder="Ex: 2026110953">
+          </div>
+
+          <!-- Unidade / Campus -->
+          <div class="profile-field-group">
+            <label for="editProfileCampus" class="profile-field-label">Campus / Unidade</label>
+            <select id="editProfileCampus" class="profile-field-input">
+              <option value="Una - Centerminas - 533">Una - Centerminas - 533</option>
+              <option value="Una - Barro Preto">Una - Barro Preto</option>
+              <option value="Una - Guajajaras">Una - Guajajaras</option>
+              <option value="Una - Liberdade">Una - Liberdade</option>
+              <option value="Una - Linha Verde">Una - Linha Verde</option>
+              <option value="Una - Betim">Una - Betim</option>
+              <option value="Una - Contagem">Una - Contagem</option>
+            </select>
+          </div>
+
+          <!-- Período / Turno -->
+          <div class="profile-field-group">
+            <label for="editProfilePeriod" class="profile-field-label">Período / Turno</label>
+            <input type="text" id="editProfilePeriod" class="profile-field-input" placeholder="Ex: 4º Período • Noite">
+          </div>
+
+          <!-- Mini Biografia -->
+          <div class="profile-field-group full-width">
+            <label for="editProfileBio" class="profile-field-label">Biografia / Interesses Acadêmicos</label>
+            <textarea id="editProfileBio" class="profile-field-textarea" rows="3" placeholder="Compartilhe seus interesses acadêmicos, áreas de estudo ou projetos na Wiki Una..."></textarea>
+          </div>
+        </div>
+
+        <!-- Rodapé de Ações do Modal -->
+        <div class="profile-modal-footer">
+          <button type="button" class="btn-cancel-profile" id="btnCancelProfile">Cancelar</button>
+          <button type="submit" class="btn-save-profile" id="btnSaveProfile">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            Salvar Alterações
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- Container de Toasts de Notificação -->
+  <div class="dashboard-toast-container" id="dashToastContainer" aria-live="polite"></div>
+
+  <!-- ==========================================================================
+       SCRIPT SEGURO DO DASHBOARD (Sessão, Abas, Perfil do Aluno e Foto)
+       ========================================================================== -->
   <script>
-    // Gerenciamento de sessão na página interna
     (function () {
+      'use strict';
+
       const STORAGE_SESSION_KEY = 'wikiuna_active_session';
+      const STORAGE_USERS_KEY = 'wikiuna_users_db';
       const sessionData = localStorage.getItem(STORAGE_SESSION_KEY);
 
+      // Verificação de autenticação: redireciona para login se não autenticado
       if (!sessionData) {
-        // Se não houver sessão ativa, redireciona para a página de login
         window.location.href = 'index.html';
         return;
       }
 
+      let currentUser = null;
       try {
-        const user = JSON.parse(sessionData);
-        const nameEl = document.getElementById('displayUserName');
-        if (nameEl && user && user.name) {
-          nameEl.textContent = user.name.split(' ')[0] + ' (' + (user.course || 'Una') + ')';
-        }
-      } catch (e) {
-        window.location.href = 'index.html';
-      }
-
-      // Ação de Sair (Logout)
-      document.getElementById('btnLogoutPage')?.addEventListener('click', function () {
+        currentUser = JSON.parse(sessionData);
+      } catch (err) {
         localStorage.removeItem(STORAGE_SESSION_KEY);
         window.location.href = 'index.html';
+        return;
+      }
+
+      // Elementos do Topbar e Dashboard
+      const studentGreetingName = document.getElementById('studentGreetingName');
+      const userTriggerName = document.getElementById('userTriggerName');
+      const userAvatarLetter = document.getElementById('userAvatarLetter');
+      const topbarAvatarImg = document.getElementById('topbarAvatarImg');
+      const campusChipText = document.querySelector('.campus-selector-chip span');
+
+      // Elementos do Modal de Perfil
+      const profileModalOverlay = document.getElementById('profileModalOverlay');
+      const btnOpenProfileModal = document.getElementById('btnOpenProfileModal');
+      const btnProfileModalClose = document.getElementById('btnProfileModalClose');
+      const btnCancelProfile = document.getElementById('btnCancelProfile');
+      const profileEditForm = document.getElementById('profileEditForm');
+
+      // Campos do Modal
+      const editProfileName = document.getElementById('editProfileName');
+      const editProfileEmail = document.getElementById('editProfileEmail');
+      const editProfileCourse = document.getElementById('editProfileCourse');
+      const editProfileRA = document.getElementById('editProfileRA');
+      const editProfileCampus = document.getElementById('editProfileCampus');
+      const editProfilePeriod = document.getElementById('editProfilePeriod');
+      const editProfileBio = document.getElementById('editProfileBio');
+
+      // Foto de Perfil
+      const profilePhotoInput = document.getElementById('profilePhotoInput');
+      const avatarLetterPreview = document.getElementById('avatarLetterPreview');
+      const avatarImagePreview = document.getElementById('avatarImagePreview');
+      const btnRemovePhoto = document.getElementById('btnRemovePhoto');
+
+      // Variável temporária de foto para preview
+      let tempAvatarBase64 = null;
+
+      /**
+       * Notificação Toast Moderna
+       */
+      function showDashToast(message, type = 'success') {
+        const container = document.getElementById('dashToastContainer');
+        if (!container) return;
+
+        const toast = document.createElement('div');
+        toast.className = `dash-toast ${type}`;
+        toast.innerHTML = `
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            ${type === 'success' ? '<polyline points="20 6 9 17 4 12"></polyline>' : '<circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line>'}
+          </svg>
+          <span>${message}</span>
+        `;
+
+        container.appendChild(toast);
+        setTimeout(() => {
+          toast.style.opacity = '0';
+          toast.style.transform = 'translateY(10px)';
+          toast.style.transition = 'all 200ms ease';
+          setTimeout(() => toast.remove(), 210);
+        }, 3500);
+      }
+
+      /**
+       * Atualiza a Interface com os Dados do Aluno
+       */
+      function renderUserData() {
+        if (!currentUser) return;
+
+        const fullName = currentUser.name || 'Estudante';
+        const firstName = fullName.split(' ')[0];
+        const initial = firstName.charAt(0).toUpperCase();
+
+        // Nome na saudação e no botão de perfil
+        if (studentGreetingName) studentGreetingName.textContent = firstName;
+        if (userTriggerName) userTriggerName.textContent = firstName;
+
+        // Foto ou Iniciais no Topbar
+        if (currentUser.avatar) {
+          if (topbarAvatarImg) {
+            topbarAvatarImg.src = currentUser.avatar;
+            topbarAvatarImg.style.display = 'block';
+          }
+          if (userAvatarLetter) userAvatarLetter.style.display = 'none';
+        } else {
+          if (topbarAvatarImg) topbarAvatarImg.style.display = 'none';
+          if (userAvatarLetter) {
+            userAvatarLetter.textContent = initial;
+            userAvatarLetter.style.display = 'block';
+          }
+        }
+
+        // Campus no chip superior
+        if (campusChipText && currentUser.campus) {
+          campusChipText.textContent = currentUser.campus;
+        }
+      }
+
+      /**
+       * Carrega dados do aluno nos campos do Modal
+       */
+      function populateProfileModal() {
+        if (!currentUser) return;
+
+        editProfileName.value = currentUser.name || '';
+        editProfileEmail.value = currentUser.email || '';
+        editProfileCourse.value = currentUser.course || 'Ciência da Computação';
+        editProfileRA.value = currentUser.ra || '2026110953';
+        if (currentUser.campus && editProfileCampus) {
+          editProfileCampus.value = currentUser.campus;
+        }
+        editProfilePeriod.value = currentUser.period || '4º Período • Noite';
+        editProfileBio.value = currentUser.bio || '';
+
+        // Foto de Perfil
+        tempAvatarBase64 = currentUser.avatar || null;
+        updateModalAvatarPreview();
+      }
+
+      /**
+       * Atualiza o Preview da Foto dentro do Modal
+       */
+      function updateModalAvatarPreview() {
+        const initial = (editProfileName.value.trim() || currentUser.name || 'E').charAt(0).toUpperCase();
+
+        if (tempAvatarBase64) {
+          avatarImagePreview.src = tempAvatarBase64;
+          avatarImagePreview.style.display = 'block';
+          avatarLetterPreview.style.display = 'none';
+          btnRemovePhoto.style.display = 'inline-block';
+        } else {
+          avatarImagePreview.style.display = 'none';
+          avatarLetterPreview.textContent = initial;
+          avatarLetterPreview.style.display = 'block';
+          btnRemovePhoto.style.display = 'none';
+        }
+      }
+
+      /**
+       * Abertura e Fechamento do Modal de Perfil
+       */
+      function openProfileModal() {
+        populateProfileModal();
+        profileModalOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeProfileModal() {
+        profileModalOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      if (btnOpenProfileModal) {
+        btnOpenProfileModal.addEventListener('click', openProfileModal);
+      }
+
+      if (btnProfileModalClose) {
+        btnProfileModalClose.addEventListener('click', closeProfileModal);
+      }
+
+      if (btnCancelProfile) {
+        btnCancelProfile.addEventListener('click', closeProfileModal);
+      }
+
+      // Fechar clicando fora do cartão
+      profileModalOverlay?.addEventListener('click', (e) => {
+        if (e.target === profileModalOverlay) {
+          closeProfileModal();
+        }
       });
+
+      // Fechar com tecla Escape
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && profileModalOverlay.classList.contains('active')) {
+          closeProfileModal();
+        }
+      });
+
+      /**
+       * Upload e Redimensionamento da Foto de Perfil
+       */
+      profilePhotoInput?.addEventListener('change', (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        // Validação de tipo de arquivo
+        if (!file.type.startsWith('image/')) {
+          showDashToast('Por favor, selecione uma imagem válida (PNG, JPG ou WEBP).', 'error');
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function (event) {
+          const img = new Image();
+          img.onload = function () {
+            // Redimensiona para no máximo 300x300 mantendo alta qualidade e baixo consumo de storage
+            const maxDim = 300;
+            let width = img.width;
+            let height = img.height;
+
+            if (width > height) {
+              if (width > maxDim) {
+                height *= maxDim / width;
+                width = maxDim;
+              }
+            } else {
+              if (height > maxDim) {
+                width *= maxDim / height;
+                height = maxDim;
+              }
+            }
+
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+
+            // Obtém imagem compactada em JPEG
+            tempAvatarBase64 = canvas.toDataURL('image/jpeg', 0.88);
+            updateModalAvatarPreview();
+            showDashToast('Foto carregada! Clique em Salvar para aplicar.');
+          };
+          img.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+
+      /**
+       * Remover Foto de Perfil
+       */
+      btnRemovePhoto?.addEventListener('click', () => {
+        tempAvatarBase64 = null;
+        if (profilePhotoInput) profilePhotoInput.value = '';
+        updateModalAvatarPreview();
+        showDashToast('Foto removida. O perfil usará suas iniciais.');
+      });
+
+      /**
+       * Salvar Alterações do Perfil
+       */
+      profileEditForm?.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const newName = editProfileName.value.trim();
+        if (!newName || newName.length < 2) {
+          showDashToast('Informe um nome válido.', 'error');
+          editProfileName.focus();
+          return;
+        }
+
+        // Atualiza o objeto do usuário ativo
+        currentUser.name = newName;
+        currentUser.course = editProfileCourse.value.trim() || 'Comunidade Acadêmica Una';
+        currentUser.ra = editProfileRA.value.trim() || '';
+        currentUser.campus = editProfileCampus.value;
+        currentUser.period = editProfilePeriod.value.trim() || '';
+        currentUser.bio = editProfileBio.value.trim();
+        currentUser.avatar = tempAvatarBase64;
+
+        // Salva na sessão ativa
+        localStorage.setItem(STORAGE_SESSION_KEY, JSON.stringify(currentUser));
+
+        // Atualiza também na base de usuários local para persistência de longo prazo
+        try {
+          const users = JSON.parse(localStorage.getItem(STORAGE_USERS_KEY)) || [];
+          const userIdx = users.findIndex(u => u.email.toLowerCase() === currentUser.email.toLowerCase());
+          if (userIdx !== -1) {
+            users[userIdx] = { ...users[userIdx], ...currentUser };
+            localStorage.setItem(STORAGE_USERS_KEY, JSON.stringify(users));
+          }
+        } catch (err) {}
+
+        // Atualiza a tela
+        renderUserData();
+        closeProfileModal();
+        showDashToast('Perfil acadêmico atualizado com sucesso!');
+      });
+
+      // Inicializa dados do usuário na tela
+      renderUserData();
+
+      // Atualização da Data Atual no Topo
+      const dateEl = document.getElementById('currentDateString');
+      if (dateEl) {
+        try {
+          const now = new Date();
+          const options = { weekday: 'long', day: 'numeric', month: 'long' };
+          const formatted = now.toLocaleDateString('pt-BR', options);
+          dateEl.textContent = formatted.charAt(0).toUpperCase() + formatted.slice(1);
+        } catch (e) {}
+      }
+
+      // Alternância Dinâmica das 5 Abas
+      const tabButtons = document.querySelectorAll('.nav-tab-button');
+      const tabPanels = document.querySelectorAll('.tab-content-panel');
+
+      function activateTab(tabKey) {
+        tabButtons.forEach(btn => {
+          if (btn.getAttribute('data-tab') === tabKey) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        });
+
+        tabPanels.forEach(panel => {
+          if (panel.id === `content-${tabKey}`) {
+            panel.classList.add('active');
+          } else {
+            panel.classList.remove('active');
+          }
+        });
+      }
+
+      tabButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const tabKey = btn.getAttribute('data-tab');
+          if (tabKey) activateTab(tabKey);
+        });
+      });
+
+      // Botão Flutuante de Ajuda direciona para a aba Ajuda
+      const btnHelpFloating = document.getElementById('btnHelpFloating');
+      if (btnHelpFloating) {
+        btnHelpFloating.addEventListener('click', () => {
+          activateTab('ajuda');
+        });
+      }
+
+      // Logout Seguro
+      const btnLogout = document.getElementById('btnLogout');
+      if (btnLogout) {
+        btnLogout.addEventListener('click', () => {
+          localStorage.removeItem(STORAGE_SESSION_KEY);
+          window.location.href = 'index.html';
+        });
+      }
+
+      // Feedback amigável para a Busca Semântica
+      const searchInput = document.getElementById('inputSemanticSearch');
+      if (searchInput) {
+        searchInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            const term = searchInput.value.trim();
+            if (term) {
+              alert(`Busca semântica: "${term}".\nO módulo de IA para busca semântica em salas, projetos e biblioteca está em fase de conexão e estará ativo em breve!`);
+            }
+          }
+        });
+      }
     })();
   </script>
 </body>
 </html>
-

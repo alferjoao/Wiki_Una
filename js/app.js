@@ -771,50 +771,70 @@
    */
   function setupEventListeners() {
     // Alternância de Abas
-    dom.tabLogin.addEventListener('click', () => switchTab('login'));
-    dom.tabRegister.addEventListener('click', () => switchTab('register'));
+    if (dom.tabLogin && dom.tabRegister) {
+      dom.tabLogin.addEventListener('click', () => switchTab('login'));
+      dom.tabRegister.addEventListener('click', () => switchTab('register'));
+    }
 
     // Validação em tempo real do e-mail de login
-    dom.loginEmail.addEventListener('input', () => {
-      validateUlifeEmail(dom.loginEmail, dom.loginEmailFeedback, dom.loginDomainSuggestion);
-    });
+    if (dom.loginEmail) {
+      dom.loginEmail.addEventListener('input', () => {
+        validateUlifeEmail(dom.loginEmail, dom.loginEmailFeedback, dom.loginDomainSuggestion);
+      });
+    }
 
     // Clique na sugestão de domínio no login
-    dom.loginDomainSuggestion.addEventListener('click', () => {
-      const val = dom.loginEmail.value.trim();
-      dom.loginEmail.value = `${val}${REQUIRED_DOMAIN}`;
-      validateUlifeEmail(dom.loginEmail, dom.loginEmailFeedback, dom.loginDomainSuggestion);
-      dom.loginPassword.focus();
-    });
+    if (dom.loginDomainSuggestion) {
+      dom.loginDomainSuggestion.addEventListener('click', () => {
+        const val = dom.loginEmail?.value.trim() || '';
+        dom.loginEmail.value = `${val}${REQUIRED_DOMAIN}`;
+        validateUlifeEmail(dom.loginEmail, dom.loginEmailFeedback, dom.loginDomainSuggestion);
+        dom.loginPassword?.focus();
+      });
+    }
 
     // Validação em tempo real do e-mail de cadastro
-    dom.regEmail.addEventListener('input', () => {
-      validateUlifeEmail(dom.regEmail, dom.regEmailFeedback, dom.regEmailSuggestion);
-    });
+    if (dom.regEmail) {
+      dom.regEmail.addEventListener('input', () => {
+        validateUlifeEmail(dom.regEmail, dom.regEmailFeedback, dom.regEmailSuggestion);
+      });
+    }
 
     // Clique na sugestão de domínio no cadastro
-    dom.regEmailSuggestion.addEventListener('click', () => {
-      const val = dom.regEmail.value.trim();
-      dom.regEmail.value = `${val}${REQUIRED_DOMAIN}`;
-      validateUlifeEmail(dom.regEmail, dom.regEmailFeedback, dom.regEmailSuggestion);
-      dom.regPassword.focus();
-    });
+    if (dom.regEmailSuggestion) {
+      dom.regEmailSuggestion.addEventListener('click', () => {
+        const val = dom.regEmail?.value.trim() || '';
+        dom.regEmail.value = `${val}${REQUIRED_DOMAIN}`;
+        validateUlifeEmail(dom.regEmail, dom.regEmailFeedback, dom.regEmailSuggestion);
+        dom.regPassword?.focus();
+      });
+    }
 
     // Validação de força de senha no cadastro
-    dom.regPassword.addEventListener('input', () => {
-      checkPasswordStrength(dom.regPassword.value);
-      if (dom.regConfirmPassword.value) checkPasswordMatch();
-    });
+    if (dom.regPassword) {
+      dom.regPassword.addEventListener('input', () => {
+        checkPasswordStrength(dom.regPassword.value);
+        if (dom.regConfirmPassword && dom.regConfirmPassword.value) checkPasswordMatch();
+      });
+    }
 
     // Confirmação de senha
-    dom.regConfirmPassword.addEventListener('input', checkPasswordMatch);
+    if (dom.regConfirmPassword) {
+      dom.regConfirmPassword.addEventListener('input', checkPasswordMatch);
+    }
 
     // Submissão dos formulários
-    dom.formLogin.addEventListener('submit', handleLogin);
-    dom.formRegister.addEventListener('submit', handleRegister);
+    if (dom.formLogin) {
+      dom.formLogin.addEventListener('submit', handleLogin);
+    }
+    if (dom.formRegister) {
+      dom.formRegister.addEventListener('submit', handleRegister);
+    }
 
     // Logout
-    dom.btnLogout.addEventListener('click', handleLogout);
+    if (dom.btnLogout) {
+      dom.btnLogout.addEventListener('click', handleLogout);
+    }
 
     // Senhas
     setupPasswordToggles();
