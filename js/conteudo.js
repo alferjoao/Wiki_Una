@@ -6,6 +6,7 @@
  *     resumo: 'Uma frase curta',
  *     onde: 'Bloco A • Térreo, ao lado da escada'      // só em Localização
  *     foto: 'assets/fotos/nome-da-foto.jpg',           // opcional
+ *     rota: [{ foto: '...', texto: 'Passo curto' }],   // opcional: caminho com fotos
  *     passos: ['Passo 1', 'Passo 2'],                  // opcional
  *     dica: 'Algo útil',                               // opcional
  *     buscas: ['sinônimos', 'jeitos de pesquisar'] }   // ajuda a busca a encontrar
@@ -18,13 +19,25 @@
  * Em Ambiente virtual, troque revisado: false por true depois de conferir os
  * passos no app uLife (de preferência com prints).
  */
+// Caminho da entrada até os banheiros do início da Una (4º andar)
+const ROTA_BANHEIROS_4_INICIO = [
+  { foto: 'assets/fotos/4andar-entrada.jpg', texto: 'Entre na Una pela entrada do 4º andar e passe pela catraca.' },
+  { foto: 'assets/fotos/4andar-cac.jpg', texto: 'Você chega no hall da CAC. Siga em frente pela faixa no chão.' },
+  { foto: 'assets/fotos/4andar-corredor-laboratorios.jpg', texto: 'Entre no corredor e siga a placa “sanitários”.' },
+  { foto: 'assets/fotos/4andar-banheiros-inicio.jpg', texto: 'Chegou! Feminino à esquerda, PNE no meio e masculino à direita.' }
+];
+
 window.WIKI_CONTEUDO = {
   localizacao: [
     {
       id: 'banheiros', nome: 'Banheiros', icone: '🚻',
       itens: [
-        { id: 'banheiro-masc-fem', titulo: 'Banheiros masculino e feminino', resumo: 'Banheiros de uso geral do campus.', buscas: ['wc', 'toalete', 'sanitario', 'preciso ir ao banheiro'] },
-        { id: 'banheiro-acessivel', titulo: 'Banheiro acessível (PCD)', resumo: 'Banheiro adaptado para pessoas com deficiência.', buscas: ['pcd', 'cadeirante', 'deficiencia', 'adaptado'] }
+        { id: 'banheiro-masc-fem', titulo: 'Banheiros masculino e feminino', resumo: 'Logo no início da Una, no 4º andar. Tem bebedouro ao lado.',
+          onde: '4º andar • início da Una, no corredor dos laboratórios', foto: 'assets/fotos/4andar-banheiros-inicio.jpg', rota: ROTA_BANHEIROS_4_INICIO,
+          buscas: ['wc', 'toalete', 'sanitario', 'preciso ir ao banheiro', 'bebedouro', 'agua'] },
+        { id: 'banheiro-acessivel', titulo: 'Banheiro acessível (PNE)', resumo: 'Banheiro adaptado, junto dos banheiros do início da Una.',
+          onde: '4º andar • início da Una, entre o feminino e o masculino', foto: 'assets/fotos/4andar-banheiros-inicio.jpg', rota: ROTA_BANHEIROS_4_INICIO,
+          buscas: ['pcd', 'pne', 'cadeirante', 'deficiencia', 'adaptado', 'acessivel'] }
       ]
     },
     {
@@ -45,7 +58,9 @@ window.WIKI_CONTEUDO = {
       id: 'atendimento', nome: 'Secretaria / Atendimento', icone: '🗂️',
       itens: [
         { id: 'secretaria', titulo: 'Secretaria / Central de Atendimento (CAA)', resumo: 'Documentos, matrícula, financeiro e requerimentos presenciais.', buscas: ['caa', 'secretaria', 'atendimento', 'documento', 'matricula', 'financeiro'] },
-        { id: 'cad', titulo: 'CAD', resumo: 'Descrição a preencher pelo time.', buscas: ['cad'] },
+        { id: 'cac', titulo: 'CAC – Central de Atendimento ao Candidato', resumo: 'Atendimento para quem quer entrar na Una: matrícula e dúvidas.',
+          onde: '4º andar • logo depois da entrada, no hall', foto: 'assets/fotos/4andar-cac.jpg',
+          buscas: ['cac', 'cad', 'candidato', 'vestibular', 'matricula', 'quero estudar na una', 'atendimento'] },
         { id: 'napi', titulo: 'NAPI – Apoio psicopedagógico e inclusão', resumo: 'Apoio a estudantes, adaptações de prova e atendimento especializado.', buscas: ['napi', 'aee', 'inclusao', 'psicopedagogico', 'adaptacao', 'conversar com alguém', 'estou passando por um momento difícil', 'preciso de apoio emocional', 'tenho TDAH ou autismo'] },
         { id: 'coordenacao', titulo: 'Coordenação de curso', resumo: 'Onde falar com a coordenação do seu curso.', buscas: ['coordenador', 'coordenacao'] }
       ]
@@ -59,7 +74,9 @@ window.WIKI_CONTEUDO = {
     {
       id: 'acesso', nome: 'Entrada', icone: '🚪',
       itens: [
-        { id: 'entrada', titulo: 'Entrada e catracas', resumo: 'Como entrar no campus com sua carteirinha.', buscas: ['entrada', 'catraca', 'carteirinha', 'portaria', 'como chego na una'] }
+        { id: 'entrada', titulo: 'Entrada e catracas', resumo: 'A porta da Una no 4º andar. Passe pela catraca para entrar.',
+          onde: '4º andar • entrada principal da Una', foto: 'assets/fotos/4andar-entrada.jpg',
+          buscas: ['entrada', 'catraca', 'carteirinha', 'portaria', 'como chego na una', 'porta'] }
       ]
     }
   ],

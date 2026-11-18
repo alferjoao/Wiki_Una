@@ -1399,3 +1399,28 @@ body {
 }
 .ia-btn:hover { background: var(--primary-purple-light); }
 .ia-status-mini { font-size: 0.68rem; margin-top: 0.25rem; padding-left: 0.2rem; }
+
+/* Rota com fotos ("Como chegar") */
+.guia-rota { list-style: none; display: flex; flex-direction: column; gap: 0.9rem; margin-bottom: 0.5rem; }
+.guia-rota li {
+  border: 1px solid var(--una-border); border-radius: 14px; overflow: hidden; background: #fff;
+}
+.guia-rota img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: var(--una-gray-bg); }
+.guia-rota p {
+  display: flex; align-items: flex-start; gap: 0.6rem;
+  padding: 0.7rem 0.85rem; font-size: 0.9rem; color: var(--una-text); line-height: 1.4;
+}
+.guia-rota-num {
+  flex-shrink: 0; width: 1.6rem; height: 1.6rem; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #15213D, #7C3AED); color: #fff; font-size: 0.78rem; font-weight: 700;
+}
+
+/* Miniatura da foto na lista */
+.guia-item.has-thumb {
+  display: grid; grid-template-columns: 52px 1fr; column-gap: 0.65rem; align-items: center;
+}
+.guia-item-thumb {
+  grid-row: span 2; width: 52px; height: 52px; border-radius: 10px; object-fit: cover;
+  background: var(--una-gray-bg);
+}

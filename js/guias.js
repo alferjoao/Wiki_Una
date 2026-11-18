@@ -80,7 +80,7 @@
     // Foto (ou aviso de que ainda está sendo tirada)
     const foto = document.createElement('div');
     foto.className = 'guia-foto';
-    if (item.foto) {
+    if (item.foto && !item.rota) {   // com rota, a foto final já aparece no último passo
       const img = document.createElement('img');
       img.src = item.foto;
       img.alt = `Foto: ${item.titulo}`;
@@ -91,7 +91,7 @@
       foto.classList.add('is-empty');
       foto.textContent = '📷 Foto em breve – o time está fotografando o campus';
     }
-    if (item.foto || tab === 'localizacao') body.appendChild(foto);
+    if (!item.rota && (item.foto || tab === 'localizacao')) body.appendChild(foto);
 
     if (tab === 'localizacao') {
       const onde = document.createElement('p');
@@ -100,6 +100,29 @@
       strong.textContent = 'Onde fica: ';
       onde.append(strong, item.onde || 'local em levantamento.');
       body.appendChild(onde);
+    }
+
+    if (item.rota && item.rota.length) {
+      const h = document.createElement('h4');
+      h.className = 'guia-dialog-sub';
+      h.textContent = 'Como chegar';
+      const ol = document.createElement('ol');
+      ol.className = 'guia-rota';
+      item.rota.forEach((passo, i) => {
+        const li = document.createElement('li');
+        const img = document.createElement('img');
+        img.src = passo.foto;
+        img.alt = `Passo ${i + 1}: ${passo.texto}`;
+        img.loading = 'lazy';
+        const p = document.createElement('p');
+        const n = document.createElement('span');
+        n.className = 'guia-rota-num';
+        n.textContent = i + 1;
+        p.append(n, passo.texto);
+        li.append(img, p);
+        ol.appendChild(li);
+      });
+      body.append(h, ol);
     }
 
     if (item.passos && item.passos.length) {
@@ -203,6 +226,15 @@
           const r = document.createElement('span');
           r.className = 'guia-item-resumo';
           r.textContent = item.resumo || '';
+          if (item.foto) {
+            const thumb = document.createElement('img');
+            thumb.className = 'guia-item-thumb';
+            thumb.src = item.foto;
+            thumb.alt = '';
+            thumb.loading = 'lazy';
+            btn.classList.add('has-thumb');
+            btn.append(thumb);
+          }
           btn.append(t, r);
           btn.addEventListener('click', () => openItem({ tab, cat, item }));
           li.appendChild(btn);
