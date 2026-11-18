@@ -149,7 +149,8 @@
     // Foto (ou aviso de que ainda está sendo tirada)
     const foto = document.createElement('div');
     foto.className = 'guia-foto';
-    if (item.foto && !item.rota) {   // com rota, a foto final já aparece no último passo
+    const rotas = item.rotas || (item.rota ? [{ nome: 'Como chegar', passos: item.rota }] : []);
+    if (item.foto && !rotas.length) {   // com rota, a foto final já aparece no último passo
       const img = document.createElement('img');
       img.src = item.foto;
       img.alt = `Foto: ${item.titulo}`;
@@ -160,7 +161,7 @@
       foto.classList.add('is-empty');
       foto.textContent = '📷 Foto em breve – o time está fotografando o campus';
     }
-    if (!item.rota && (item.foto || tab === 'localizacao')) body.appendChild(foto);
+    if (!rotas.length && (item.foto || tab === 'localizacao')) body.appendChild(foto);
 
     if (tab === 'localizacao') {
       const onde = document.createElement('p');
@@ -171,14 +172,15 @@
       body.appendChild(onde);
     }
 
-    if (item.rota && item.rota.length) {
+    rotas.forEach(({ nome, passos }) => {
       const h = document.createElement('h4');
       h.className = 'guia-dialog-sub';
-      h.textContent = 'Como chegar';
+      h.textContent = nome;
       const ol = document.createElement('ol');
-      ol.className = 'guia-rota';
-      const lista = item.rota.map((passo, i) => ({ src: passo.foto, legenda: `Passo ${i + 1}: ${passo.texto}` }));
-      item.rota.forEach((passo, i) => {
+      // prints de tela aparecem inteiros; fotos do campus podem ser recortadas
+      ol.className = tab === 'ambiente' ? 'guia-rota is-print' : 'guia-rota';
+      const lista = passos.map((passo, i) => ({ src: passo.foto, legenda: `${nome} – passo ${i + 1}: ${passo.texto}` }));
+      passos.forEach((passo, i) => {
         const li = document.createElement('li');
         const img = document.createElement('img');
         img.src = passo.foto;
@@ -193,7 +195,7 @@
         ol.appendChild(li);
       });
       body.append(h, ol);
-    }
+    });
 
     if (item.passos && item.passos.length) {
       const h = document.createElement('h4');

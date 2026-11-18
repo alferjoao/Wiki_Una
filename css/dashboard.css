@@ -1479,3 +1479,6 @@ body {
   .foto-viewer-stage { padding: 0; }
   .foto-viewer-nav { top: auto; bottom: 4.5rem; transform: none; width: 44px; height: 44px; }
 }
+
+/* Prints de tela do uLife: mostra a imagem inteira */
+.guia-rota.is-print img { aspect-ratio: auto; max-height: 460px; object-fit: contain; background: #F1F4F9; }

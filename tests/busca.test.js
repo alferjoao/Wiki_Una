@@ -25,6 +25,8 @@ const casos = [
   ['como pago a mensalidade', 'boleto'],
   ['estou devendo a faculdade', 'negociar'],
   ['esqueci a senha do ulife', 'esqueci-senha'],
+  ['como faço login no ulife', 'login'],
+  ['entrar no app pelo celular', 'login'],
   ['nao consigo entrar', 'esqueci-senha'],
   ['internet do campus', 'wifi'],
   ['comprovante que estudo aqui', 'declaracao-matricula'],

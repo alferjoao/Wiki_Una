@@ -145,7 +145,7 @@ window.WikiBusca = (function () {
         // ...e pesa menos quando o resto da pergunta não combina com o item
         const concEff = conc * (0.5 + 0.5 * base);
         let score = Math.min(1, Math.max(base, concEff * 0.85) + 0.05 * concEff);
-        if (qNorm.length > 3 && d.phrase.includes(qNorm)) score = Math.max(score, 1);
+        if (qNorm.length > 3 && d.phrase.includes(qNorm)) score = Math.max(score, 1.05); // frase exata ganha empates
         return { entry: d.entry, score };
       })
       .sort((a, b) => b.score - a.score)

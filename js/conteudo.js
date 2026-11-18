@@ -7,6 +7,7 @@
  *     onde: 'Bloco A • Térreo, ao lado da escada'      // só em Localização
  *     foto: 'assets/fotos/nome-da-foto.jpg',           // opcional
  *     rota: [{ foto: '...', texto: 'Passo curto' }],   // opcional: caminho com fotos
+ *     rotas: [{ nome: 'No celular', passos: [{ foto, texto }] }], // opcional: mais de um caminho
  *     passos: ['Passo 1', 'Passo 2'],                  // opcional
  *     dica: 'Algo útil',                               // opcional
  *     buscas: ['sinônimos', 'jeitos de pesquisar'] }   // ajuda a busca a encontrar
@@ -164,10 +165,19 @@ window.WIKI_CONTEUDO = {
     {
       id: 'conta', nome: 'Conta e acesso', icone: '🔑',
       itens: [
-        { id: 'primeiro-acesso', revisado: false, titulo: 'Primeiro acesso ao uLife', resumo: 'Entrar no uLife pela primeira vez.', buscas: ['primeiro acesso', 'login', 'entrar', 'calouro'],
-          passos: ['Baixe o app uLife ou acesse pelo navegador.', 'Entre com o e-mail @ulife.com.br recebido na matrícula.', 'Crie sua senha seguindo as instruções.'] },
+        { id: 'login', revisado: false, titulo: 'Entrar no uLife (login)', resumo: 'Como fazer login no computador ou no app do celular.',
+          buscas: ['login', 'entrar', 'logar', 'acessar', 'primeiro acesso', 'calouro', 'como entro no ulife', 'site do ulife', 'app do ulife'],
+          rotas: [
+            { nome: 'No computador', passos: [
+              { foto: 'assets/prints/ulife-login-computador.jpg', texto: 'Abra o site do uLife. Digite só o seu login – o “@ulife.com.br” já aparece ao lado – e clique em Entrar.' }
+            ] },
+            { nome: 'No celular (app uLife)', passos: [
+              { foto: 'assets/prints/ulife-login-celular.jpg', texto: 'Abra o app uLife, digite seu login e sua senha e toque em Entrar.' }
+            ] }
+          ],
+          dica: 'Com dúvida? Toque em “Como realizar o acesso”, embaixo do botão Entrar.' },
         { id: 'esqueci-senha', revisado: false, titulo: 'Esqueci minha senha', resumo: 'Recuperar o acesso ao uLife.', buscas: ['senha', 'esqueci', 'recuperar', 'nao consigo entrar', 'bloqueado', 'meu login não funciona'],
-          passos: ['Na tela de login do uLife, toque em esqueci minha senha.', 'Informe seu e-mail @ulife.com.br.', 'Siga as instruções recebidas.'] },
+          passos: ['Na tela de login do uLife, toque em “clique aqui para alterar sua senha”.', 'Informe seu login @ulife.com.br.', 'Siga as instruções recebidas.'] },
         { id: 'wifi', revisado: false, titulo: 'Conectar no Wi-Fi do campus', resumo: 'Internet da Una com seu login.', buscas: ['wifi', 'wi-fi', 'internet', 'rede'],
           passos: ['Procure a rede Wi-Fi da Una no seu celular.', 'Entre com seu login institucional.', 'Se não conectar, procure o suporte de TI.'] },
         { id: 'office-teams', revisado: false, titulo: 'Microsoft 365 e Teams grátis', resumo: 'Word, Excel, PowerPoint e Teams com o e-mail da Una.', buscas: ['office', 'word', 'excel', 'teams', 'microsoft', 'outlook'],
