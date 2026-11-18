@@ -87,7 +87,7 @@
         </div>
       </div>
 
-      <!-- Barra de Busca Semântica (futuramente conectada com IA) -->
+      <!-- Busca geral em Localização e Ambiente virtual (futuramente com IA) -->
       <div class="semantic-search-box">
         <div class="search-input-wrapper">
           <svg class="search-icon-purple" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -98,14 +98,16 @@
             type="search" 
             id="inputSemanticSearch" 
             class="semantic-search-input" 
-            placeholder="Busca semântica no portal..."
+            placeholder="Buscar na Wiki Una..."
             autocomplete="off"
+            role="combobox"
+            aria-expanded="false"
+            aria-controls="globalSearchResults"
+            aria-label="Buscar lugares e passo a passo"
           >
         </div>
-        <div class="search-badge-tag">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-          Busca com IA • Em breve
-        </div>
+        <ul class="global-results" id="globalSearchResults" role="listbox" hidden></ul>
+        <p class="search-hint">Ex.: banheiro, certificado, notas</p>
       </div>
 
       <!-- Abas Oficiais Solicitadas pelo Usuário -->
@@ -189,28 +191,25 @@
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
             </div>
             <div>
-              <h2 class="section-heading-title">Localização & Campus Centerminas</h2>
-              <p class="section-heading-subtitle">Guia de salas, laboratórios, auditórios e blocos da Una</p>
+              <h2 class="section-heading-title">Localização no campus</h2>
+              <p class="section-heading-subtitle">Encontre banheiros, auditórios, laboratórios, secretaria e mais – com fotos</p>
             </div>
           </div>
-          
-          <p style="font-size:0.9rem;color:var(--una-text-muted);line-height:1.5;">
-            Localizada no Centro de Comércio e Serviços Centerminas (União), a unidade conta com fácil acesso pela Linha Verde e metrô, estacionamento amplo e infraestrutura completa.
-          </p>
 
-          <div class="info-subcards-grid">
-            <div class="subcard-box">
-              <h4>📍 Endereço do Campus</h4>
-              <p>Av. Pastor Anselmo Silvestre, 1495 - Dom Joaquim, Belo Horizonte - MG, CEP 31170-678.</p>
+          <p class="guia-endereco">📍 Campus Centerminas: Av. Pastor Anselmo Silvestre, 1495 – Dom Joaquim, Belo Horizonte – MG, CEP 31170-678.</p>
+
+          <div class="guia" data-guia="localizacao">
+            <div class="guia-search">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="search" placeholder="O que você procura? Ex.: banheiro, laboratório de enfermagem, cantina" aria-label="Buscar lugar no campus" autocomplete="off">
+              <button type="button" class="guia-clear" hidden aria-label="Limpar busca">✕</button>
             </div>
-            <div class="subcard-box">
-              <h4>🏢 Laboratórios de Tecnologia</h4>
-              <p>Bloco B • 3º Andar: Salas de Redes, Desenvolvimento de Software e Inteligência Artificial.</p>
+            <div class="guia-chips" aria-label="Buscas comuns">
+              <span>Mais procurados:</span><button type="button" class="guia-chip">Banheiro</button><button type="button" class="guia-chip">Biblioteca</button><button type="button" class="guia-chip">Secretaria</button><button type="button" class="guia-chip">Auditório</button><button type="button" class="guia-chip">Cantina</button>
             </div>
-            <div class="subcard-box">
-              <h4>📚 Biblioteca e Espaço Maker</h4>
-              <p>Bloco A • 2º Andar: Cabines individuais de estudo, acervo físico e salas multimídia.</p>
-            </div>
+            <p class="guia-count" aria-live="polite"></p>
+            <div class="guia-columns"></div>
+            <p class="guia-empty" hidden>Nada encontrado. Tente outra palavra ou clique em um dos “mais procurados”.</p>
           </div>
         </div>
       </section>
@@ -223,24 +222,23 @@
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
             </div>
             <div>
-              <h2 class="section-heading-title">Ambiente Virtual de Aprendizagem (AVA)</h2>
-              <p class="section-heading-subtitle">Salas virtuais, materiais didáticos, fóruns e gravações das aulas</p>
+              <h2 class="section-heading-title">Ambiente virtual (uLife)</h2>
+              <p class="section-heading-subtitle">Passo a passo de como fazer cada coisa no app uLife</p>
             </div>
           </div>
-          
-          <div class="info-subcards-grid">
-            <div class="subcard-box">
-              <h4>💻 Blackboard & uLife</h4>
-              <p>Acesse suas Unidades Curriculares, cronogramas de atividades e envie seus trabalhos acadêmicos.</p>
+
+          <div class="guia" data-guia="ambiente">
+            <div class="guia-search">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="search" placeholder="O que você quer fazer? Ex.: postar certificado, ver notas, boleto" aria-label="Buscar no passo a passo do uLife" autocomplete="off">
+              <button type="button" class="guia-clear" hidden aria-label="Limpar busca">✕</button>
             </div>
-            <div class="subcard-box">
-              <h4>📖 Biblioteca Virtual Pearson</h4>
-              <p>Milhares de títulos acadêmicos atualizados disponíveis 24/7 com seu login @ulife.com.br.</p>
+            <div class="guia-chips" aria-label="Buscas comuns">
+              <span>Mais procurados:</span><button type="button" class="guia-chip">Postar certificado</button><button type="button" class="guia-chip">Ver notas</button><button type="button" class="guia-chip">Livros digitais</button><button type="button" class="guia-chip">Boleto</button><button type="button" class="guia-chip">Esqueci minha senha</button>
             </div>
-            <div class="subcard-box">
-              <h4>🎥 Aulas Gravadas & Ao Vivo</h4>
-              <p>Repositório de gravações e links do Teams para encontros síncronos da sua graduação.</p>
-            </div>
+            <p class="guia-count" aria-live="polite"></p>
+            <div class="guia-columns"></div>
+            <p class="guia-empty" hidden>Nada encontrado. Tente outra palavra ou clique em um dos “mais procurados”.</p>
           </div>
         </div>
       </section>
@@ -284,23 +282,27 @@
                   <button type="button" class="cal-nav-btn" id="calNext" aria-label="Próximo mês">›</button>
                 </div>
               </div>
+              <div class="cal-months" id="calMonths" aria-label="Ir para o mês"></div>
               <div class="cal-weekdays" aria-hidden="true">
                 <span>Dom</span><span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span>
               </div>
               <div class="cal-grid" id="calGrid" role="grid" tabindex="0" aria-label="Dias do mês. Use as setas do teclado ou deslize para navegar."></div>
-              <div class="cal-legend">
-                <span><i class="cal-dot cat-feriado"></i>Feriado / recesso</span>
-                <span><i class="cal-dot cat-avaliacao"></i>Avaliação</span>
-                <span><i class="cal-dot cat-prazo"></i>Prazo / secretaria</span>
-                <span><i class="cal-dot cat-letivo"></i>Semestre letivo</span>
-                <span><i class="cal-dot cat-encontro"></i>Encontro síncrono</span>
-                <span><i class="cal-dot cat-ferias"></i>Férias</span>
+              <div class="cal-legend" aria-label="Filtrar tipos de evento (clique para mostrar ou esconder)">
+                <button type="button" class="cal-filter cat-feriado" data-cat="feriado" aria-pressed="true"><i class="cal-dot"></i>Feriado / recesso</button>
+                <button type="button" class="cal-filter cat-avaliacao" data-cat="avaliacao" aria-pressed="true"><i class="cal-dot"></i>Avaliação</button>
+                <button type="button" class="cal-filter cat-prazo" data-cat="prazo" aria-pressed="true"><i class="cal-dot"></i>Prazo / secretaria</button>
+                <button type="button" class="cal-filter cat-letivo" data-cat="letivo" aria-pressed="true"><i class="cal-dot"></i>Semestre letivo</button>
+                <button type="button" class="cal-filter cat-encontro" data-cat="encontro" aria-pressed="true"><i class="cal-dot"></i>Encontro síncrono</button>
+                <button type="button" class="cal-filter cat-ferias" data-cat="ferias" aria-pressed="true"><i class="cal-dot"></i>Férias</button>
               </div>
             </div>
 
             <!-- Detalhes do dia selecionado -->
             <aside class="cal-agenda" aria-live="polite">
-              <h4 class="cal-agenda-date" id="calAgendaDate">Hoje</h4>
+              <div class="cal-agenda-head">
+                <span class="cal-agenda-day" id="calAgendaDay">18</span>
+                <h4 class="cal-agenda-date" id="calAgendaDate">Hoje</h4>
+              </div>
               <ul class="cal-agenda-list" id="calAgendaList"></ul>
               <h4 class="cal-agenda-sub">Próximos no mês</h4>
               <ul class="cal-agenda-list cal-upcoming" id="calUpcoming"></ul>
@@ -503,6 +505,12 @@
 
     </div>
   </div>
+
+  <!-- Janela de detalhes dos guias (ESC fecha) -->
+  <dialog class="guia-dialog" id="guiaDialog" aria-labelledby="guiaDialogTitle">
+    <button type="button" class="guia-dialog-close" aria-label="Fechar">✕</button>
+    <div class="guia-dialog-body"></div>
+  </dialog>
 
   <!-- Container de Toasts de Notificação -->
   <div class="dashboard-toast-container" id="dashToastContainer" aria-live="polite"></div>
@@ -864,21 +872,10 @@
         });
       }
 
-      // Feedback amigável para a Busca Semântica
-      const searchInput = document.getElementById('inputSemanticSearch');
-      if (searchInput) {
-        searchInput.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter') {
-            e.preventDefault();
-            const term = searchInput.value.trim();
-            if (term) {
-              showDashToast(`Busca semântica por "${term}" estará disponível em breve.`);
-            }
-          }
-        });
-      }
     })();
   </script>
+  <script src="js/conteudo.js"></script>
+  <script src="js/guias.js"></script>
   <script src="js/calendario.js"></script>
 </body>
 </html>

@@ -182,6 +182,9 @@
     cityWrap: document.getElementById('calCityWrap'),
     pdf: document.getElementById('calPdfLink'),
     agendaDate: document.getElementById('calAgendaDate'),
+    agendaDay: document.getElementById('calAgendaDay'),
+    months: document.getElementById('calMonths'),
+    filters: document.querySelectorAll('.cal-filter'),
     agendaList: document.getElementById('calAgendaList'),
     upcoming: document.getElementById('calUpcoming'),
     note: document.getElementById('calNote'),
@@ -197,13 +200,14 @@
   try { prefs = { ...prefs, ...JSON.parse(localStorage.getItem(PREFS_KEY)) }; } catch (e) { /* usa padrão */ }
   if (!PDFS[prefs.mode]) prefs.mode = 'presencial';
 
+  const hidden = new Set(); // categorias escondidas pela legenda
   let view = new Date(today.getFullYear(), today.getMonth(), 1);
   let selected = new Date(today);
 
   function events() {
     const base = { presencial: PRESENCIAL, semipresencial: SEMIPRESENCIAL, ead: EAD }[prefs.mode];
     const local = prefs.mode !== 'ead' && prefs.city === 'Belo Horizonte' ? FERIADOS_BH : [];
-    return FERIADOS.concat(local, base);
+    return FERIADOS.concat(local, base).filter(e => !hidden.has(e[3]));
   }
 
   function eventsOn(dayIso, list) {
@@ -252,6 +256,11 @@
     const y = view.getFullYear();
     const m = view.getMonth();
     el.title.textContent = `${MONTHS[m]} ${y}`;
+    el.months.querySelectorAll('button').forEach((b, i) => {
+      const on = i === m;
+      b.classList.toggle('is-active', on);
+      if (on) b.setAttribute('aria-current', 'date'); else b.removeAttribute('aria-current');
+    });
 
     const first = new Date(y, m, 1);
     const start = new Date(y, m, 1 - first.getDay());
@@ -319,8 +328,10 @@
   }
 
   function renderAgenda(list) {
-    const label = selected.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });
-    el.agendaDate.textContent = label.charAt(0).toUpperCase() + label.slice(1);
+    const label = `${selected.toLocaleDateString('pt-BR', { weekday: 'long' })}, ${MONTHS[selected.getMonth()].toLowerCase()}`;
+    el.agendaDay.textContent = selected.getDate();
+    el.agendaDate.textContent = label.charAt(0).toUpperCase() + label.slice(1)
+      + (iso(selected) === iso(today) ? ' · hoje' : '');
 
     const dayEvents = eventsOn(iso(selected), list);
     el.agendaList.replaceChildren(...dayEvents.map(li));
@@ -337,7 +348,15 @@
     const upcoming = list
       .filter(([s, e]) => s.startsWith(monthPrefix) && (e || s) >= fromIso)
       .sort((a, b) => a[0].localeCompare(b[0]));
-    el.upcoming.replaceChildren(...upcoming.map(li));
+    el.upcoming.replaceChildren(...upcoming.map(ev => {
+      const item = li(ev);
+      const days = daysBetween(fromIso, ev[0]);
+      const badge = document.createElement('em');
+      badge.className = 'cal-countdown';
+      badge.textContent = days <= 0 ? 'em andamento' : days === 1 ? 'amanhã' : `em ${days} dias`;
+      item.appendChild(badge);
+      return item;
+    }));
     if (!upcoming.length) {
       const empty = document.createElement('li');
       empty.className = 'cal-empty';
@@ -369,6 +388,26 @@
     }
     grid.querySelector('.is-selected')?.focus({ preventScroll: true });
   }
+
+  // Atalho dos 12 meses (pula direto, como no Calendário do Mac)
+  MONTHS.forEach((name, i) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = name.slice(0, 3);
+    b.setAttribute('aria-label', name);
+    b.addEventListener('click', () => {
+      const delta = i - view.getMonth();
+      if (delta) goMonth(delta);
+    });
+    el.months.appendChild(b);
+  });
+
+  el.filters.forEach(btn => btn.addEventListener('click', () => {
+    const cat = btn.dataset.cat;
+    if (hidden.has(cat)) hidden.delete(cat); else hidden.add(cat);
+    btn.setAttribute('aria-pressed', !hidden.has(cat));
+    renderGrid(0);
+  }));
 
   // Eventos de interface
   document.getElementById('calPrev').addEventListener('click', () => goMonth(-1));

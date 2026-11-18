@@ -1,0 +1,2 @@
+Coloque aqui as fotos do campus (ex.: banheiro-terreo.jpg) e informe o caminho no campo "foto" do item em js/conteudo.js.
+Dica: use JPG com até ~1600px de largura para o site carregar rápido.
