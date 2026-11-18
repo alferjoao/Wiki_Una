@@ -107,7 +107,8 @@
           >
         </div>
         <ul class="global-results" id="globalSearchResults" role="listbox" hidden></ul>
-        <p class="search-hint">Ex.: banheiro, certificado, notas</p>
+        <p class="search-hint">Ex.: onde posso comer? perdi a prova</p>
+        <p class="ia-status ia-status-mini" id="globalIaStatus" aria-live="polite"></p>
       </div>
 
       <!-- Abas Oficiais Solicitadas pelo Usuário -->
@@ -192,11 +193,12 @@
             </div>
             <div>
               <h2 class="section-heading-title">Localização no campus</h2>
-              <p class="section-heading-subtitle">Encontre banheiros, auditórios, laboratórios, secretaria e mais – com fotos</p>
+              <p class="section-heading-subtitle">Encontre banheiros, auditório, laboratórios, secretaria e mais – com fotos</p>
             </div>
           </div>
 
-          <p class="guia-endereco">📍 Campus Centerminas: Av. Pastor Anselmo Silvestre, 1495 – Dom Joaquim, Belo Horizonte – MG, CEP 31170-678.</p>
+          <p class="guia-endereco">📍 <strong>A Una fica no 4º andar do Centerminas.</strong> Todos os lugares desta página ficam nesse andar.<br>
+            <span>Av. Pastor Anselmo Silvestre, 1495 – Dom Joaquim, Belo Horizonte – MG, CEP 31170-678.</span></p>
 
           <div class="guia" data-guia="localizacao">
             <div class="guia-search">
@@ -207,6 +209,7 @@
             <div class="guia-chips" aria-label="Buscas comuns">
               <span>Mais procurados:</span><button type="button" class="guia-chip">Banheiro</button><button type="button" class="guia-chip">Biblioteca</button><button type="button" class="guia-chip">Secretaria</button><button type="button" class="guia-chip">Auditório</button><button type="button" class="guia-chip">Cantina</button>
             </div>
+            <p class="ia-status" aria-live="polite"></p>
             <p class="guia-count" aria-live="polite"></p>
             <div class="guia-columns"></div>
             <p class="guia-empty" hidden>Nada encontrado. Tente outra palavra ou clique em um dos “mais procurados”.</p>
@@ -236,6 +239,7 @@
             <div class="guia-chips" aria-label="Buscas comuns">
               <span>Mais procurados:</span><button type="button" class="guia-chip">Postar certificado</button><button type="button" class="guia-chip">Ver notas</button><button type="button" class="guia-chip">Livros digitais</button><button type="button" class="guia-chip">Boleto</button><button type="button" class="guia-chip">Esqueci minha senha</button>
             </div>
+            <p class="ia-status" aria-live="polite"></p>
             <p class="guia-count" aria-live="polite"></p>
             <div class="guia-columns"></div>
             <p class="guia-empty" hidden>Nada encontrado. Tente outra palavra ou clique em um dos “mais procurados”.</p>
@@ -875,6 +879,7 @@
     })();
   </script>
   <script src="js/conteudo.js"></script>
+  <script src="js/busca.js"></script>
   <script src="js/guias.js"></script>
   <script src="js/calendario.js"></script>
 </body>

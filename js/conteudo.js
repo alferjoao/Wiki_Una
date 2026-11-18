@@ -10,6 +10,9 @@
  *     dica: 'Algo útil',                               // opcional
  *     buscas: ['sinônimos', 'jeitos de pesquisar'] }   // ajuda a busca a encontrar
  *
+ * Todo o campus fica no 4º andar do Centerminas: em "onde", diga só o ponto
+ * de referência dentro do andar (ex.: 'Perto dos elevadores, à direita').
+ *
  * Fotos: coloque o arquivo em assets/fotos/ e informe o caminho em "foto".
  * Itens sem "onde" ou sem "foto" mostram o aviso "em levantamento".
  * Em Ambiente virtual, troque revisado: false por true depois de conferir os
@@ -20,16 +23,15 @@ window.WIKI_CONTEUDO = {
     {
       id: 'banheiros', nome: 'Banheiros', icone: '🚻',
       itens: [
-        { id: 'banheiro-masc-fem', titulo: 'Banheiros masculino e feminino', resumo: 'Banheiros de uso geral em cada andar.', buscas: ['wc', 'toalete', 'sanitario'] },
+        { id: 'banheiro-masc-fem', titulo: 'Banheiros masculino e feminino', resumo: 'Banheiros de uso geral do campus.', buscas: ['wc', 'toalete', 'sanitario', 'preciso ir ao banheiro'] },
         { id: 'banheiro-acessivel', titulo: 'Banheiro acessível (PCD)', resumo: 'Banheiro adaptado para pessoas com deficiência.', buscas: ['pcd', 'cadeirante', 'deficiencia', 'adaptado'] },
         { id: 'fraldario', titulo: 'Fraldário', resumo: 'Espaço para troca de fraldas.', buscas: ['bebe', 'trocador'] }
       ]
     },
     {
-      id: 'auditorios', nome: 'Auditórios', icone: '🎤',
+      id: 'auditorio', nome: 'Auditório', icone: '🎤',
       itens: [
-        { id: 'auditorio-principal', titulo: 'Auditório principal', resumo: 'Palestras, colação de grau e eventos.', buscas: ['palestra', 'evento', 'colacao', 'formatura'] },
-        { id: 'mini-auditorio', titulo: 'Mini auditório', resumo: 'Eventos menores, bancas e apresentações.', buscas: ['banca', 'apresentacao', 'tcc'] }
+        { id: 'auditorio', titulo: 'Auditório', resumo: 'O auditório do campus: palestras, eventos e apresentações.', buscas: ['palestra', 'evento', 'colacao', 'formatura', 'banca', 'apresentacao', 'tcc'] }
       ]
     },
     {
@@ -50,21 +52,20 @@ window.WIKI_CONTEUDO = {
       itens: [
         { id: 'secretaria', titulo: 'Secretaria / Central de Atendimento (CAA)', resumo: 'Documentos, matrícula, financeiro e requerimentos presenciais.', buscas: ['caa', 'secretaria', 'atendimento', 'documento', 'matricula', 'financeiro'] },
         { id: 'cad', titulo: 'CAD', resumo: 'Descrição a preencher pelo time.', buscas: ['cad'] },
-        { id: 'napi', titulo: 'NAPI – Apoio psicopedagógico e inclusão', resumo: 'Apoio a estudantes, adaptações de prova e atendimento especializado.', buscas: ['napi', 'aee', 'inclusao', 'psicopedagogico', 'adaptacao'] },
+        { id: 'napi', titulo: 'NAPI – Apoio psicopedagógico e inclusão', resumo: 'Apoio a estudantes, adaptações de prova e atendimento especializado.', buscas: ['napi', 'aee', 'inclusao', 'psicopedagogico', 'adaptacao', 'conversar com alguém', 'estou passando por um momento difícil', 'preciso de apoio emocional', 'tenho TDAH ou autismo'] },
         { id: 'coordenacao', titulo: 'Coordenação de curso', resumo: 'Onde falar com a coordenação do seu curso.', buscas: ['coordenador', 'coordenacao'] }
       ]
     },
     {
       id: 'biblioteca', nome: 'Biblioteca', icone: '📚',
       itens: [
-        { id: 'biblioteca-fisica', titulo: 'Biblioteca', resumo: 'Acervo físico, empréstimo e devolução de livros.', buscas: ['livro', 'emprestimo', 'acervo', 'devolucao'] },
-        { id: 'salas-estudo', titulo: 'Salas e cabines de estudo', resumo: 'Lugares silenciosos para estudar sozinho ou em grupo.', buscas: ['estudar', 'silencio', 'grupo', 'cabine'] }
+        { id: 'biblioteca-fisica', titulo: 'Biblioteca', resumo: 'A biblioteca do campus: livros, empréstimo e lugar para estudar.', buscas: ['livro', 'emprestimo', 'acervo', 'devolucao', 'estudar', 'silencio', 'cabine'] }
       ]
     },
     {
       id: 'convivencia', nome: 'Alimentação e convivência', icone: '☕',
       itens: [
-        { id: 'cantina', titulo: 'Cantina / lanchonete', resumo: 'Lanches, café e refeições.', buscas: ['comida', 'lanche', 'cafe', 'almoco', 'restaurante'] },
+        { id: 'cantina', titulo: 'Cantina / lanchonete', resumo: 'Lanches, café e refeições.', buscas: ['comida', 'lanche', 'cafe', 'almoco', 'restaurante', 'comer alguma coisa', 'estou com fome', 'tomar um açaí ou um suco'] },
         { id: 'microondas', titulo: 'Micro-ondas e bebedouros', resumo: 'Para esquentar comida e pegar água.', buscas: ['agua', 'esquentar', 'marmita', 'bebedouro'] },
         { id: 'area-convivencia', titulo: 'Área de convivência', resumo: 'Espaço para descansar e encontrar colegas.', buscas: ['descanso', 'convivencia'] }
       ]
@@ -73,7 +74,7 @@ window.WIKI_CONTEUDO = {
       id: 'acesso', nome: 'Acessibilidade e acesso', icone: '♿',
       itens: [
         { id: 'entrada', titulo: 'Entrada e catracas', resumo: 'Como entrar no campus com sua carteirinha.', buscas: ['entrada', 'catraca', 'carteirinha', 'portaria'] },
-        { id: 'elevadores', titulo: 'Elevadores e rampas', resumo: 'Caminhos acessíveis entre os andares.', buscas: ['elevador', 'rampa', 'escada', 'acessibilidade'] },
+        { id: 'elevadores', titulo: 'Elevadores e rampas', resumo: 'Como chegar ao 4º andar e circular com acessibilidade.', buscas: ['elevador', 'rampa', 'escada', 'acessibilidade'] },
         { id: 'estacionamento', titulo: 'Estacionamento', resumo: 'Vagas para carro, moto e vagas preferenciais.', buscas: ['carro', 'moto', 'vaga', 'estacionar'] }
       ]
     }
@@ -86,7 +87,7 @@ window.WIKI_CONTEUDO = {
       itens: [
         { id: 'assistir-aula', revisado: false, titulo: 'Assistir aula ao vivo', resumo: 'Entrar na aula on-line pelo uLife.', buscas: ['aula ao vivo', 'teams', 'link da aula', 'online'],
           passos: ['Abra o app uLife e entre com seu e-mail @ulife.com.br.', 'Na tela inicial, toque na disciplina do dia.', 'Toque no link da aula ao vivo para abrir no Teams.'], dica: 'Entre alguns minutos antes para testar áudio e câmera.' },
-        { id: 'aulas-gravadas', revisado: false, titulo: 'Ver aulas gravadas', resumo: 'Assistir de novo uma aula que já aconteceu.', buscas: ['gravacao', 'gravada', 'rever aula', 'perdi a aula'],
+        { id: 'aulas-gravadas', revisado: false, titulo: 'Ver aulas gravadas', resumo: 'Assistir de novo uma aula que já aconteceu.', buscas: ['gravacao', 'gravada', 'rever aula', 'perdi a aula', 'assistir de novo a explicação do professor'],
           passos: ['Abra a disciplina no uLife.', 'Procure a área de gravações ou conteúdos da disciplina.', 'Escolha a data da aula para assistir.'] },
         { id: 'material-aula', revisado: false, titulo: 'Baixar material da disciplina', resumo: 'Slides, PDFs e conteúdos postados pelo professor.', buscas: ['slide', 'pdf', 'material', 'conteudo', 'apostila'],
           passos: ['Abra a disciplina no uLife.', 'Entre em conteúdos/materiais.', 'Toque no arquivo para abrir ou baixar.'] },
@@ -112,7 +113,7 @@ window.WIKI_CONTEUDO = {
     {
       id: 'certificados', nome: 'Certificados e horas', icone: '🏅',
       itens: [
-        { id: 'postar-certificado', revisado: false, titulo: 'Postar certificado (atividades complementares)', resumo: 'Enviar certificados de cursos, palestras e eventos para contar horas.', buscas: ['certificado', 'horas complementares', 'atividade complementar', 'acc', 'enviar certificado'],
+        { id: 'postar-certificado', revisado: false, titulo: 'Postar certificado (atividades complementares)', resumo: 'Enviar certificados de cursos, palestras e eventos para contar horas.', buscas: ['certificado', 'horas complementares', 'atividade complementar', 'acc', 'enviar certificado', 'mandar o pdf do curso que eu fiz', 'fiz um curso e quero contar horas'],
           passos: ['Deixe o certificado salvo em PDF ou imagem.', 'No uLife, abra atividades complementares.', 'Toque em nova solicitação, preencha os dados e anexe o certificado.', 'Acompanhe se foi aprovado.'], dica: 'Confira no calendário o prazo de comprovação de atividades complementares.' },
         { id: 'horas-extensao', revisado: false, titulo: 'Horas de extensão', resumo: 'Projetos de extensão e como as horas são contadas.', buscas: ['extensao', 'projeto de extensao', 'horas de extensao'],
           passos: ['Veja os períodos de matrícula em projetos na aba Calendário Acadêmico.', 'No uLife, procure os projetos de extensão disponíveis.', 'Inscreva-se e acompanhe as atividades.'] },
@@ -132,7 +133,7 @@ window.WIKI_CONTEUDO = {
     {
       id: 'secretaria-docs', nome: 'Documentos e secretaria', icone: '📄',
       itens: [
-        { id: 'declaracao-matricula', revisado: false, titulo: 'Declaração de matrícula', resumo: 'Comprovante de que você estuda na Una.', buscas: ['declaracao', 'comprovante', 'atestado de matricula'],
+        { id: 'declaracao-matricula', revisado: false, titulo: 'Declaração de matrícula', resumo: 'Comprovante de que você estuda na Una.', buscas: ['declaracao', 'comprovante', 'atestado de matricula', 'provar que sou aluno', 'documento para o estágio ou trabalho'],
           passos: ['No uLife, abra a área de secretaria / requerimentos.', 'Escolha declaração de matrícula.', 'Baixe o documento ou acompanhe o pedido.'] },
         { id: 'historico', revisado: false, titulo: 'Histórico escolar', resumo: 'Lista das disciplinas cursadas e notas.', buscas: ['historico', 'disciplinas cursadas'],
           passos: ['No uLife, abra a área de secretaria / requerimentos.', 'Solicite o histórico escolar.', 'Acompanhe o pedido até ficar disponível.'] },
@@ -160,7 +161,7 @@ window.WIKI_CONTEUDO = {
       itens: [
         { id: 'primeiro-acesso', revisado: false, titulo: 'Primeiro acesso ao uLife', resumo: 'Entrar no uLife pela primeira vez.', buscas: ['primeiro acesso', 'login', 'entrar', 'calouro'],
           passos: ['Baixe o app uLife ou acesse pelo navegador.', 'Entre com o e-mail @ulife.com.br recebido na matrícula.', 'Crie sua senha seguindo as instruções.'] },
-        { id: 'esqueci-senha', revisado: false, titulo: 'Esqueci minha senha', resumo: 'Recuperar o acesso ao uLife.', buscas: ['senha', 'esqueci', 'recuperar', 'nao consigo entrar', 'bloqueado'],
+        { id: 'esqueci-senha', revisado: false, titulo: 'Esqueci minha senha', resumo: 'Recuperar o acesso ao uLife.', buscas: ['senha', 'esqueci', 'recuperar', 'nao consigo entrar', 'bloqueado', 'meu login não funciona'],
           passos: ['Na tela de login do uLife, toque em esqueci minha senha.', 'Informe seu e-mail @ulife.com.br.', 'Siga as instruções recebidas.'] },
         { id: 'wifi', revisado: false, titulo: 'Conectar no Wi-Fi do campus', resumo: 'Internet da Una com seu login.', buscas: ['wifi', 'wi-fi', 'internet', 'rede'],
           passos: ['Procure a rede Wi-Fi da Una no seu celular.', 'Entre com seu login institucional.', 'Se não conectar, procure o suporte de TI.'] },

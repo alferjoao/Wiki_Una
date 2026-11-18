@@ -11,27 +11,49 @@
   const TAB_NAMES = { localizacao: 'Localização', ambiente: 'Ambiente virtual' };
   const dialog = document.getElementById('guiaDialog');
 
-  // "Laboratório" e "laboratorio" devem achar a mesma coisa
-  const norm = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  const Busca = window.WikiBusca;
 
-  // Índice plano de todos os itens, para as buscas
+  // Índice plano de todos os itens, para a busca semântica
   const index = [];
   Object.entries(DATA).forEach(([tab, categorias]) => {
-    categorias.forEach(cat => cat.itens.forEach(item => {
-      index.push({
-        tab, cat, item,
-        texto: norm([item.titulo, item.resumo, cat.nome, item.onde, ...(item.buscas || [])].join(' '))
-      });
-    }));
+    categorias.forEach(cat => cat.itens.forEach(item => index.push({ tab, cat, item })));
   });
+  Busca.init(index);
 
-  function matches(entry, query) {
-    const words = norm(query).split(/\s+/).filter(Boolean);
-    return words.every(w => entry.texto.includes(w));
+  /**
+   * Busca em duas etapas: responde na hora com a busca leve e, se a IA estiver
+   * pronta, refina pelo significado e chama render de novo.
+   */
+  function search(query, tab, render) {
+    const token = {};
+    search.last = token;
+    render(Busca.buscar(query, tab), false);
+    Busca.buscarIA(query, tab).then(r => {
+      if (r && search.last === token) render(r, true);
+    }).catch(() => {});
   }
 
-  function search(query, tab) {
-    return index.filter(e => (!tab || e.tab === tab) && matches(e, query));
+  /* Status da IA em todos os lugares que mostram a busca (Nielsen #1: status visível) */
+  function bindStatus(el) {
+    if (!el) return;
+    Busca.onStatus(({ state, progress }) => {
+      el.dataset.state = state;
+      el.replaceChildren();
+      const label = document.createElement('span');
+      if (state === 'ready') label.textContent = '✨ Busca com IA ativa: entende frases como “onde posso comer?”';
+      else if (state === 'loading') label.textContent = `✨ Preparando a IA… ${progress || 0}% (só na primeira vez)`;
+      else if (state === 'error') label.textContent = 'Busca inteligente ativa (IA indisponível agora)';
+      else label.textContent = 'Busca inteligente ativa: escreva do seu jeito.';
+      el.appendChild(label);
+      if (state === 'off' || state === 'error') {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'ia-btn';
+        btn.textContent = state === 'error' ? 'Tentar de novo' : 'Ativar IA (~118 MB, uma vez)';
+        btn.addEventListener('click', () => Busca.ativarIA());
+        el.appendChild(btn);
+      }
+    });
   }
 
   /* ---------------- Janela de detalhes ---------------- */
@@ -126,15 +148,31 @@
     const empty = root.querySelector('.guia-empty');
     const clear = root.querySelector('.guia-clear');
 
+    bindStatus(root.querySelector('.ia-status'));
+
     function draw() {
       const q = input.value.trim();
-      const found = q ? new Set(search(q, tab).map(e => e.item)) : null;
+      if (!q) return paint(null, '');
+      search(q, tab, (results) => paint(results, q));
+    }
+
+    function paint(results, q) {
+      const score = results ? new Map(results.map(r => [r.entry.item, r.score])) : null;
       columns.replaceChildren();
       let total = 0;
 
-      categorias.forEach(cat => {
-        const itens = found ? cat.itens.filter(i => found.has(i)) : cat.itens;
-        if (!itens.length) return;
+      // Na busca, as colunas e os itens mais relevantes vêm primeiro
+      const cats = categorias
+        .map(cat => {
+          const itens = score
+            ? cat.itens.filter(i => score.has(i)).sort((a, b) => score.get(b) - score.get(a))
+            : cat.itens;
+          return { cat, itens, best: itens.length && score ? score.get(itens[0]) : 0 };
+        })
+        .filter(c => c.itens.length);
+      if (score) cats.sort((a, b) => b.best - a.best);
+
+      cats.forEach(({ cat, itens }) => {
         total += itens.length;
 
         const col = document.createElement('section');
@@ -181,6 +219,7 @@
     }
 
     input.addEventListener('input', draw);
+    input.addEventListener('focus', () => { if (Busca.podeLigarSozinha()) Busca.ativarIA(); }, { once: true });
     input.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') { input.value = ''; draw(); }
       if (e.key === 'Enter') {
@@ -194,6 +233,8 @@
       draw();
       input.focus();
     }));
+    // Se a IA terminar de carregar com uma busca digitada, refaz já com a IA
+    Busca.onStatus(({ state }) => { if (state === 'ready' && input.value.trim()) draw(); });
     draw();
   }
 
@@ -203,6 +244,7 @@
   const globalInput = document.getElementById('inputSemanticSearch');
   const globalList = document.getElementById('globalSearchResults');
   if (!globalInput || !globalList) return;
+  bindStatus(document.getElementById('globalIaStatus'));
 
   let results = [];
   let active = -1;
@@ -222,7 +264,12 @@
   function drawGlobal() {
     const q = globalInput.value.trim();
     if (!q) { closeGlobal(); return; }
-    results = search(q).slice(0, 8);
+    search(q, null, (r) => paintGlobal(r.slice(0, 8).map(x => x.entry)));
+  }
+
+  function paintGlobal(list) {
+    results = list;
+    if (active >= results.length) active = -1;
     globalList.replaceChildren();
 
     if (!results.length) {
@@ -251,14 +298,17 @@
   }
 
   globalInput.addEventListener('input', () => { active = -1; drawGlobal(); });
-  globalInput.addEventListener('focus', drawGlobal);
+  globalInput.addEventListener('focus', () => {
+    if (Busca.podeLigarSozinha()) Busca.ativarIA();
+    drawGlobal();
+  });
   globalInput.addEventListener('blur', () => setTimeout(closeGlobal, 120));
   globalInput.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
       if (!results.length) return;
       e.preventDefault();
       active = (active + (e.key === 'ArrowDown' ? 1 : -1) + results.length) % results.length;
-      drawGlobal();
+      paintGlobal(results);
     } else if (e.key === 'Enter') {
       e.preventDefault();
       const entry = results[active >= 0 ? active : 0];
