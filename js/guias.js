@@ -56,6 +56,75 @@
     });
   }
 
+  /* ---------------- Visualizador de fotos (ampliar) ---------------- */
+  const viewer = document.getElementById('fotoDialog');
+  let fotos = [];
+  let atual = 0;
+
+  function zoomButton(img, list, index) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'foto-zoom';
+    btn.setAttribute('aria-label', `Ampliar foto: ${list[index].legenda}`);
+    const hint = document.createElement('span');
+    hint.className = 'foto-zoom-hint';
+    hint.setAttribute('aria-hidden', 'true');
+    hint.textContent = '🔍 Ampliar';
+    btn.append(img, hint);
+    btn.addEventListener('click', () => abrirFoto(list, index));
+    return btn;
+  }
+
+  function abrirFoto(list, index) {
+    fotos = list;
+    mostrarFoto(index);
+    viewer.showModal();
+  }
+
+  function mostrarFoto(index) {
+    atual = (index + fotos.length) % fotos.length;
+    const f = fotos[atual];
+    const img = viewer.querySelector('.foto-viewer-img');
+    img.src = f.src;
+    img.alt = f.legenda;
+    viewer.querySelector('.foto-viewer-stage').classList.remove('is-zoomed');
+    viewer.querySelector('.foto-viewer-caption').textContent = f.legenda;
+    viewer.querySelector('.foto-viewer-count').textContent = fotos.length > 1 ? `${atual + 1} de ${fotos.length}` : '';
+    viewer.querySelectorAll('.foto-viewer-nav').forEach(b => { b.hidden = fotos.length < 2; });
+  }
+
+  if (viewer) {
+    viewer.querySelector('.foto-viewer-close').addEventListener('click', () => viewer.close());
+    viewer.querySelector('.foto-viewer-prev').addEventListener('click', () => mostrarFoto(atual - 1));
+    viewer.querySelector('.foto-viewer-next').addEventListener('click', () => mostrarFoto(atual + 1));
+    // Toque/clique na foto: aproxima ainda mais (e afasta de novo)
+    const stage = viewer.querySelector('.foto-viewer-stage');
+    viewer.querySelector('.foto-viewer-img').addEventListener('click', (e) => {
+      const zoom = !stage.classList.contains('is-zoomed');
+      stage.classList.toggle('is-zoomed', zoom);
+      if (zoom) {
+        // centraliza no ponto clicado
+        const r = e.target.getBoundingClientRect();
+        requestAnimationFrame(() => {
+          stage.scrollLeft = ((e.clientX - r.left) / r.width) * stage.scrollWidth - stage.clientWidth / 2;
+          stage.scrollTop = ((e.clientY - r.top) / r.height) * stage.scrollHeight - stage.clientHeight / 2;
+        });
+      }
+    });
+    viewer.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') mostrarFoto(atual - 1);
+      if (e.key === 'ArrowRight') mostrarFoto(atual + 1);
+    });
+    let x0 = null;
+    stage.addEventListener('touchstart', (e) => { x0 = e.touches.length === 1 ? e.touches[0].clientX : null; }, { passive: true });
+    stage.addEventListener('touchend', (e) => {
+      if (x0 === null || stage.classList.contains('is-zoomed')) return;
+      const dx = e.changedTouches[0].clientX - x0;
+      if (Math.abs(dx) > 50 && fotos.length > 1) mostrarFoto(atual + (dx < 0 ? 1 : -1));
+      x0 = null;
+    });
+  }
+
   /* ---------------- Janela de detalhes ---------------- */
   function openItem(entry) {
     const { tab, cat, item } = entry;
@@ -86,7 +155,7 @@
       img.alt = `Foto: ${item.titulo}`;
       img.loading = 'lazy';
       img.onerror = () => { foto.classList.add('is-empty'); foto.textContent = '📷 Foto não encontrada'; };
-      foto.appendChild(img);
+      foto.appendChild(zoomButton(img, [{ src: item.foto, legenda: item.titulo }], 0));
     } else if (tab === 'localizacao') {
       foto.classList.add('is-empty');
       foto.textContent = '📷 Foto em breve – o time está fotografando o campus';
@@ -108,6 +177,7 @@
       h.textContent = 'Como chegar';
       const ol = document.createElement('ol');
       ol.className = 'guia-rota';
+      const lista = item.rota.map((passo, i) => ({ src: passo.foto, legenda: `Passo ${i + 1}: ${passo.texto}` }));
       item.rota.forEach((passo, i) => {
         const li = document.createElement('li');
         const img = document.createElement('img');
@@ -119,7 +189,7 @@
         n.className = 'guia-rota-num';
         n.textContent = i + 1;
         p.append(n, passo.texto);
-        li.append(img, p);
+        li.append(zoomButton(img, lista, i), p);
         ol.appendChild(li);
       });
       body.append(h, ol);

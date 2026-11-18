@@ -516,6 +516,21 @@
     <div class="guia-dialog-body"></div>
   </dialog>
 
+  <!-- Visualizador de fotos em tela cheia (ESC fecha, setas passam) -->
+  <dialog class="foto-viewer" id="fotoDialog" aria-label="Foto ampliada">
+    <div class="foto-viewer-top">
+      <span class="foto-viewer-count"></span>
+      <button type="button" class="foto-viewer-close" aria-label="Fechar foto">✕</button>
+    </div>
+    <div class="foto-viewer-stage">
+      <img class="foto-viewer-img" alt="">
+    </div>
+    <button type="button" class="foto-viewer-nav foto-viewer-prev" aria-label="Foto anterior">‹</button>
+    <button type="button" class="foto-viewer-nav foto-viewer-next" aria-label="Próxima foto">›</button>
+    <p class="foto-viewer-caption"></p>
+    <p class="foto-viewer-tip">Toque na foto para aproximar · deslize ou use as setas para passar</p>
+  </dialog>
+
   <!-- Container de Toasts de Notificação -->
   <div class="dashboard-toast-container" id="dashToastContainer" aria-live="polite"></div>
 
