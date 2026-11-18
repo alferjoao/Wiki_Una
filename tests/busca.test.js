@@ -13,8 +13,6 @@ B.init(index);
 
 // [pergunta do aluno, id esperado entre os 3 primeiros]
 const casos = [
-  ['onde posso comer?', 'cantina'],
-  ['to com fome', 'cantina'],
   ['preciso ir no banheiro', 'banheiro-masc-fem'],
   ['banheiro pra cadeirante', 'banheiro-acessivel'],
   ['lugar silencioso pra estudar', 'biblioteca-fisica'],
@@ -33,9 +31,11 @@ const casos = [
   ['quero trancar o curso', 'trancamento'],
   ['laboratorio de enfermagem', 'lab-saude'],
   ['laboratório de informática', 'lab-informatica'],
+  ['laboratorio de redes', 'lab-informatica'],
+  ['laboratorio de eletrica', 'lab-engenharia'],
+  ['aula pratica de enfermagem', 'lab-saude'],
   ['vai ter palestra onde', 'auditorio'],
   ['estou muito ansioso', 'napi'],
-  ['onde fica o elevador', 'elevadores'],
   ['qual minha sala', 'quadro-aulas'],
   ['ver minha nota', 'ver-notas'],
   ['certifcado', 'postar-certificado'],          // erro de digitação
@@ -53,5 +53,9 @@ casos.forEach(([q, esperado]) => {
   console.log(`${ok ? 'PASS' : 'FAIL'}  "${q}" -> ${top.join(', ') || '(nada)'}`);
 });
 console.assert(B.buscar('xyzqwk').length === 0, 'texto sem sentido não deve achar nada');
+['cantina', 'estacionamento', 'nucleo de praticas juridicas', 'atelie de arquitetura'].forEach(q => {
+  const top = B.buscar(q, 'localizacao')[0];
+  console.log(`info  "${q}" (não existe na Una) -> ${top ? top.entry.item.id : '(nada)'}`);
+});
 console.log(`\n${casos.length - falhas}/${casos.length} perguntas acharam o item certo no top 3`);
 process.exit(falhas ? 1 : 0);

@@ -142,7 +142,9 @@ window.WikiBusca = (function () {
           ? Math.max(...extra.map(g => g.reduce((s, t) => s + tokenScore(t, d), 0) / g.length))
           : 0;
         // A ideia por trás da pergunta desempata: "palestra" → Auditório antes de Certificado
-        let score = Math.min(1, Math.max(base, conc * 0.85) + 0.05 * conc);
+        // ...e pesa menos quando o resto da pergunta não combina com o item
+        const concEff = conc * (0.5 + 0.5 * base);
+        let score = Math.min(1, Math.max(base, concEff * 0.85) + 0.05 * concEff);
         if (qNorm.length > 3 && d.phrase.includes(qNorm)) score = Math.max(score, 1);
         return { entry: d.entry, score };
       })

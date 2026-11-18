@@ -10,8 +10,8 @@
  *     dica: 'Algo útil',                               // opcional
  *     buscas: ['sinônimos', 'jeitos de pesquisar'] }   // ajuda a busca a encontrar
  *
- * Todo o campus fica no 4º andar do Centerminas: em "onde", diga só o ponto
- * de referência dentro do andar (ex.: 'Perto dos elevadores, à direita').
+ * A Una ocupa o 4º e o 5º andar do Centerminas: em "onde", comece pelo andar
+ * e diga um ponto de referência (ex.: '4º andar • perto dos elevadores, à direita').
  *
  * Fotos: coloque o arquivo em assets/fotos/ e informe o caminho em "foto".
  * Itens sem "onde" ou sem "foto" mostram o aviso "em levantamento".
@@ -37,13 +37,9 @@ window.WIKI_CONTEUDO = {
     {
       id: 'aulas-praticas', nome: 'Aulas práticas / Laboratórios', icone: '🧪',
       itens: [
-        { id: 'lab-informatica', titulo: 'Laboratórios de informática', resumo: 'Computação, Sistemas, ADS, Jogos e cursos de tecnologia.', buscas: ['computador', 'ti', 'programacao', 'ciencia da computacao', 'sistemas'] },
-        { id: 'lab-redes', titulo: 'Laboratório de redes', resumo: 'Aulas práticas de redes e infraestrutura.', buscas: ['redes', 'cisco', 'infraestrutura'] },
-        { id: 'lab-saude', titulo: 'Laboratórios de saúde', resumo: 'Enfermagem, Biomedicina, Farmácia, Nutrição e Fisioterapia.', buscas: ['enfermagem', 'biomedicina', 'farmacia', 'anatomia', 'nutricao', 'fisioterapia'] },
-        { id: 'lab-engenharia', titulo: 'Laboratórios de engenharia', resumo: 'Física, química, materiais e práticas das engenharias.', buscas: ['engenharia', 'fisica', 'quimica', 'civil', 'mecanica', 'eletrica'] },
-        { id: 'atelie-arq-design', titulo: 'Ateliês de Arquitetura e Design', resumo: 'Maquetes, desenho e projetos.', buscas: ['arquitetura', 'design', 'maquete', 'urbanismo', 'moda'] },
-        { id: 'nucleo-juridico', titulo: 'Núcleo de Práticas Jurídicas', resumo: 'Aulas práticas e atendimento do curso de Direito.', buscas: ['direito', 'npj', 'juridico', 'advocacia'] },
-        { id: 'clinica-psicologia', titulo: 'Clínica-escola de Psicologia', resumo: 'Atendimentos e estágios de Psicologia.', buscas: ['psicologia', 'clinica', 'estagio'] },
+        { id: 'lab-informatica', titulo: 'Laboratório de informática e redes', resumo: 'Computadores para as aulas de tecnologia e de redes.', buscas: ['computador', 'ti', 'programacao', 'ciencia da computacao', 'sistemas', 'redes', 'cisco', 'infraestrutura', 'usar um computador da faculdade'] },
+        { id: 'lab-saude', titulo: 'Área da saúde', resumo: 'Espaço de aulas práticas dos cursos da saúde.', buscas: ['saude', 'enfermagem', 'biomedicina', 'farmacia', 'anatomia', 'nutricao', 'fisioterapia', 'laboratorio de saude'] },
+        { id: 'lab-engenharia', titulo: 'Laboratório de engenharia elétrica e mecânica', resumo: 'Um laboratório só, usado pelas engenharias elétrica e mecânica.', buscas: ['engenharia', 'eletrica', 'mecanica', 'circuito', 'motor', 'laboratorio de engenharia'] },
         { id: 'estudio-comunicacao', titulo: 'Estúdios de Comunicação', resumo: 'Fotografia, vídeo, rádio e jornalismo.', buscas: ['jornalismo', 'publicidade', 'foto', 'video', 'radio', 'estudio'] }
       ]
     },
@@ -63,19 +59,9 @@ window.WIKI_CONTEUDO = {
       ]
     },
     {
-      id: 'convivencia', nome: 'Alimentação e convivência', icone: '☕',
+      id: 'acesso', nome: 'Entrada', icone: '🚪',
       itens: [
-        { id: 'cantina', titulo: 'Cantina / lanchonete', resumo: 'Lanches, café e refeições.', buscas: ['comida', 'lanche', 'cafe', 'almoco', 'restaurante', 'comer alguma coisa', 'estou com fome', 'tomar um açaí ou um suco'] },
-        { id: 'microondas', titulo: 'Micro-ondas e bebedouros', resumo: 'Para esquentar comida e pegar água.', buscas: ['agua', 'esquentar', 'marmita', 'bebedouro'] },
-        { id: 'area-convivencia', titulo: 'Área de convivência', resumo: 'Espaço para descansar e encontrar colegas.', buscas: ['descanso', 'convivencia'] }
-      ]
-    },
-    {
-      id: 'acesso', nome: 'Acessibilidade e acesso', icone: '♿',
-      itens: [
-        { id: 'entrada', titulo: 'Entrada e catracas', resumo: 'Como entrar no campus com sua carteirinha.', buscas: ['entrada', 'catraca', 'carteirinha', 'portaria'] },
-        { id: 'elevadores', titulo: 'Elevadores e rampas', resumo: 'Como chegar ao 4º andar e circular com acessibilidade.', buscas: ['elevador', 'rampa', 'escada', 'acessibilidade'] },
-        { id: 'estacionamento', titulo: 'Estacionamento', resumo: 'Vagas para carro, moto e vagas preferenciais.', buscas: ['carro', 'moto', 'vaga', 'estacionar'] }
+        { id: 'entrada', titulo: 'Entrada e catracas', resumo: 'Como entrar no campus com sua carteirinha.', buscas: ['entrada', 'catraca', 'carteirinha', 'portaria', 'como chego na una'] }
       ]
     }
   ],
