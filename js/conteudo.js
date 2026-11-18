@@ -24,8 +24,7 @@ window.WIKI_CONTEUDO = {
       id: 'banheiros', nome: 'Banheiros', icone: '🚻',
       itens: [
         { id: 'banheiro-masc-fem', titulo: 'Banheiros masculino e feminino', resumo: 'Banheiros de uso geral do campus.', buscas: ['wc', 'toalete', 'sanitario', 'preciso ir ao banheiro'] },
-        { id: 'banheiro-acessivel', titulo: 'Banheiro acessível (PCD)', resumo: 'Banheiro adaptado para pessoas com deficiência.', buscas: ['pcd', 'cadeirante', 'deficiencia', 'adaptado'] },
-        { id: 'fraldario', titulo: 'Fraldário', resumo: 'Espaço para troca de fraldas.', buscas: ['bebe', 'trocador'] }
+        { id: 'banheiro-acessivel', titulo: 'Banheiro acessível (PCD)', resumo: 'Banheiro adaptado para pessoas com deficiência.', buscas: ['pcd', 'cadeirante', 'deficiencia', 'adaptado'] }
       ]
     },
     {
@@ -39,8 +38,7 @@ window.WIKI_CONTEUDO = {
       itens: [
         { id: 'lab-informatica', titulo: 'Laboratório de informática e redes', resumo: 'Computadores para as aulas de tecnologia e de redes.', buscas: ['computador', 'ti', 'programacao', 'ciencia da computacao', 'sistemas', 'redes', 'cisco', 'infraestrutura', 'usar um computador da faculdade'] },
         { id: 'lab-saude', titulo: 'Área da saúde', resumo: 'Espaço de aulas práticas dos cursos da saúde.', buscas: ['saude', 'enfermagem', 'biomedicina', 'farmacia', 'anatomia', 'nutricao', 'fisioterapia', 'laboratorio de saude'] },
-        { id: 'lab-engenharia', titulo: 'Laboratório de engenharia elétrica e mecânica', resumo: 'Um laboratório só, usado pelas engenharias elétrica e mecânica.', buscas: ['engenharia', 'eletrica', 'mecanica', 'circuito', 'motor', 'laboratorio de engenharia'] },
-        { id: 'estudio-comunicacao', titulo: 'Estúdios de Comunicação', resumo: 'Fotografia, vídeo, rádio e jornalismo.', buscas: ['jornalismo', 'publicidade', 'foto', 'video', 'radio', 'estudio'] }
+        { id: 'lab-engenharia', titulo: 'Laboratório de engenharia elétrica e mecânica', resumo: 'Um laboratório só, usado pelas engenharias elétrica e mecânica.', buscas: ['engenharia', 'eletrica', 'mecanica', 'circuito', 'motor', 'laboratorio de engenharia'] }
       ]
     },
     {
