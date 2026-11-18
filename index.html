@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Wiki Una - Login Acadêmico</title>
   <meta name="description" content="Acesse a Wiki Una com seu e-mail institucional @ulife.com.br. Plataforma acadêmica colaborativa.">
@@ -81,11 +81,11 @@
       </div>
 
       <!-- Abas Limpas: Entrar x Criar Conta (Nielsen #3) -->
-      <nav class="auth-tabs" id="authTabsNav" aria-label="Modo de autenticação">
-        <button type="button" class="tab-btn active" id="tabLogin" aria-controls="formLogin" aria-selected="true">
+      <nav class="auth-tabs" id="authTabsNav" role="tablist" aria-label="Modo de autenticação">
+        <button type="button" class="tab-btn active" role="tab" id="tabLogin" aria-controls="formLogin" aria-selected="true">
           Entrar
         </button>
-        <button type="button" class="tab-btn" id="tabRegister" aria-controls="formRegister" aria-selected="false">
+        <button type="button" class="tab-btn" role="tab" id="tabRegister" aria-controls="formRegister" aria-selected="false">
           Criar Conta
         </button>
       </nav>
@@ -162,7 +162,7 @@
         <!-- Botão Entrar -->
         <button type="submit" class="btn-primary" id="btnLoginSubmit">
           <span class="btn-text">Entrar</span>
-          <div class="btn-spinner" aria-hidden="true"></div>
+          <span class="btn-spinner" aria-hidden="true"></span>
         </button>
 
         <!-- Acesso Rápido com Perfil de Teste em 1 Clique -->
@@ -328,40 +328,20 @@
         </div>
 
         <!-- Termos de Uso -->
-        <div class="form-options">
+        <div class="form-options" style="justify-content:flex-start;gap:0.3rem;">
           <label class="checkbox-container">
             <input type="checkbox" id="regTerms" required>
-            <span>Concordo com os <button type="button" class="text-link" id="btnOpenTerms">Termos Acadêmicos</button></span>
+            <span>Concordo com os</span>
           </label>
+          <button type="button" class="text-link" id="btnOpenTerms">Termos Acadêmicos</button>
         </div>
 
         <!-- Botão Criar Conta -->
         <button type="submit" class="btn-primary" id="btnRegisterSubmit">
           <span class="btn-text">Criar Conta</span>
-          <div class="btn-spinner" aria-hidden="true"></div>
+          <span class="btn-spinner" aria-hidden="true"></span>
         </button>
       </form>
-
-      <!-- ==========================================
-           ÁREA PÓS-LOGIN (DASHBOARD SIMULADO)
-           ========================================== -->
-      <div class="user-welcome-screen" id="userWelcomeScreen">
-        <div class="welcome-avatar" id="welcomeAvatar">UN</div>
-        <h2 class="welcome-title">Bem-vindo(a), <span id="welcomeUserName">Estudante</span>!</h2>
-        <div class="welcome-email" id="welcomeUserEmail">estudante@ulife.com.br</div>
-        <div class="welcome-badge">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-          <span id="welcomeUserCourse">Comunidade Acadêmica Una</span>
-        </div>
-
-        <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:1.5rem;line-height:1.5;">
-          Você está conectado(a) com segurança à Wiki Una! Redirecionando...
-        </p>
-
-        <button type="button" class="btn-secondary" id="btnLogout" style="width:100%;">
-          Sair da Conta (Logout)
-        </button>
-      </div>
 
       <!-- Barra de Ações Rápidas Minimalista no Rodapé do Card -->
       <footer class="card-footer-actions">

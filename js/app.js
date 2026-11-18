@@ -72,18 +72,6 @@
     reqUpper: document.getElementById('reqUpper'),
     reqSpecial: document.getElementById('reqSpecial'),
 
-    // Tela de Usuário Logado
-    authCardHeader: document.getElementById('authCardHeader'),
-    authTabsNav: document.getElementById('authTabsNav'),
-    domainAlertBox: document.getElementById('domainAlertBox'),
-    userWelcomeScreen: document.getElementById('userWelcomeScreen'),
-    welcomeAvatar: document.getElementById('welcomeAvatar'),
-    welcomeUserName: document.getElementById('welcomeUserName'),
-    welcomeUserEmail: document.getElementById('welcomeUserEmail'),
-    welcomeUserCourse: document.getElementById('welcomeUserCourse'),
-    btnLogout: document.getElementById('btnLogout'),
-    cardFooterActions: document.querySelector('.card-footer-actions'),
-
     // Botões de Demo e Modais
     btnQuickLogin: document.getElementById('btnQuickLogin'),
     btnFillDemo: document.getElementById('btnFillDemo'),
@@ -107,7 +95,7 @@
       users = DEFAULT_USERS;
     } else {
       // Garante que o perfil de teste está sempre disponível no banco local
-      if (!users.some(u => u.email.toLowerCase() === 'teste@ulife.com.br')) {
+      if (!users.some(u => u.email === 'teste@ulife.com.br')) {
         users.unshift(DEFAULT_USERS[0]);
       }
     }
@@ -127,10 +115,20 @@
 
   function getUsers() {
     try {
-      return JSON.parse(localStorage.getItem(STORAGE_USERS_KEY)) || DEFAULT_USERS;
-    } catch (e) {
-      return DEFAULT_USERS;
-    }
+      const users = JSON.parse(localStorage.getItem(STORAGE_USERS_KEY));
+      // Descarta registros corrompidos (sem e-mail) para não quebrar o login
+      if (Array.isArray(users)) {
+        return users.filter(u => u && typeof u.email === 'string')
+          .map(u => ({ ...u, email: u.email.toLowerCase() }));
+      }
+    } catch (e) { /* JSON inválido: recomeça com os padrões */ }
+    return DEFAULT_USERS.map(u => ({ ...u }));
+  }
+
+  // A sessão nunca guarda a senha
+  function startSession(user) {
+    const { password, ...safeUser } = user;
+    localStorage.setItem(STORAGE_SESSION_KEY, JSON.stringify(safeUser));
   }
 
   function saveUser(user) {
@@ -181,7 +179,7 @@
   }
 
   function escapeHtml(str) {
-    return str.replace(/[&<>'"]/g, 
+    return String(str).replace(/[&<>'"]/g, 
       tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
     );
   }
@@ -190,6 +188,8 @@
    * Heurística #3: Controle do Usuário e Liberdade (Alternância de Abas)
    */
   function switchTab(mode) {
+    dom.tabLogin.setAttribute('aria-selected', mode === 'login');
+    dom.tabRegister.setAttribute('aria-selected', mode !== 'login');
     if (mode === 'login') {
       dom.tabLogin.classList.add('active');
       dom.tabRegister.classList.remove('active');
@@ -435,7 +435,7 @@
       dom.btnLoginSubmit.disabled = false;
 
       const users = getUsers();
-      const matched = users.find(u => u.email.toLowerCase() === email && u.password === password);
+      const matched = users.find(u => u.email === email && u.password === password);
 
       if (matched) {
         // Sucesso de autenticação
@@ -445,8 +445,7 @@
           localStorage.removeItem(STORAGE_REMEMBER_KEY);
         }
 
-        // Salva sessão ativa
-        localStorage.setItem(STORAGE_SESSION_KEY, JSON.stringify(matched));
+        startSession(matched);
 
         showToast('Login bem-sucedido!', `Bem-vindo(a) à Wiki Una, ${matched.name.split(' ')[0]}! Redirecionando...`, 'success');
         setTimeout(() => {
@@ -454,7 +453,7 @@
         }, 500);
       } else {
         // Falha no Login (Heurística #9)
-        const emailExists = users.some(u => u.email.toLowerCase() === email);
+        const emailExists = users.some(u => u.email === email);
 
         if (!emailExists) {
           dom.loginEmailFeedback.className = 'input-feedback error';
@@ -508,7 +507,7 @@
     }
 
     const users = getUsers();
-    if (users.some(u => u.email.toLowerCase() === email)) {
+    if (users.some(u => u.email === email)) {
       dom.regEmailFeedback.className = 'input-feedback error';
       dom.regEmailFeedback.innerHTML = `
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
@@ -519,8 +518,8 @@
       return;
     }
 
-    if (password.length < 8) {
-      showToast('Senha muito curta', 'A senha deve conter ao menos 8 caracteres com letras e números.', 'error');
+    if (password.length < 8 || !checkPasswordStrength(password)) {
+      showToast('Senha fraca', 'Use ao menos 8 caracteres e mais 2 requisitos: número, maiúscula ou caractere especial.', 'error');
       dom.regPassword.focus();
       return;
     }
@@ -555,8 +554,7 @@
 
       saveUser(newUser);
 
-      // Salva sessão direta
-      localStorage.setItem(STORAGE_SESSION_KEY, JSON.stringify(newUser));
+      startSession(newUser);
 
       showToast('Conta criada com sucesso!', 'Seu acesso à Wiki Una foi ativado. Redirecionando...', 'success');
       setTimeout(() => {
@@ -565,32 +563,14 @@
     }, 800);
   }
 
-  /**
-   * Apresentação da Área Logada (Dashboard do Aluno / Wiki Una)
-   */
-  function showUserDashboard(user) {
-    window.location.href = 'dashboard.html';
-  }
-
-  function handleLogout() {
-    localStorage.removeItem(STORAGE_SESSION_KEY);
-    dom.userWelcomeScreen.style.display = 'none';
-
-    dom.authCardHeader.style.display = 'flex';
-    dom.authTabsNav.style.display = 'grid';
-    dom.domainAlertBox.style.display = 'flex';
-    if (dom.cardFooterActions) dom.cardFooterActions.style.display = 'flex';
-
-    switchTab('login');
-    showToast('Sessão encerrada', 'Você saiu da Wiki Una com segurança.', 'info');
-  }
-
   function checkActiveSession() {
     const session = localStorage.getItem(STORAGE_SESSION_KEY);
     if (session) {
       try {
         const user = JSON.parse(session);
         if (user && user.email) {
+          // Remove senha de sessões antigas salvas antes desta correção
+          if ('password' in user) startSession(user);
           window.location.href = 'dashboard.html';
         }
       } catch (e) {
@@ -615,14 +595,8 @@
 
     if (dom.btnQuickLogin) {
       dom.btnQuickLogin.addEventListener('click', () => {
-        const testUser = {
-          name: 'Usuário Teste',
-          email: 'teste@ulife.com.br',
-          password: '123456',
-          course: 'Ciência da Computação',
-          createdAt: new Date().toISOString()
-        };
-        localStorage.setItem(STORAGE_SESSION_KEY, JSON.stringify(testUser));
+        const testUser = getUsers().find(u => u.email === 'teste@ulife.com.br') || DEFAULT_USERS[0];
+        startSession(testUser);
         showToast('Acesso Rápido', 'Entrando como Usuário Teste...', 'success');
         setTimeout(() => {
           window.location.href = 'dashboard.html';
@@ -731,17 +705,15 @@
         `;
         openModal('Recuperação de Senha - Wiki Una', content);
 
-        setTimeout(() => {
-          document.getElementById('btnSendResetLink')?.addEventListener('click', () => {
-            const input = document.getElementById('modalForgotEmail');
-            if (input && input.value.endsWith('@ulife.com.br')) {
-              showToast('Link de recuperação enviado', `Instruções enviadas para ${input.value}.`, 'success');
-              closeModal();
-            } else {
-              showToast('E-mail inválido', 'Digite um e-mail válido com o final @ulife.com.br.', 'error');
-            }
-          });
-        }, 100);
+        document.getElementById('btnSendResetLink').addEventListener('click', () => {
+          const value = document.getElementById('modalForgotEmail').value.trim().toLowerCase();
+          if (/^[a-z0-9._%+-]+@ulife\.com\.br$/.test(value)) {
+            showToast('Link de recuperação enviado', `Instruções enviadas para ${value}.`, 'success');
+            closeModal();
+          } else {
+            showToast('E-mail inválido', 'Digite um e-mail válido com o final @ulife.com.br.', 'error');
+          }
+        });
       });
     }
 
@@ -829,11 +801,6 @@
     }
     if (dom.formRegister) {
       dom.formRegister.addEventListener('submit', handleRegister);
-    }
-
-    // Logout
-    if (dom.btnLogout) {
-      dom.btnLogout.addEventListener('click', handleLogout);
     }
 
     // Senhas
