@@ -60,6 +60,10 @@ window.WIKI_CONTEUDO = {
         { id: 'secretaria', titulo: 'Secretaria / Central de Atendimento (CAA)', resumo: 'Documentos, matrícula, financeiro e requerimentos presenciais.', buscas: ['caa', 'secretaria', 'atendimento', 'documento', 'matricula', 'financeiro'] },
         { id: 'cac', titulo: 'CAC – Central de Atendimento ao Candidato', resumo: 'Atendimento para quem quer entrar na Una: matrícula e dúvidas.',
           onde: '4º andar • logo depois da entrada, no hall', foto: 'assets/fotos/4andar-cac.jpg',
+          rota: [
+            { foto: 'assets/fotos/4andar-entrada.jpg', texto: 'Entre na Una pela entrada do 4º andar e passe pela catraca.' },
+            { foto: 'assets/fotos/4andar-cac.jpg', texto: 'Chegou! A CAC fica logo à frente, no hall. É só entrar.' }
+          ],
           buscas: ['cac', 'cad', 'candidato', 'vestibular', 'matricula', 'quero estudar na una', 'atendimento'] },
         { id: 'napi', titulo: 'NAPI – Apoio psicopedagógico e inclusão', resumo: 'Apoio a estudantes, adaptações de prova e atendimento especializado.', buscas: ['napi', 'aee', 'inclusao', 'psicopedagogico', 'adaptacao', 'conversar com alguém', 'estou passando por um momento difícil', 'preciso de apoio emocional', 'tenho TDAH ou autismo'] },
         { id: 'coordenacao', titulo: 'Coordenação de curso', resumo: 'Onde falar com a coordenação do seu curso.', buscas: ['coordenador', 'coordenacao'] }
