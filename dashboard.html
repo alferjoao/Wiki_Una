@@ -74,19 +74,8 @@
        ========================================================================== -->
   <div class="portal-layout">
 
-    <!-- Painel Lateral com a Logo do Site, Busca Semântica e Abas -->
+    <!-- Painel lateral: busca geral e abas -->
     <aside class="sidebar-panel">
-      <!-- Bloco com a Logo Oficial da Wiki Una -->
-      <div class="panel-brand-box">
-        <div class="panel-logo-wrapper">
-          <img src="assets/logo.png" alt="Logo Wiki Una" class="panel-brand-logo">
-        </div>
-        <div class="panel-brand-info">
-          <span class="panel-brand-title">Wiki Una</span>
-          <span class="panel-brand-subtitle">Base Acadêmica • Una</span>
-        </div>
-      </div>
-
       <!-- Busca geral em Localização e Ambiente virtual (futuramente com IA) -->
       <div class="semantic-search-box">
         <div class="search-input-wrapper">
@@ -103,12 +92,11 @@
             role="combobox"
             aria-expanded="false"
             aria-controls="globalSearchResults"
-            aria-label="Buscar lugares e passo a passo"
+            aria-label="Buscar lugares e passo a passo (atalho: tecla /)"
           >
+          <kbd class="search-kbd" title="Atalho: aperte / para buscar">/</kbd>
         </div>
         <ul class="global-results" id="globalSearchResults" role="listbox" hidden></ul>
-        <p class="search-hint">Ex.: onde posso comer? perdi a prova</p>
-        <p class="ia-status ia-status-mini" id="globalIaStatus" aria-live="polite"></p>
       </div>
 
       <!-- Abas Oficiais Solicitadas pelo Usuário -->
@@ -203,16 +191,14 @@
           <div class="guia" data-guia="localizacao">
             <div class="guia-search">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-              <input type="search" placeholder="O que você procura? Ex.: banheiro, laboratório de enfermagem, CAC" aria-label="Buscar lugar no campus" autocomplete="off">
+              <input type="search" placeholder="O que você procura? Ex.: banheiro, laboratório, CAC" aria-label="Buscar lugar no campus" autocomplete="off">
               <button type="button" class="guia-clear" hidden aria-label="Limpar busca">✕</button>
+              <button type="button" class="ia-chip" aria-live="polite"></button>
             </div>
-            <div class="guia-chips" aria-label="Buscas comuns">
-              <span>Mais procurados:</span><button type="button" class="guia-chip">Banheiro</button><button type="button" class="guia-chip">Biblioteca</button><button type="button" class="guia-chip">Secretaria</button><button type="button" class="guia-chip">Auditório</button><button type="button" class="guia-chip">Laboratório</button>
-            </div>
-            <p class="ia-status" aria-live="polite"></p>
+            <div class="guia-cats" role="toolbar" aria-label="Filtrar por categoria"></div>
             <p class="guia-count" aria-live="polite"></p>
             <div class="guia-columns"></div>
-            <p class="guia-empty" hidden>Nada encontrado. Tente outra palavra ou clique em um dos “mais procurados”.</p>
+            <p class="guia-empty" hidden>Nada encontrado. Tente escrever de outro jeito ou escolha uma categoria acima.</p>
           </div>
         </div>
       </section>
@@ -233,16 +219,14 @@
           <div class="guia" data-guia="ambiente">
             <div class="guia-search">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-              <input type="search" placeholder="O que você quer fazer? Ex.: postar certificado, ver notas, boleto" aria-label="Buscar no passo a passo do uLife" autocomplete="off">
+              <input type="search" placeholder="O que você quer fazer? Ex.: postar certificado, ver notas" aria-label="Buscar no passo a passo do uLife" autocomplete="off">
               <button type="button" class="guia-clear" hidden aria-label="Limpar busca">✕</button>
+              <button type="button" class="ia-chip" aria-live="polite"></button>
             </div>
-            <div class="guia-chips" aria-label="Buscas comuns">
-              <span>Mais procurados:</span><button type="button" class="guia-chip">Postar certificado</button><button type="button" class="guia-chip">Ver notas</button><button type="button" class="guia-chip">Livros digitais</button><button type="button" class="guia-chip">Boleto</button><button type="button" class="guia-chip">Esqueci minha senha</button>
-            </div>
-            <p class="ia-status" aria-live="polite"></p>
+            <div class="guia-cats" role="toolbar" aria-label="Filtrar por categoria"></div>
             <p class="guia-count" aria-live="polite"></p>
             <div class="guia-columns"></div>
-            <p class="guia-empty" hidden>Nada encontrado. Tente outra palavra ou clique em um dos “mais procurados”.</p>
+            <p class="guia-empty" hidden>Nada encontrado. Tente escrever de outro jeito ou escolha uma categoria acima.</p>
           </div>
         </div>
       </section>
@@ -354,39 +338,32 @@
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
             </div>
             <div>
-              <h2 class="section-heading-title">Ajuda e Suporte ao Aluno</h2>
-              <p class="section-heading-subtitle">Central de atendimento, secretaria acadêmica, CAA e suporte de TI</p>
+              <h2 class="section-heading-title">Ajuda</h2>
+              <p class="section-heading-subtitle">Como usar a Wiki Una e onde pedir atendimento</p>
             </div>
           </div>
-          
-          <div class="info-subcards-grid">
-            <div class="subcard-box">
-              <h4>💬 Central de Atendimento (CAA)</h4>
-              <p>Requerimentos de declaração de matrícula, financeiro, histórico escolar e dispensas.</p>
-            </div>
-            <div class="subcard-box">
-              <h4>🔑 Suporte de Acesso & E-mail</h4>
-              <p>Redefinição de senha do portal uLife (@ulife.com.br), Wi-Fi do campus e Microsoft 365.</p>
-            </div>
-            <div class="subcard-box">
-              <h4>📞 Contato Direto Una</h4>
-              <p>WhatsApp institucional: (31) 3235-7300 • Atendimento presencial no Bloco A.</p>
-            </div>
+
+          <h3 class="ajuda-titulo">Precisa de atendimento?</h3>
+          <div class="ajuda-links">
+            <a class="ajuda-link" href="#localizacao/secretaria"><span aria-hidden="true">🗂️</span><span><strong>Secretaria / CAA</strong><small>Documentos, matrícula e financeiro</small></span></a>
+            <a class="ajuda-link" href="#localizacao/cac"><span aria-hidden="true">🙋</span><span><strong>CAC</strong><small>Para quem quer entrar na Una</small></span></a>
+            <a class="ajuda-link" href="#localizacao/napi"><span aria-hidden="true">💜</span><span><strong>NAPI</strong><small>Apoio psicopedagógico e inclusão</small></span></a>
+            <a class="ajuda-link" href="#ambiente/esqueci-senha"><span aria-hidden="true">🔑</span><span><strong>Esqueci minha senha</strong><small>Recuperar o acesso ao uLife</small></span></a>
           </div>
+
+          <h3 class="ajuda-titulo">Dicas para usar a Wiki Una</h3>
+          <ul class="ajuda-dicas">
+            <li><span aria-hidden="true">🔎</span> Escreva do seu jeito na busca: “perdi a prova”, “preciso ir ao banheiro”.</li>
+            <li><kbd>/</kbd> Aperte a barra no teclado para buscar de qualquer lugar.</li>
+            <li><span aria-hidden="true">🖼️</span> Toque em qualquer foto para ver de perto.</li>
+            <li><span aria-hidden="true">🔗</span> Use “Compartilhar” para mandar um lugar ou passo a passo para um colega.</li>
+            <li><kbd>Esc</kbd> Fecha janelas e fotos. No calendário, as setas trocam o dia.</li>
+          </ul>
         </div>
       </section>
 
     </main>
   </div>
-
-  <!-- Botão Flutuante de Ajuda (Canto Inferior Direito) -->
-  <button type="button" class="floating-help-btn" id="btnHelpFloating" title="Ajuda e Dúvidas" aria-label="Abrir Ajuda">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-      <circle cx="12" cy="12" r="10"></circle>
-      <line x1="12" y1="16" x2="12" y2="12"></line>
-      <line x1="12" y1="8" x2="12.01" y2="8"></line>
-    </svg>
-  </button>
 
   <!-- ==========================================================================
        MODAL DE PERFIL DO ALUNO (Editar Foto e Dados Pessoais / Acadêmicos)
@@ -865,7 +842,15 @@
             panel.classList.remove('active');
           }
         });
+        // Guarda a aba no endereço (sem criar histórico) para recarregar e compartilhar
+        if (location.hash.split('/')[0] !== `#${tabKey}`) history.replaceState(history.state, '', `#${tabKey}`);
       }
+      window.wikiActivateTab = activateTab;
+
+      // Abre a aba que vier no link (ex.: dashboard.html#calendario)
+      const hashTab = location.hash.slice(1).split('/')[0];
+      if (document.getElementById(`content-${hashTab}`)) activateTab(hashTab);
+      else history.replaceState(null, '', '#localizacao');
 
       tabButtons.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -873,14 +858,6 @@
           if (tabKey) activateTab(tabKey);
         });
       });
-
-      // Botão Flutuante de Ajuda direciona para a aba Ajuda
-      const btnHelpFloating = document.getElementById('btnHelpFloating');
-      if (btnHelpFloating) {
-        btnHelpFloating.addEventListener('click', () => {
-          activateTab('ajuda');
-        });
-      }
 
       // Logout Seguro
       const btnLogout = document.getElementById('btnLogout');

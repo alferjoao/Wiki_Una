@@ -279,80 +279,25 @@ body {
 }
 
 /* Bloco de Destaque da Logo Oficial da Wiki Una */
-.panel-brand-box {
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-  padding-bottom: 1rem;
-  margin-bottom: 1.25rem;
-  border-bottom: 1px solid #F1F5F9;
-}
 
-.panel-logo-wrapper {
-  width: 56px;
-  height: 56px;
-  border-radius: var(--radius-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  filter: drop-shadow(0 4px 10px rgba(124, 58, 237, 0.25));
-  transition: transform var(--transition);
-}
 
-.panel-brand-box:hover .panel-logo-wrapper {
-  transform: scale(1.05);
-}
 
-.panel-brand-logo {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
 
-.panel-brand-info {
-  display: flex;
-  flex-direction: column;
-}
 
-.panel-brand-title {
-  font-size: 1.2rem;
-  font-weight: 800;
-  color: #0B132B;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
-}
 
-.panel-brand-subtitle {
-  font-size: 0.72rem;
-  color: var(--primary-purple);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  margin-top: 0.15rem;
-}
 
-.panel-header {
-  margin-bottom: 1rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid #F1F5F9;
-}
 
-.panel-title {
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: var(--una-dark);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
 
-.panel-subtitle {
-  font-size: 0.78rem;
-  color: var(--una-text-muted);
-  margin-top: 0.2rem;
-  line-height: 1.35;
-}
+
+
+
+
+
+
+
+
+
+
 
 /* ==========================================================================
    BARRA DE BUSCA SEMÂNTICA (FUTURA INTEGRAÇÃO)
@@ -395,7 +340,7 @@ body {
 }
 
 .semantic-search-box { position: relative; }
-.search-hint { margin-top: 0.35rem; font-size: 0.72rem; color: var(--una-text-dim); padding-left: 0.2rem; }
+
 .global-results {
   position: absolute; left: 0; right: 0; top: 44px; z-index: 50;
   list-style: none; background: #fff; border: 1px solid var(--una-border);
@@ -411,18 +356,7 @@ body {
 .global-result:hover, .global-result.is-active { background: var(--primary-purple-light); }
 .global-empty { padding: 0.6rem; font-size: 0.78rem; color: var(--una-text-muted); }
 
-.search-badge-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  font-size: 0.68rem;
-  font-weight: 700;
-  color: var(--primary-purple-dark);
-  background-color: var(--primary-purple-subtle);
-  padding: 0.15rem 0.45rem;
-  border-radius: var(--radius-full);
-  margin-top: 0.35rem;
-}
+
 
 /* ==========================================================================
    LISTA DE ABAS SOLICITADAS
@@ -589,29 +523,9 @@ body {
 /* ==========================================================================
    BOTÃO FLUTUANTE DE AJUDA (CANTO INFERIOR DIREITO)
    ========================================================================== */
-.floating-help-btn {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  width: 46px;
-  height: 46px;
-  border-radius: var(--radius-full);
-  background-color: #FFFFFF;
-  border: 2px solid #3B82F6;
-  color: #2563EB;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
-  cursor: pointer;
-  transition: var(--transition);
-  z-index: 99;
-}
 
-.floating-help-btn:hover {
-  transform: scale(1.08);
-  background-color: #EFF6FF;
-}
+
+
 
 /* ==========================================================================
    MODAL DE PERFIL DO ESTUDANTE (EDITAR FOTO E DADOS)
@@ -1007,7 +921,7 @@ body {
     width: auto; padding: 0.5rem 1rem;
     border-right: 0; border-bottom: 1px solid var(--una-border);
   }
-  .panel-brand-box, .semantic-search-box { display: none; }
+  .semantic-search-box { display: none; }
   .tabs-nav-list {
     flex-direction: row; overflow-x: auto; gap: 0.4rem;
     scrollbar-width: none;
@@ -1286,26 +1200,25 @@ body {
 }
 .guia-clear:hover { background: var(--primary-purple-subtle); color: var(--primary-purple-dark); }
 
-.guia-chips { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; margin: 0.75rem 0 0.25rem; }
-.guia-chips > span { font-size: 0.76rem; color: var(--una-text-dim); margin-right: 0.2rem; }
-.guia-chip {
-  border: 1px solid var(--primary-purple-subtle); background: var(--primary-purple-light);
-  color: var(--primary-purple-dark); font: inherit; font-size: 0.76rem; font-weight: 600;
-  padding: 0.3rem 0.7rem; border-radius: 999px; cursor: pointer; transition: var(--transition);
-}
-.guia-chip:hover { background: var(--primary-purple); color: #fff; }
+
+
+
+
 
 .guia-count { min-height: 1.2rem; margin: 0.5rem 0; font-size: 0.8rem; font-weight: 600; color: var(--una-text-muted); }
 .guia-empty { padding: 2rem 1rem; text-align: center; color: var(--una-text-muted); font-size: 0.9rem; }
 
-.guia-columns {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  gap: 1rem; align-items: start;
-}
+/* Colunas em "mural": cada cartão encaixa logo abaixo do outro, sem buracos */
+.guia-columns { column-width: 260px; column-gap: 1rem; }
 .guia-col {
+  break-inside: avoid; margin-bottom: 1rem; display: inline-block; width: 100%;
   border: 1px solid var(--una-border); border-radius: var(--radius-lg);
   background: #fff; overflow: hidden;
+  transition: box-shadow 200ms ease, transform 200ms ease;
+  animation: guiaIn 320ms ease both; animation-delay: calc(var(--i, 0) * 40ms);
 }
+.guia-col:hover { box-shadow: 0 8px 24px rgba(21, 33, 61, 0.08); }
+@keyframes guiaIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 .guia-col-title {
   display: flex; align-items: center; gap: 0.5rem;
   padding: 0.8rem 0.9rem; font-size: 0.92rem; font-weight: 700; color: var(--una-text);
@@ -1322,7 +1235,8 @@ body {
   border: 0; background: transparent; text-align: left; cursor: pointer;
   padding: 0.55rem 0.6rem; border-radius: 10px; font: inherit; transition: var(--transition);
 }
-.guia-item:hover { background: var(--primary-purple-light); }
+.guia-item:hover { background: var(--primary-purple-light); transform: translateX(2px); }
+.guia-item:active { transform: scale(0.99); }
 .guia-item:focus-visible { outline: 2px solid var(--primary-purple); outline-offset: -2px; }
 .guia-item-title { font-size: 0.86rem; font-weight: 600; color: var(--una-text); }
 .guia-item:hover .guia-item-title { color: var(--primary-purple-dark); }
@@ -1354,6 +1268,7 @@ body {
   aspect-ratio: 16 / 9; background: var(--una-gray-bg);
 }
 .guia-foto img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.guia-foto.is-empty { aspect-ratio: auto; min-height: 0; padding: 0.7rem !important; margin-bottom: 0.75rem; }
 .guia-foto.is-empty {
   display: flex; align-items: center; justify-content: center; text-align: center; padding: 1rem;
   border: 2px dashed var(--una-border); color: var(--una-text-muted); font-size: 0.85rem;
@@ -1386,19 +1301,12 @@ body {
 }
 
 /* Status da busca com IA */
-.ia-status {
-  display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;
-  margin-top: 0.6rem; font-size: 0.76rem; color: var(--una-text-muted);
-}
-.ia-status[data-state="ready"] { color: var(--primary-purple-dark); font-weight: 600; }
-.ia-status[data-state="loading"] { color: var(--primary-purple); }
-.ia-btn {
-  border: 1px solid var(--primary-purple-subtle); background: #fff; color: var(--primary-purple-dark);
-  font: inherit; font-size: 0.72rem; font-weight: 600; padding: 0.2rem 0.6rem;
-  border-radius: 999px; cursor: pointer;
-}
-.ia-btn:hover { background: var(--primary-purple-light); }
-.ia-status-mini { font-size: 0.68rem; margin-top: 0.25rem; padding-left: 0.2rem; }
+
+
+
+
+
+
 
 /* Rota com fotos ("Como chegar") */
 .guia-rota { list-style: none; display: flex; flex-direction: column; gap: 0.9rem; margin-bottom: 0.5rem; }
@@ -1420,8 +1328,9 @@ body {
 .guia-item.has-thumb {
   display: grid; grid-template-columns: 52px 1fr; column-gap: 0.65rem; align-items: center;
 }
+.guia-item-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .guia-item-thumb {
-  grid-row: span 2; width: 52px; height: 52px; border-radius: 10px; object-fit: cover;
+  width: 52px; height: 52px; border-radius: 10px; object-fit: cover;
   background: var(--una-gray-bg);
 }
 
@@ -1482,3 +1391,91 @@ body {
 
 /* Prints de tela do uLife: mostra a imagem inteira */
 .guia-rota.is-print img { aspect-ratio: auto; max-height: 460px; object-fit: contain; background: #F1F4F9; }
+
+/* ==========================================================================
+   VISUAL MAIS LIMPO E INTERATIVO
+   ========================================================================== */
+/* Miniatura vazia: mesmo tamanho da foto, mantém o texto alinhado */
+.guia-item-thumb.is-empty {
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; background: var(--una-gray-bg); filter: grayscale(1); opacity: 0.45;
+}
+
+/* Filtros de categoria */
+.guia-cats { display: flex; flex-wrap: wrap; gap: 0.4rem; padding: 0.85rem 0 0.15rem; }
+@media (max-width: 640px) {
+  /* no celular vira uma linha que rola para o lado */
+  .guia-cats { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-right: -1.1rem; padding-right: 1.1rem; }
+}
+.guia-cats::-webkit-scrollbar { display: none; }
+.guia-cat {
+  flex-shrink: 0; display: inline-flex; align-items: center; gap: 0.35rem;
+  border: 1px solid var(--una-border); background: #fff; color: var(--una-text-muted);
+  font: inherit; font-size: 0.8rem; font-weight: 600; padding: 0.4rem 0.8rem;
+  border-radius: 999px; cursor: pointer; transition: var(--transition);
+}
+.guia-cat:hover { border-color: var(--primary-purple-subtle); color: var(--primary-purple-dark); background: var(--primary-purple-light); }
+.guia-cat[aria-pressed="true"] { background: var(--una-dark); border-color: var(--una-dark); color: #fff; }
+.guia-cat:focus-visible { outline: 2px solid var(--primary-purple); outline-offset: 2px; }
+
+/* Chip da IA dentro da busca */
+.ia-chip {
+  flex-shrink: 0; border: 1px solid var(--primary-purple-subtle); background: var(--primary-purple-light);
+  color: var(--primary-purple-dark); font: inherit; font-size: 0.72rem; font-weight: 700;
+  padding: 0.3rem 0.65rem; border-radius: 999px; cursor: pointer; white-space: nowrap;
+  transition: var(--transition);
+}
+.ia-chip:hover:not(:disabled) { background: var(--primary-purple); color: #fff; }
+.ia-chip:disabled { cursor: default; }
+.ia-chip[data-state="ready"] { background: #ECFDF5; border-color: #A7F3D0; color: #047857; }
+.ia-chip[data-state="loading"] { animation: iaPulse 1.2s ease-in-out infinite; }
+@keyframes iaPulse { 50% { opacity: 0.55; } }
+
+/* Atalho de teclado */
+kbd, .search-kbd {
+  font: 600 0.72rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  padding: 0.2rem 0.4rem; border-radius: 5px; color: var(--una-text-muted);
+  background: #fff; border: 1px solid var(--una-border); border-bottom-width: 2px;
+}
+.search-kbd { position: absolute; right: 0.55rem; pointer-events: none; }
+.semantic-search-input:focus ~ .search-kbd { display: none; }
+@media (pointer: coarse) { .search-kbd { display: none; } }
+
+/* Compartilhar */
+.guia-share {
+  margin-top: 1.1rem; width: 100%; padding: 0.7rem; border-radius: 12px; cursor: pointer;
+  border: 1px solid var(--una-border); background: #fff; color: var(--una-text);
+  font: inherit; font-size: 0.88rem; font-weight: 600; transition: var(--transition);
+}
+.guia-share:hover { border-color: var(--primary-purple); color: var(--primary-purple-dark); background: var(--primary-purple-light); }
+
+/* Aba Ajuda */
+.ajuda-titulo { font-size: 0.95rem; font-weight: 700; margin: 0.5rem 0 0.75rem; color: var(--una-text); }
+.ajuda-links { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.75rem; margin-bottom: 1.5rem; }
+.ajuda-link {
+  display: flex; align-items: center; gap: 0.75rem; padding: 0.9rem 1rem;
+  border: 1px solid var(--una-border); border-radius: 14px; text-decoration: none; color: var(--una-text);
+  background: #fff; transition: var(--transition);
+}
+.ajuda-link > span:first-child { font-size: 1.4rem; }
+.ajuda-link strong { display: block; font-size: 0.9rem; }
+.ajuda-link small { display: block; font-size: 0.76rem; color: var(--una-text-muted); margin-top: 2px; }
+.ajuda-link:hover { border-color: var(--primary-purple-subtle); background: var(--primary-purple-light); transform: translateY(-2px); }
+.ajuda-link:focus-visible { outline: 2px solid var(--primary-purple); outline-offset: 2px; }
+.ajuda-dicas { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+.ajuda-dicas li { display: flex; align-items: center; gap: 0.65rem; font-size: 0.88rem; color: var(--una-text); }
+.ajuda-dicas li > :first-child { min-width: 2.2rem; text-align: center; }
+
+/* Celular: indica que a barra de abas rola para o lado */
+@media (max-width: 900px) {
+  .sidebar-panel { position: relative; }
+  .sidebar-panel::after {
+    content: ''; position: absolute; top: 0; right: 0; bottom: 1px; width: 36px; pointer-events: none;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0), #fff);
+  }
+}
+
+/* Respeita quem prefere menos animação */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

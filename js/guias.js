@@ -33,26 +33,25 @@
     }).catch(() => {});
   }
 
-  /* Status da IA em todos os lugares que mostram a busca (Nielsen #1: status visível) */
-  function bindStatus(el) {
-    if (!el) return;
+  /* Chip da IA dentro do campo de busca (Nielsen #1: status sempre visível, sem poluir) */
+  function bindChip(btn) {
+    if (!btn) return;
+    btn.addEventListener('click', () => Busca.ativarIA());
     Busca.onStatus(({ state, progress }) => {
-      el.dataset.state = state;
-      el.replaceChildren();
-      const label = document.createElement('span');
-      if (state === 'ready') label.textContent = '✨ Busca com IA ativa: entende frases como “onde posso comer?”';
-      else if (state === 'loading') label.textContent = `✨ Preparando a IA… ${progress || 0}% (só na primeira vez)`;
-      else if (state === 'error') label.textContent = 'Busca inteligente ativa (IA indisponível agora)';
-      else label.textContent = 'Busca inteligente ativa: escreva do seu jeito.';
-      el.appendChild(label);
-      if (state === 'off' || state === 'error') {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'ia-btn';
-        btn.textContent = state === 'error' ? 'Tentar de novo' : 'Ativar IA (~118 MB, uma vez)';
-        btn.addEventListener('click', () => Busca.ativarIA());
-        el.appendChild(btn);
-      }
+      btn.dataset.state = state;
+      btn.disabled = state === 'loading' || state === 'ready';
+      btn.textContent = {
+        ready: '✨ IA ativa',
+        loading: `✨ ${progress || 0}%`,
+        error: '✨ Tentar IA de novo',
+        off: '✨ Ativar IA'
+      }[state];
+      btn.title = {
+        ready: 'Busca com IA ativa: entende frases como “onde fica o banheiro?”',
+        loading: 'Preparando a IA (só na primeira vez)…',
+        error: 'A IA não carregou. A busca normal continua funcionando.',
+        off: 'Liga a busca com IA (baixa ~118 MB uma vez). A busca normal já funciona sem ela.'
+      }[state];
     });
   }
 
@@ -126,7 +125,7 @@
   }
 
   /* ---------------- Janela de detalhes ---------------- */
-  function openItem(entry) {
+  function openItem(entry, fromLink) {
     const { tab, cat, item } = entry;
     const body = dialog.querySelector('.guia-dialog-body');
     body.replaceChildren();
@@ -159,7 +158,7 @@
       foto.appendChild(zoomButton(img, [{ src: item.foto, legenda: item.titulo }], 0));
     } else if (tab === 'localizacao') {
       foto.classList.add('is-empty');
-      foto.textContent = '📷 Foto em breve – o time está fotografando o campus';
+      foto.textContent = '📷 Foto em breve';
     }
     if (!rotas.length && (item.foto || tab === 'localizacao')) body.appendChild(foto);
 
@@ -225,9 +224,58 @@
       body.appendChild(aviso);
     }
 
+    // Compartilhar: manda o link direto deste item
+    const share = document.createElement('button');
+    share.type = 'button';
+    share.className = 'guia-share';
+    share.textContent = '🔗 Compartilhar';
+    share.addEventListener('click', async () => {
+      const url = `${location.origin}${location.pathname}#${tab}/${item.id}`;
+      try {
+        if (navigator.share && matchMedia('(pointer: coarse)').matches) {
+          await navigator.share({ title: `Wiki Una – ${item.titulo}`, url });
+          return;
+        }
+        await navigator.clipboard.writeText(url);
+        share.textContent = '✓ Link copiado!';
+      } catch (e) {
+        share.textContent = 'Não deu para copiar';
+      }
+      setTimeout(() => { share.textContent = '🔗 Compartilhar'; }, 2200);
+    });
+    body.appendChild(share);
+
+    // O item vai para o endereço; o botão Voltar do celular fecha a janela
+    const hash = `#${tab}/${item.id}`;
+    if (!fromLink && location.hash !== hash) history.pushState({ wikiItem: true }, '', hash);
+
     if (typeof dialog.showModal === 'function') dialog.showModal();
     else dialog.setAttribute('open', '');
+    body.scrollTop = 0;
   }
+
+  dialog?.addEventListener('close', () => {
+    const tabHash = `#${location.hash.slice(1).split('/')[0]}`;
+    if (history.state && history.state.wikiItem) history.back();
+    else if (location.hash.includes('/')) history.replaceState(null, '', tabHash);
+  });
+  window.addEventListener('popstate', () => {
+    if (dialog.open && !location.hash.includes('/')) dialog.close();
+  });
+
+  // Abre o item de um link (ex.: #localizacao/cac), inclusive links da aba Ajuda
+  function openFromHash() {
+    const [tab, id] = location.hash.slice(1).split('/');
+    if (!id) {   // voltou para uma aba (ex.: botão Voltar depois de um link da Ajuda)
+      if (window.wikiActivateTab && document.getElementById(`content-${tab}`)) window.wikiActivateTab(tab);
+      return;
+    }
+    const entry = index.find(e => e.tab === tab && e.item.id === id);
+    if (!entry) return;
+    if (window.wikiActivateTab) window.wikiActivateTab(tab);
+    if (!dialog.open) openItem(entry, true);
+  }
+  window.addEventListener('hashchange', openFromHash);
 
   dialog?.querySelector('.guia-dialog-close')?.addEventListener('click', () => dialog.close());
   // Clique fora do cartão fecha (ESC já é nativo do <dialog>)
@@ -243,7 +291,29 @@
     const empty = root.querySelector('.guia-empty');
     const clear = root.querySelector('.guia-clear');
 
-    bindStatus(root.querySelector('.ia-status'));
+    bindChip(root.querySelector('.ia-chip'));
+
+    // Filtro por categoria (Todos | Banheiros | …)
+    let filtro = null;
+    const cats = root.querySelector('.guia-cats');
+    const catBtns = [{ id: null, nome: 'Todos', icone: '✦' }, ...categorias].map(cat => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'guia-cat';
+      b.setAttribute('aria-pressed', cat.id === null);
+      const ic = document.createElement('span');
+      ic.setAttribute('aria-hidden', 'true');
+      ic.textContent = cat.icone;
+      b.append(ic, cat.nome);
+      b.addEventListener('click', () => {
+        filtro = cat.id;
+        catBtns.forEach(x => x.setAttribute('aria-pressed', x === b));
+        draw();
+      });
+      cats.appendChild(b);
+      return b;
+    });
+    const comFoto = tab === 'localizacao'; // lugares sempre mostram miniatura (ou o espaço dela)
 
     function draw() {
       const q = input.value.trim();
@@ -257,7 +327,8 @@
       let total = 0;
 
       // Na busca, as colunas e os itens mais relevantes vêm primeiro
-      const cats = categorias
+      const lista = categorias
+        .filter(cat => !filtro || cat.id === filtro)
         .map(cat => {
           const itens = score
             ? cat.itens.filter(i => score.has(i)).sort((a, b) => score.get(b) - score.get(a))
@@ -265,9 +336,9 @@
           return { cat, itens, best: itens.length && score ? score.get(itens[0]) : 0 };
         })
         .filter(c => c.itens.length);
-      if (score) cats.sort((a, b) => b.best - a.best);
+      if (score) lista.sort((a, b) => b.best - a.best);
 
-      cats.forEach(({ cat, itens }) => {
+      lista.forEach(({ cat, itens }) => {
         total += itens.length;
 
         const col = document.createElement('section');
@@ -298,16 +369,28 @@
           const r = document.createElement('span');
           r.className = 'guia-item-resumo';
           r.textContent = item.resumo || '';
-          if (item.foto) {
-            const thumb = document.createElement('img');
-            thumb.className = 'guia-item-thumb';
-            thumb.src = item.foto;
-            thumb.alt = '';
-            thumb.loading = 'lazy';
+          const fotoThumb = item.foto || (item.rota && item.rota[item.rota.length - 1].foto);
+          if (comFoto) {
+            let thumb;
+            if (fotoThumb) {
+              thumb = document.createElement('img');
+              thumb.src = fotoThumb;
+              thumb.alt = '';
+              thumb.loading = 'lazy';
+            } else {
+              thumb = document.createElement('span');
+              thumb.classList.add('is-empty');
+              thumb.setAttribute('aria-hidden', 'true');
+              thumb.textContent = '📷';
+            }
+            thumb.classList.add('guia-item-thumb');
             btn.classList.add('has-thumb');
             btn.append(thumb);
           }
-          btn.append(t, r);
+          const txt = document.createElement('span');
+          txt.className = 'guia-item-text';
+          txt.append(t, r);
+          btn.append(txt);
           btn.addEventListener('click', () => openItem({ tab, cat, item }));
           li.appendChild(btn);
           ul.appendChild(li);
@@ -317,6 +400,8 @@
         columns.appendChild(col);
       });
 
+      // as colunas entram uma a uma, de leve
+      columns.querySelectorAll('.guia-col').forEach((c, i) => c.style.setProperty('--i', i));
       empty.hidden = total > 0;
       clear.hidden = !q;
       count.textContent = q ? `${total} resultado${total === 1 ? '' : 's'} para “${q}”` : '';
@@ -332,11 +417,6 @@
       }
     });
     clear.addEventListener('click', () => { input.value = ''; draw(); input.focus(); });
-    root.querySelectorAll('.guia-chip').forEach(chip => chip.addEventListener('click', () => {
-      input.value = chip.textContent;
-      draw();
-      input.focus();
-    }));
     // Se a IA terminar de carregar com uma busca digitada, refaz já com a IA
     Busca.onStatus(({ state }) => { if (state === 'ready' && input.value.trim()) draw(); });
     draw();
@@ -348,7 +428,20 @@
   const globalInput = document.getElementById('inputSemanticSearch');
   const globalList = document.getElementById('globalSearchResults');
   if (!globalInput || !globalList) return;
-  bindStatus(document.getElementById('globalIaStatus'));
+  openFromHash();
+
+  // Atalho "/" para buscar de qualquer lugar (Nielsen #7: atalhos para quem já conhece)
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== '/' || e.ctrlKey || e.metaKey || e.altKey) return;
+    const el = document.activeElement;
+    if (el && (el.isContentEditable || /^(input|textarea|select)$/i.test(el.tagName))) return;
+    if (document.querySelector('dialog[open]')) return;
+    const aba = document.querySelector('.tab-content-panel.active .guia-search input');
+    const alvo = aba || (globalInput.offsetParent ? globalInput : null);
+    if (!alvo) return;
+    e.preventDefault();
+    alvo.focus();
+  });
 
   let results = [];
   let active = -1;
