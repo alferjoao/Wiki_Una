@@ -24,7 +24,7 @@ window.WikiBusca = (function () {
     'que qual quais onde como quando quero queria preciso gostaria posso consigo fazer faco tem tenho ter ' +
     'eu me meu minha meus minhas seu sua voce vc aqui ali la isso esse essa este esta fica ficam e ao aos ' +
     'se mais muito ja nao sim tipo coisa algum alguma achar acho encontrar saber ver vejo uns lugar local ' +
-    'una faculdade campus app ulife').split(' '));
+    'una faculdade campus app ulife perto proximo proxima lado estou to ta tou').split(' '));
 
   // Mapa de significados: se a pergunta tem uma destas ideias, procura também estes termos
   const CONCEITOS = [
@@ -101,7 +101,7 @@ window.WikiBusca = (function () {
       const phrase = norm([e.item.titulo, e.item.resumo, ...(e.item.buscas || [])].join(' | '));
       // Para a IA: cada frase vira um vetor; vale a mais parecida com a pergunta
       const texts = [`${e.item.titulo}. ${e.item.resumo || ''}`, ...(e.item.buscas || [])];
-      return { entry: e, title, body, phrase, texts };
+      return { entry: e, title, body, phrase, texts, titleText: norm(e.item.titulo) };
     });
   }
 
@@ -147,6 +147,7 @@ window.WikiBusca = (function () {
         const concEff = conc * (0.5 + 0.5 * base);
         let score = Math.min(1, Math.max(base, concEff * 0.85) + 0.05 * concEff);
         if (qNorm.length > 3 && d.phrase.includes(qNorm)) score = Math.max(score, 1.05); // frase exata ganha empates
+        if (qNorm.length > 3 && d.titleText.includes(qNorm)) score = Math.max(score, 1.1);  // no título vale mais que citado na descrição
         return { entry: d.entry, score };
       })
       .sort((a, b) => b.score - a.score)
@@ -235,5 +236,53 @@ window.WikiBusca = (function () {
       .filter(cut);
   }
 
-  return { init, buscar, buscarIA, ativarIA, onStatus, podeLigarSozinha, norm };
+  /* ---------------- "Perto de": banheiro mais próximo ---------------- */
+  const LOCAIS = (window.WIKI_LOCAIS || []).map(l => ({
+    ...l,
+    // termos mais longos primeiro ("sala 501" antes de "501")
+    termos: [...l.termos].map(norm).sort((a, b) => b.length - a.length)
+  }));
+  const escapeRe = t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+  // Acha um ponto de referência na pergunta e devolve a pergunta sem ele
+  function acharLocal(query) {
+    const q = norm(query);
+    for (const l of LOCAIS) {
+      for (const t of l.termos) {
+        const re = new RegExp(`(^|[^a-z0-9])${escapeRe(t)}(?=$|[^a-z0-9])`);
+        if (re.test(q)) return { local: l, resto: q.replace(re, '$1 ').trim() };
+      }
+    }
+    return null;
+  }
+
+  const temPerto = item => !!((item.perto && item.perto.length) || (item.rotas || []).some(r => r.perto));
+  const pertoDe = (item, id) => (item.perto || []).includes(id) || (item.rotas || []).some(r => (r.perto || []).includes(id));
+
+  /**
+   * Como buscar, mas entende "X perto de Y": procura X e põe primeiro o que fica perto de Y.
+   * Só vale quando X é algo que existe em vários lugares (ex.: banheiro); senão busca normal.
+   */
+  function comLocal(query, tab, fn) {
+    const achado = acharLocal(query);
+    if (achado && meaningful(achado.resto).length) {
+      const r = fn(achado.resto, tab);
+      const aplica = res => res && res.some(x => temPerto(x.entry.item));
+      const ordena = res => {
+        const perto = res.filter(x => pertoDe(x.entry.item, achado.local.id));
+        return { results: [...perto, ...res.filter(x => !perto.includes(x))], local: achado.local };
+      };
+      if (r && typeof r.then === 'function') {
+        return r.then(res => aplica(res) ? ordena(res) : fn(query, tab).then(x => x && { results: x, local: null }));
+      }
+      if (aplica(r)) return ordena(r);
+    }
+    const r = fn(query, tab);
+    return r && typeof r.then === 'function' ? r.then(x => x && { results: x, local: null }) : { results: r, local: null };
+  }
+
+  const buscarPerto = (query, tab) => comLocal(query, tab, buscar);
+  const buscarIAPerto = (query, tab) => comLocal(query, tab, buscarIA);
+
+  return { init, buscar, buscarIA, buscarPerto, buscarIAPerto, acharLocal, pertoDe, ativarIA, onStatus, podeLigarSozinha, norm };
 })();

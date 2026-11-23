@@ -8,6 +8,8 @@
  *     foto: 'assets/fotos/nome-da-foto.jpg',           // opcional
  *     rota: [{ foto: '...', texto: 'Passo curto' }],   // opcional: caminho com fotos
  *     rotas: [{ nome: 'No celular', passos: [{ foto, texto }] }], // opcional: mais de um caminho
+ *     perto: ['biblioteca'],   // opcional (no item ou em cada rota): ids de WIKI_LOCAIS
+ *                              // usados na busca "banheiro perto da biblioteca"
  *     passos: ['Passo 1', 'Passo 2'],                  // opcional
  *     dica: 'Algo útil',                               // opcional
  *     buscas: ['sinônimos', 'jeitos de pesquisar'] }   // ajuda a busca a encontrar
@@ -81,6 +83,16 @@ const ROTA_BANHEIROS_5 = [
   { foto: F5 + '5andar-banheiros.jpg', texto: 'Chegou! Tem banheiro unissex, feminino/masculino e PNE.' }
 ];
 
+// Pontos de referência para "perto de" (ex.: "banheiro perto da biblioteca").
+// termos: como a pessoa escreve, sem acento. Os ids vão no campo "perto" das rotas.
+window.WIKI_LOCAIS = [
+  { id: 'entrada', nome: 'Entrada / CAC', termos: ['entrada', 'catraca', 'cac', 'hall', 'inicio da una', 'recepcao'] },
+  { id: 'biblioteca', nome: 'Biblioteca / Atende+', termos: ['biblioteca', 'atende+', 'atende mais', 'atende', 'coordenacao', 'secretaria', 'sala 423', 'sala 424', '423', '424'] },
+  { id: 'napi', nome: 'NAPI / sala 436', termos: ['napi', 'sala 436', '436'] },
+  { id: 'fundo', nome: 'Fundo do 4º andar', termos: ['parede de madeira', 'corredor vermelho', 'corredor das mesas', 'fundo do andar', 'fundo do 4', 'mesas'] },
+  { id: '5andar', nome: '5º andar / Auditório', termos: ['quinto andar', '5º andar', '5o andar', '5 andar', 'quinto', 'auditorio', 'sala 501', 'sala 504', '501', '504', 'estetica', 'corpo e movimento'] }
+];
+
 window.WIKI_CONTEUDO = {
   localizacao: [
     {
@@ -89,20 +101,20 @@ window.WIKI_CONTEUDO = {
         { id: 'banheiro-masc-fem', titulo: 'Banheiros do 4º andar', resumo: 'Masculino e feminino em três lugares: no início da Una, no corredor da biblioteca e no fundo do andar. Todos têm bebedouro.',
           onde: '4º andar • início da Una (corredor da direita), corredor da biblioteca e fundo do andar (depois da parede de madeira)', foto: 'assets/fotos/4andar-banheiros-inicio.jpg',
           rotas: [
-            { nome: 'Opção 1: no início da Una', passos: ROTA_BANHEIROS_4_INICIO },
-            { nome: 'Opção 2: no corredor da biblioteca', passos: ROTA_BANHEIROS_4_CORREDOR },
-            { nome: 'Opção 3: no fundo do andar', passos: ROTA_BANHEIROS_4_FUNDO }
+            { nome: 'Opção 1: no início da Una', passos: ROTA_BANHEIROS_4_INICIO, perto: ['entrada'] },
+            { nome: 'Opção 2: no corredor da biblioteca', passos: ROTA_BANHEIROS_4_CORREDOR, perto: ['biblioteca', 'napi'] },
+            { nome: 'Opção 3: no fundo do andar', passos: ROTA_BANHEIROS_4_FUNDO, perto: ['fundo'] }
           ],
           buscas: ['wc', 'toalete', 'sanitario', 'preciso ir ao banheiro', 'bebedouro', 'agua'] },
         { id: 'banheiros-5', titulo: 'Banheiros do 5º andar', resumo: 'Unissex, feminino/masculino e PNE, do lado esquerdo do auditório.',
-          onde: '5º andar • fim do corredor, à esquerda do auditório', foto: F5 + '5andar-banheiros.jpg', rota: ROTA_BANHEIROS_5,
+          onde: '5º andar • fim do corredor, à esquerda do auditório', foto: F5 + '5andar-banheiros.jpg', rota: ROTA_BANHEIROS_5, perto: ['5andar'],
           buscas: ['wc', 'toalete', 'sanitario', 'banheiro unissex', 'banheiro quinto andar', 'banheiro perto do auditorio'] },
         { id: 'banheiro-acessivel', titulo: 'Banheiro acessível (PNE)', resumo: 'Banheiro adaptado. Tem nos dois banheiros do 4º andar e no do 5º andar.',
           onde: '4º andar (início da Una e corredor da biblioteca) e 5º andar (ao lado do auditório)', foto: 'assets/fotos/4andar-banheiros-inicio.jpg',
           rotas: [
-            { nome: '4º andar – opção 1: no início da Una', passos: ROTA_BANHEIROS_4_INICIO },
-            { nome: '4º andar – opção 2: no corredor da biblioteca', passos: ROTA_BANHEIROS_4_CORREDOR },
-            { nome: '5º andar: ao lado do auditório', passos: ROTA_BANHEIROS_5 }
+            { nome: '4º andar – opção 1: no início da Una', passos: ROTA_BANHEIROS_4_INICIO, perto: ['entrada'] },
+            { nome: '4º andar – opção 2: no corredor da biblioteca', passos: ROTA_BANHEIROS_4_CORREDOR, perto: ['biblioteca', 'napi'] },
+            { nome: '5º andar: ao lado do auditório', passos: ROTA_BANHEIROS_5, perto: ['5andar'] }
           ],
           buscas: ['pcd', 'pne', 'cadeirante', 'deficiencia', 'adaptado', 'acessivel'] }
       ]

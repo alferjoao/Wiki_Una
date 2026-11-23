@@ -1480,3 +1480,27 @@ kbd, .search-kbd {
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* "Onde você está?" – banheiro mais perto */
+.guia-perto {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem;
+  margin: 0.25rem 0 0.75rem; padding: 0.7rem 0.8rem; border-radius: 12px;
+  background: var(--primary-purple-light); border: 1px solid var(--primary-purple-subtle);
+}
+.guia-perto > span { font-size: 0.82rem; font-weight: 700; color: var(--primary-purple-dark); margin-right: 0.2rem; }
+.guia-perto-chip {
+  border: 1px solid var(--primary-purple-subtle); background: #fff; color: var(--una-text);
+  font: inherit; font-size: 0.78rem; font-weight: 600; padding: 0.3rem 0.7rem;
+  border-radius: 999px; cursor: pointer; transition: var(--transition);
+}
+.guia-perto-chip:hover { border-color: var(--primary-purple); }
+.guia-perto-chip[aria-pressed="true"] { background: var(--primary-purple); border-color: var(--primary-purple); color: #fff; }
+.guia-perto-chip:focus-visible { outline: 2px solid var(--primary-purple); outline-offset: 2px; }
+.guia-perto-selo {
+  display: inline-block; margin-left: 0.5rem; padding: 0.1rem 0.5rem; border-radius: 999px;
+  background: #ECFDF5; color: #047857; font-size: 0.68rem; font-weight: 700;
+  text-transform: none; letter-spacing: 0; vertical-align: middle;
+}
+.guia-item-text .guia-perto-selo { margin: 0.25rem 0 0; align-self: flex-start; }
+.guia-dialog-sub.is-perto { color: #047857; }
+.guia-perto-aviso { font-size: 0.82rem; color: var(--una-text-muted); margin-bottom: 0.5rem; }

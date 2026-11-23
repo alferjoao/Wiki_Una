@@ -27,9 +27,10 @@
   function search(query, tab, render) {
     const token = {};
     search.last = token;
-    render(Busca.buscar(query, tab), false);
-    Busca.buscarIA(query, tab).then(r => {
-      if (r && search.last === token) render(r, true);
+    const leve = Busca.buscarPerto(query, tab);
+    render(leve.results, false, leve.local);
+    Busca.buscarIAPerto(query, tab).then(r => {
+      if (r && search.last === token) render(r.results, true, r.local);
     }).catch(() => {});
   }
 
@@ -125,7 +126,9 @@
   }
 
   /* ---------------- Janela de detalhes ---------------- */
-  function openItem(entry, fromLink) {
+  const LOCAIS = window.WIKI_LOCAIS || [];
+
+  function openItem(entry, fromLink, local) {
     const { tab, cat, item } = entry;
     const body = dialog.querySelector('.guia-dialog-body');
     body.replaceChildren();
@@ -171,10 +174,60 @@
       body.appendChild(onde);
     }
 
-    rotas.forEach(({ nome, passos }) => {
+    // Vários caminhos marcados com "perto": a pessoa escolhe onde está e o mais perto vem primeiro
+    const locaisDoItem = LOCAIS.filter(l => rotas.some(r => (r.perto || []).includes(l.id)));
+    const rotasBox = document.createElement('div');
+    if (rotas.length > 1 && locaisDoItem.length > 1) {
+      const onde = document.createElement('div');
+      onde.className = 'guia-perto';
+      onde.setAttribute('role', 'group');
+      onde.setAttribute('aria-label', 'Onde você está agora?');
+      const lbl = document.createElement('span');
+      lbl.textContent = '📍 Onde você está?';
+      onde.appendChild(lbl);
+      const chips = locaisDoItem.map(l => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'guia-perto-chip';
+        b.textContent = l.nome;
+        b.setAttribute('aria-pressed', !!local && local.id === l.id);
+        b.addEventListener('click', () => {
+          const ativo = b.getAttribute('aria-pressed') === 'true';
+          chips.forEach(c => c.setAttribute('aria-pressed', 'false'));
+          b.setAttribute('aria-pressed', String(!ativo));
+          desenharRotas(ativo ? null : l);
+        });
+        onde.appendChild(b);
+        return b;
+      });
+      body.appendChild(onde);
+    }
+    body.appendChild(rotasBox);
+
+    function desenharRotas(perto) {
+      rotasBox.replaceChildren();
+      const ordem = perto
+        ? [...rotas.filter(r => (r.perto || []).includes(perto.id)), ...rotas.filter(r => !(r.perto || []).includes(perto.id))]
+        : rotas;
+      ordem.forEach(r => desenharRota(r, perto && (r.perto || []).includes(perto.id)));
+      if (perto && !ordem.some(r => (r.perto || []).includes(perto.id))) {
+        const aviso = document.createElement('p');
+        aviso.className = 'guia-perto-aviso';
+        aviso.textContent = `Nenhuma destas opções fica perto de ${perto.nome}. Veja todas abaixo ou busque de novo.`;
+        rotasBox.prepend(aviso);
+      }
+    }
+
+    function desenharRota({ nome, passos }, maisPerto) {
       const h = document.createElement('h4');
-      h.className = 'guia-dialog-sub';
+      h.className = 'guia-dialog-sub' + (maisPerto ? ' is-perto' : '');
       h.textContent = nome;
+      if (maisPerto) {
+        const selo = document.createElement('span');
+        selo.className = 'guia-perto-selo';
+        selo.textContent = '📍 Mais perto de você';
+        h.appendChild(selo);
+      }
       const ol = document.createElement('ol');
       // prints de tela aparecem inteiros; fotos do campus podem ser recortadas
       ol.className = tab === 'ambiente' ? 'guia-rota is-print' : 'guia-rota';
@@ -193,8 +246,9 @@
         li.append(zoomButton(img, lista, i), p);
         ol.appendChild(li);
       });
-      body.append(h, ol);
-    });
+      rotasBox.append(h, ol);
+    }
+    desenharRotas(local && locaisDoItem.some(l => l.id === local.id) ? local : null);
 
     if (item.passos && item.passos.length) {
       const h = document.createElement('h4');
@@ -319,11 +373,12 @@
     function draw() {
       const q = input.value.trim();
       if (!q) return paint(null, '');
-      search(q, tab, (results) => paint(results, q));
+      search(q, tab, (results, ia, local) => paint(results, q, local));
     }
 
-    function paint(results, q) {
-      const score = results ? new Map(results.map(r => [r.entry.item, r.score])) : null;
+    function paint(results, q, local) {
+      // posição na busca (respeita a ordem de "mais perto"), não só a nota
+      const score = results ? new Map(results.map((r, i) => [r.entry.item, results.length - i])) : null;
       columns.replaceChildren();
       let total = 0;
 
@@ -392,7 +447,13 @@
           txt.className = 'guia-item-text';
           txt.append(t, r);
           btn.append(txt);
-          btn.addEventListener('click', () => openItem({ tab, cat, item }));
+          if (local && Busca.pertoDe(item, local.id)) {
+            const selo = document.createElement('span');
+            selo.className = 'guia-perto-selo';
+            selo.textContent = `📍 Perto de: ${local.nome}`;
+            txt.appendChild(selo);
+          }
+          btn.addEventListener('click', () => openItem({ tab, cat, item }, false, local));
           li.appendChild(btn);
           ul.appendChild(li);
         });
@@ -405,7 +466,9 @@
       columns.querySelectorAll('.guia-col').forEach((c, i) => c.style.setProperty('--i', i));
       empty.hidden = total > 0;
       clear.hidden = !q;
-      count.textContent = q ? `${total} resultado${total === 1 ? '' : 's'} para “${q}”` : '';
+      count.textContent = q
+        ? `${total} resultado${total === 1 ? '' : 's'} para “${q}”` + (local ? ` · os mais perto de ${local.nome} primeiro` : '')
+        : '';
     }
 
     input.addEventListener('input', draw);
@@ -446,11 +509,12 @@
 
   let results = [];
   let active = -1;
+  let globalLocal = null;
 
   function openResult(entry) {
     document.querySelector(`.nav-tab-button[data-tab="${entry.tab}"]`)?.click();
     closeGlobal();
-    openItem(entry);
+    openItem(entry, false, globalLocal);
   }
 
   function closeGlobal() {
@@ -462,7 +526,7 @@
   function drawGlobal() {
     const q = globalInput.value.trim();
     if (!q) { closeGlobal(); return; }
-    search(q, null, (r) => paintGlobal(r.slice(0, 8).map(x => x.entry)));
+    search(q, null, (r, ia, local) => { globalLocal = local; paintGlobal(r.slice(0, 8).map(x => x.entry)); });
   }
 
   function paintGlobal(list) {
@@ -485,7 +549,8 @@
       const t = document.createElement('strong');
       t.textContent = entry.item.titulo;
       const meta = document.createElement('span');
-      meta.textContent = `${TAB_NAMES[entry.tab]} · ${entry.cat.nome}`;
+      meta.textContent = `${TAB_NAMES[entry.tab]} · ${entry.cat.nome}`
+        + (globalLocal && Busca.pertoDe(entry.item, globalLocal.id) ? ` · 📍 perto de ${globalLocal.nome}` : '');
       li.append(t, meta);
       li.addEventListener('mousedown', (e) => { e.preventDefault(); openResult(entry); });
       globalList.appendChild(li);
