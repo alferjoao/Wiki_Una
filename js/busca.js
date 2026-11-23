@@ -49,7 +49,7 @@ window.WikiBusca = (function () {
     [['prova', 'provas', 'avaliacao', 'teste', 'exame'], 'prova avaliacao'],
     [['horas', 'certificado', 'certificados', 'complementar', 'complementares'], 'certificado horas complementares'],
     [['aula', 'aulas', 'professor', 'assistir'], 'aula'],
-    [['horario', 'sala', 'grade', 'que horas'], 'horario quadro aulas sala'],
+    [['horario', 'grade', 'que horas', 'minha sala', 'qual sala', 'que sala'], 'horario quadro aulas sala'],
     [['trancar', 'parar', 'pausar', 'desistir', 'sair do curso'], 'trancamento'],
     [['renovar', 'proximo semestre', 'rematricular'], 'rematricula'],
     [['bolsa', 'desconto', 'fies', 'prouni', 'financiamento'], 'fies prouni bolsa'],

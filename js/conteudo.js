@@ -51,23 +51,48 @@ const ROTA_BANHEIROS_4_CORREDOR = [
   { foto: 'assets/fotos/4andar-banheiros-corredor-pne-masculino.jpg', texto: 'O masculino fica do lado do PNE.' }
 ];
 
+// 5º andar: sobe pela escada do hall da CAC e segue o corredor da parede verde
+const F5 = 'assets/fotos/';
+const IR_5_ANDAR = [
+  ENTRAR_NA_UNA,
+  { foto: F5 + '4andar-hall-cac-escada.jpg', texto: 'No hall da CAC, siga para a direita, onde fica a escada.' },
+  { foto: F5 + '4andar-escada-5andar.jpg', texto: 'Suba por esta escada, com a placa “acesso ao 5º andar”.' },
+  { foto: F5 + 'escada-subindo-5andar.jpg', texto: 'Continue subindo até o 5º andar.' },
+  { foto: F5 + '5andar-corredor.jpg', texto: 'No 5º andar, siga pelo corredor da parede verde.' }
+];
+const ATE_AUDITORIO = [
+  ...IR_5_ANDAR,
+  { foto: F5 + '5andar-sala-501.jpg', texto: 'Passe pela sala 501 (Laboratório de Corpo e Movimento)…' },
+  { foto: F5 + '5andar-sala-504.jpg', texto: '…e pela sala 504 (Laboratório de Práticas Estéticas). Siga até o fim do corredor.' },
+  { foto: F5 + '5andar-auditorio.jpg', texto: 'O auditório fica no fim do corredor, na porta dupla de madeira.' }
+];
+const ROTA_BANHEIROS_5 = [
+  ...ATE_AUDITORIO,
+  { foto: F5 + '5andar-auditorio-banheiros.jpg', texto: 'Os banheiros ficam à esquerda do auditório, passando pela abertura.' },
+  { foto: F5 + '5andar-banheiros.jpg', texto: 'Chegou! Tem banheiro unissex, feminino/masculino e PNE.' }
+];
+
 window.WIKI_CONTEUDO = {
   localizacao: [
     {
       id: 'banheiros', nome: 'Banheiros', icone: '🚻',
       itens: [
-        { id: 'banheiro-masc-fem', titulo: 'Banheiros masculino e feminino', resumo: 'Tem dois no 4º andar, os dois com bebedouro: no início da Una e no corredor da biblioteca.',
+        { id: 'banheiro-masc-fem', titulo: 'Banheiros do 4º andar', resumo: 'Masculino e feminino em dois lugares: no início da Una e no corredor da biblioteca. Os dois têm bebedouro.',
           onde: '4º andar • no início da Una (corredor da direita) e no corredor da biblioteca (à esquerda)', foto: 'assets/fotos/4andar-banheiros-inicio.jpg',
           rotas: [
             { nome: 'Opção 1: no início da Una', passos: ROTA_BANHEIROS_4_INICIO },
             { nome: 'Opção 2: no corredor da biblioteca', passos: ROTA_BANHEIROS_4_CORREDOR }
           ],
           buscas: ['wc', 'toalete', 'sanitario', 'preciso ir ao banheiro', 'bebedouro', 'agua'] },
-        { id: 'banheiro-acessivel', titulo: 'Banheiro acessível (PNE)', resumo: 'Banheiro adaptado. Tem um em cada conjunto de banheiros do 4º andar.',
-          onde: '4º andar • junto dos banheiros do início da Una e do corredor da biblioteca', foto: 'assets/fotos/4andar-banheiros-inicio.jpg',
+        { id: 'banheiros-5', titulo: 'Banheiros do 5º andar', resumo: 'Unissex, feminino/masculino e PNE, do lado esquerdo do auditório.',
+          onde: '5º andar • fim do corredor, à esquerda do auditório', foto: F5 + '5andar-banheiros.jpg', rota: ROTA_BANHEIROS_5,
+          buscas: ['wc', 'toalete', 'sanitario', 'banheiro unissex', 'banheiro quinto andar', 'banheiro perto do auditorio'] },
+        { id: 'banheiro-acessivel', titulo: 'Banheiro acessível (PNE)', resumo: 'Banheiro adaptado. Tem nos dois banheiros do 4º andar e no do 5º andar.',
+          onde: '4º andar (início da Una e corredor da biblioteca) e 5º andar (ao lado do auditório)', foto: 'assets/fotos/4andar-banheiros-inicio.jpg',
           rotas: [
-            { nome: 'Opção 1: no início da Una', passos: ROTA_BANHEIROS_4_INICIO },
-            { nome: 'Opção 2: no corredor da biblioteca', passos: ROTA_BANHEIROS_4_CORREDOR }
+            { nome: '4º andar – opção 1: no início da Una', passos: ROTA_BANHEIROS_4_INICIO },
+            { nome: '4º andar – opção 2: no corredor da biblioteca', passos: ROTA_BANHEIROS_4_CORREDOR },
+            { nome: '5º andar: ao lado do auditório', passos: ROTA_BANHEIROS_5 }
           ],
           buscas: ['pcd', 'pne', 'cadeirante', 'deficiencia', 'adaptado', 'acessivel'] }
       ]
@@ -75,7 +100,9 @@ window.WIKI_CONTEUDO = {
     {
       id: 'auditorio', nome: 'Auditório', icone: '🎤',
       itens: [
-        { id: 'auditorio', titulo: 'Auditório', resumo: 'O auditório do campus: palestras, eventos e apresentações.', buscas: ['palestra', 'evento', 'colacao', 'formatura', 'banca', 'apresentacao', 'tcc'] }
+        { id: 'auditorio', titulo: 'Auditório', resumo: 'O auditório do campus: palestras, eventos e apresentações.',
+          onde: '5º andar • no fim do corredor', foto: F5 + '5andar-auditorio.jpg', rota: ATE_AUDITORIO,
+          buscas: ['palestra', 'evento', 'colacao', 'formatura', 'banca', 'apresentacao', 'tcc'] }
       ]
     },
     {
@@ -83,6 +110,14 @@ window.WIKI_CONTEUDO = {
       itens: [
         { id: 'lab-informatica', titulo: 'Laboratório de informática e redes', resumo: 'Computadores para as aulas de tecnologia e de redes.', buscas: ['computador', 'ti', 'programacao', 'ciencia da computacao', 'sistemas', 'redes', 'cisco', 'infraestrutura', 'usar um computador da faculdade'] },
         { id: 'lab-saude', titulo: 'Área da saúde', resumo: 'Espaço de aulas práticas dos cursos da saúde.', buscas: ['saude', 'enfermagem', 'biomedicina', 'farmacia', 'anatomia', 'nutricao', 'fisioterapia', 'laboratorio de saude'] },
+        { id: 'lab-501', titulo: 'Laboratório de Corpo e Movimento (501)', resumo: 'Aulas práticas de movimento. Use jaleco, calça comprida e sapato fechado.',
+          onde: '5º andar • início do corredor', foto: F5 + '5andar-sala-501.jpg',
+          rota: [...IR_5_ANDAR, { foto: F5 + '5andar-sala-501.jpg', texto: 'Chegou! A sala 501 é a porta de vidro com a placa verde.' }],
+          buscas: ['sala 501', 'corpo e movimento', 'educacao fisica', 'fisioterapia', 'laboratorio de movimento'] },
+        { id: 'lab-504', titulo: 'Laboratório de Práticas Estéticas (504)', resumo: 'Aulas práticas de estética. Use jaleco, calça comprida e sapato fechado.',
+          onde: '5º andar • corredor, depois da sala 501', foto: F5 + '5andar-sala-504.jpg',
+          rota: [...IR_5_ANDAR, { foto: F5 + '5andar-sala-501.jpg', texto: 'Passe pela sala 501.' }, { foto: F5 + '5andar-sala-504.jpg', texto: 'Chegou! A sala 504 é esta porta de madeira com a placa verde.' }],
+          buscas: ['sala 504', 'estetica', 'praticas esteticas', 'estetica e cosmetica', 'laboratorio de estetica'] },
         { id: 'lab-engenharia', titulo: 'Laboratório de engenharia elétrica e mecânica', resumo: 'Um laboratório só, usado pelas engenharias elétrica e mecânica.', buscas: ['engenharia', 'eletrica', 'mecanica', 'circuito', 'motor', 'laboratorio de engenharia'] }
       ]
     },

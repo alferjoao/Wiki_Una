@@ -44,6 +44,9 @@ const casos = [
   ['bibliotca', 'biblioteca-fisica'],            // erro de digitação
   ['secretaria', 'secretaria'],
   ['atende mais', 'atende-mais'],
+  ['banheiro do quinto andar', 'banheiros-5'],
+  ['laboratorio de estetica', 'lab-504'],
+  ['sala 501', 'lab-501'],
   ['falar com o coordenador do curso', 'coordenacao'],
   ['word e excel de graça', 'office-teams'],
   ['entregar trabalho', 'enviar-atividade']
