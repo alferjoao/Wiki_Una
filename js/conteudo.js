@@ -41,17 +41,34 @@ const IR_ATENDIMENTO = [ABRIR_SERVICOS, U('menu-servicos-atendimento', 'No menu 
 const ENTRAR_NA_UNA = { foto: 'assets/fotos/4andar-entrada.jpg', texto: 'Entre na Una pela entrada do 4º andar e passe pela catraca.' };
 const CORREDOR_ESQUERDA = { foto: 'assets/fotos/4andar-corredor-biblioteca.jpg', texto: 'Vire à esquerda e siga por este corredor (o mesmo da biblioteca).' };
 const ATENDE_MAIS = 'assets/fotos/4andar-atende-mais.jpg';
+const PASSAR_SALAS_423 = { foto: 'assets/fotos/4andar-corredor-salas-423-424.jpg', texto: 'Siga reto pelo corredor, passando pelas salas 423 e 424.' };
+const BANHEIROS_CORREDOR = 'assets/fotos/4andar-banheiros-corredor-feminino-pne.jpg';
+const ROTA_BANHEIROS_4_CORREDOR = [
+  ENTRAR_NA_UNA,
+  CORREDOR_ESQUERDA,
+  PASSAR_SALAS_423,
+  { foto: BANHEIROS_CORREDOR, texto: 'Chegou! O feminino fica à esquerda, com bebedouro do lado, e o PNE logo depois.' },
+  { foto: 'assets/fotos/4andar-banheiros-corredor-pne-masculino.jpg', texto: 'O masculino fica do lado do PNE.' }
+];
 
 window.WIKI_CONTEUDO = {
   localizacao: [
     {
       id: 'banheiros', nome: 'Banheiros', icone: '🚻',
       itens: [
-        { id: 'banheiro-masc-fem', titulo: 'Banheiros masculino e feminino', resumo: 'Logo no início da Una, no 4º andar. Tem bebedouro ao lado.',
-          onde: '4º andar • início da Una, no corredor dos laboratórios', foto: 'assets/fotos/4andar-banheiros-inicio.jpg', rota: ROTA_BANHEIROS_4_INICIO,
+        { id: 'banheiro-masc-fem', titulo: 'Banheiros masculino e feminino', resumo: 'Tem dois no 4º andar, os dois com bebedouro: no início da Una e no corredor da biblioteca.',
+          onde: '4º andar • no início da Una (corredor da direita) e no corredor da biblioteca (à esquerda)', foto: 'assets/fotos/4andar-banheiros-inicio.jpg',
+          rotas: [
+            { nome: 'Opção 1: no início da Una', passos: ROTA_BANHEIROS_4_INICIO },
+            { nome: 'Opção 2: no corredor da biblioteca', passos: ROTA_BANHEIROS_4_CORREDOR }
+          ],
           buscas: ['wc', 'toalete', 'sanitario', 'preciso ir ao banheiro', 'bebedouro', 'agua'] },
-        { id: 'banheiro-acessivel', titulo: 'Banheiro acessível (PNE)', resumo: 'Banheiro adaptado, junto dos banheiros do início da Una.',
-          onde: '4º andar • início da Una, entre o feminino e o masculino', foto: 'assets/fotos/4andar-banheiros-inicio.jpg', rota: ROTA_BANHEIROS_4_INICIO,
+        { id: 'banheiro-acessivel', titulo: 'Banheiro acessível (PNE)', resumo: 'Banheiro adaptado. Tem um em cada conjunto de banheiros do 4º andar.',
+          onde: '4º andar • junto dos banheiros do início da Una e do corredor da biblioteca', foto: 'assets/fotos/4andar-banheiros-inicio.jpg',
+          rotas: [
+            { nome: 'Opção 1: no início da Una', passos: ROTA_BANHEIROS_4_INICIO },
+            { nome: 'Opção 2: no corredor da biblioteca', passos: ROTA_BANHEIROS_4_CORREDOR }
+          ],
           buscas: ['pcd', 'pne', 'cadeirante', 'deficiencia', 'adaptado', 'acessivel'] }
       ]
     },
@@ -80,7 +97,18 @@ window.WIKI_CONTEUDO = {
             { foto: 'assets/fotos/4andar-cac.jpg', texto: 'Chegou! A CAC fica logo à frente, no hall. É só entrar.' }
           ],
           buscas: ['cac', 'cad', 'candidato', 'vestibular', 'matricula', 'quero estudar na una', 'atendimento'] },
-        { id: 'napi', titulo: 'NAPI – Apoio psicopedagógico e inclusão', resumo: 'Apoio a estudantes, adaptações de prova e atendimento especializado.', buscas: ['napi', 'aee', 'inclusao', 'psicopedagogico', 'adaptacao', 'conversar com alguém', 'estou passando por um momento difícil', 'preciso de apoio emocional', 'tenho TDAH ou autismo'] },
+        { id: 'napi', titulo: 'NAPI – Apoio psicopedagógico e inclusão', resumo: 'Apoio a estudantes, adaptações de prova e atendimento especializado.',
+          onde: '4º andar • corredor da biblioteca, depois dos banheiros, à direita', foto: 'assets/fotos/4andar-napi.jpg',
+          rota: [
+            ENTRAR_NA_UNA,
+            CORREDOR_ESQUERDA,
+            PASSAR_SALAS_423,
+            { foto: BANHEIROS_CORREDOR, texto: 'Passe pelos banheiros e continue em frente.' },
+            { foto: 'assets/fotos/4andar-corredor-sala-436.jpg', texto: 'Siga pela faixa no chão, passando pela sala 436.' },
+            { foto: 'assets/fotos/4andar-corredor-napi.jpg', texto: 'Continue pelo corredor. O NAPI fica mais à frente, à direita.' },
+            { foto: 'assets/fotos/4andar-napi.jpg', texto: 'Chegou! É esta porta de madeira, com a placa “NAPI – núcleo de apoio psicopedagógico e inclusão”.' }
+          ],
+          buscas: ['napi', 'aee', 'inclusao', 'psicopedagogico', 'adaptacao', 'conversar com alguém', 'estou passando por um momento difícil', 'preciso de apoio emocional', 'tenho TDAH ou autismo'] },
         { id: 'atende-mais', titulo: 'Atende+ (atendimento ao aluno)', resumo: 'Espaço de atendimento presencial da Una.',
           onde: '4º andar • corredor da esquerda, antes da biblioteca', foto: ATENDE_MAIS,
           rota: [
