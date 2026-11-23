@@ -82,7 +82,15 @@ window.WIKI_CONTEUDO = {
     {
       id: 'biblioteca', nome: 'Biblioteca', icone: '📚',
       itens: [
-        { id: 'biblioteca-fisica', titulo: 'Biblioteca', resumo: 'A biblioteca do campus: livros, empréstimo e lugar para estudar.', buscas: ['livro', 'emprestimo', 'acervo', 'devolucao', 'estudar', 'silencio', 'cabine'] }
+        { id: 'biblioteca-fisica', titulo: 'Biblioteca', resumo: 'Livros, empréstimo, autoatendimento e mesas para estudar.',
+          onde: '4º andar • à esquerda depois da catraca', foto: 'assets/fotos/4andar-biblioteca-entrada.jpg',
+          rota: [
+            { foto: 'assets/fotos/4andar-entrada.jpg', texto: 'Entre na Una pela entrada do 4º andar e passe pela catraca.' },
+            { foto: 'assets/fotos/4andar-corredor-biblioteca.jpg', texto: 'Vire à esquerda. No corredor, procure o letreiro vermelho “BIBLIOTECA” na parede da esquerda.' },
+            { foto: 'assets/fotos/4andar-biblioteca-entrada.jpg', texto: 'A entrada é esta porta de vidro, logo abaixo do letreiro.' },
+            { foto: 'assets/fotos/4andar-biblioteca-dentro.jpg', texto: 'Chegou! Aqui tem mesas para estudar, o autoatendimento e as estantes de livros.' }
+          ],
+          buscas: ['livro', 'emprestimo', 'acervo', 'devolucao', 'estudar', 'silencio', 'cabine', 'autoatendimento', 'pegar livro'] }
       ]
     },
     {

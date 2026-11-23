@@ -1313,7 +1313,8 @@ body {
 .guia-rota li {
   border: 1px solid var(--una-border); border-radius: 14px; overflow: hidden; background: #fff;
 }
-.guia-rota img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: var(--una-gray-bg); }
+/* foto inteira: em foto vertical a placa do alto não pode ser cortada */
+.guia-rota img { display: block; width: 100%; height: auto; max-height: 480px; object-fit: contain; background: var(--una-gray-bg); }
 .guia-rota p {
   display: flex; align-items: flex-start; gap: 0.6rem;
   padding: 0.7rem 0.85rem; font-size: 0.9rem; color: var(--una-text); line-height: 1.4;
