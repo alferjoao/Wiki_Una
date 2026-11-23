@@ -26,7 +26,7 @@
 const ROTA_BANHEIROS_4_INICIO = [
   { foto: 'assets/fotos/4andar-entrada.jpg', texto: 'Entre na Una pela entrada do 4º andar e passe pela catraca.' },
   { foto: 'assets/fotos/4andar-hall-cac-corredor.jpg', texto: 'No hall da CAC, siga a faixa no chão até o corredor à direita.' },
-  { foto: 'assets/fotos/4andar-corredor-laboratorios.jpg', texto: 'Entre no corredor e siga a placa “sanitários”.' },
+  { foto: 'assets/fotos/4andar-corredor-laboratorios.jpg', texto: 'Vire à direita e entre neste corredor. Siga a placa “sanitários”.' },
   { foto: 'assets/fotos/4andar-banheiros-inicio.jpg', texto: 'Chegou! Feminino à esquerda, PNE no meio e masculino à direita.' }
 ];
 
