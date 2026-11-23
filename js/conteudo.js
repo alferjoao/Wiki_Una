@@ -124,7 +124,6 @@ window.WIKI_CONTEUDO = {
     {
       id: 'atendimento', nome: 'Secretaria / Atendimento', icone: '🗂️',
       itens: [
-        { id: 'secretaria', titulo: 'Secretaria / Central de Atendimento (CAA)', resumo: 'Documentos, matrícula, financeiro e requerimentos presenciais.', buscas: ['caa', 'secretaria', 'atendimento', 'documento', 'matricula', 'financeiro'] },
         { id: 'cac', titulo: 'CAC – Central de Atendimento ao Candidato', resumo: 'Atendimento para quem quer entrar na Una: matrícula e dúvidas.',
           onde: '4º andar • logo depois da entrada, no hall', foto: 'assets/fotos/4andar-cac.jpg',
           rota: [
@@ -152,15 +151,15 @@ window.WIKI_CONTEUDO = {
             { foto: ATENDE_MAIS, texto: 'Chegou! O Atende+ é a sala de vidro com a faixa roxa “atende+”, antes de chegar na biblioteca.' }
           ],
           buscas: ['atende', 'atende mais', 'atende+', 'espaco atende', 'atendimento presencial', 'falar com alguem', 'duvida', 'ajuda'] },
-        { id: 'coordenacao', titulo: 'Coordenação de curso', resumo: 'Onde falar com a coordenação do seu curso. Fica do lado do Atende+.',
+        { id: 'secretaria', titulo: 'Secretaria e Coordenação', resumo: 'Secretaria e coordenação de curso ficam juntas: documentos, matrícula e falar com o coordenador.',
           onde: '4º andar • corredor da esquerda, do lado do Atende+', foto: 'assets/fotos/4andar-coordenacao.jpg',
           rota: [
             ENTRAR_NA_UNA,
             CORREDOR_ESQUERDA,
-            { foto: ATENDE_MAIS, texto: 'Procure o Atende+ (a sala com a faixa roxa). A coordenação fica do lado.' },
-            { foto: 'assets/fotos/4andar-coordenacao.jpg', texto: 'Chegou! É esta porta de vidro, com a plaquinha “coordenação” na parede.' }
+            { foto: ATENDE_MAIS, texto: 'Procure o Atende+ (a sala com a faixa roxa). A secretaria e a coordenação ficam do lado.' },
+            { foto: 'assets/fotos/4andar-coordenacao.jpg', texto: 'Chegou! É esta porta de vidro, com a plaquinha “coordenação” na parede. A secretaria fica no mesmo lugar.' }
           ],
-          buscas: ['coordenador', 'coordenadora', 'coordenacao', 'falar com o coordenador'] }
+          buscas: ['secretaria', 'caa', 'coordenacao', 'coordenador', 'coordenadora', 'falar com o coordenador', 'documento', 'matricula', 'requerimento'] }
       ]
     },
     {

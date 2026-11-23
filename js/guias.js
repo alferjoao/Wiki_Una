@@ -265,7 +265,8 @@
 
   // Abre o item de um link (ex.: #localizacao/cac), inclusive links da aba Ajuda
   function openFromHash() {
-    const [tab, id] = location.hash.slice(1).split('/');
+    const [tab, idLink] = location.hash.slice(1).split('/');
+    const id = { coordenacao: 'secretaria' }[idLink] || idLink; // links antigos de itens que foram unidos
     if (!id) {   // voltou para uma aba (ex.: botão Voltar depois de um link da Ajuda)
       if (window.wikiActivateTab && document.getElementById(`content-${tab}`)) window.wikiActivateTab(tab);
       return;
