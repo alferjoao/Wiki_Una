@@ -43,6 +43,8 @@ const casos = [
   ['certifcado', 'postar-certificado'],          // erro de digitação
   ['bibliotca', 'biblioteca-fisica'],            // erro de digitação
   ['secretaria', 'secretaria'],
+  ['atende mais', 'atende-mais'],
+  ['falar com o coordenador do curso', 'coordenacao'],
   ['word e excel de graça', 'office-teams'],
   ['entregar trabalho', 'enviar-atividade']
 ];

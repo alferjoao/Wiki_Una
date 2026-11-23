@@ -110,10 +110,11 @@ window.WikiBusca = (function () {
     if (d.body.has(t)) return 0.8;
     let best = 0;
     const tol = t.length >= 9 ? 2 : t.length >= 4 ? 1 : 0;
-    for (const set of [d.title, d.body]) {
+    // no título vale um pouco mais que na descrição
+    for (const [set, bonus] of [[d.title, 0.05], [d.body, 0]]) {
       for (const w of set) {
-        if (t.length >= 3 && w.startsWith(t)) best = Math.max(best, 0.7);            // digitando ainda
-        else if (tol && w[0] === t[0] && lev(t, w, tol) <= tol) best = Math.max(best, 0.6); // erro de digitação
+        if (t.length >= 3 && w.startsWith(t)) best = Math.max(best, 0.7 + bonus);            // digitando ainda
+        else if (tol && w[0] === t[0] && lev(t, w, tol) <= tol) best = Math.max(best, 0.6 + bonus); // erro de digitação
       }
     }
     return best;

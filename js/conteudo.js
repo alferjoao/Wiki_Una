@@ -37,6 +37,11 @@ const ABRIR_SERVICOS = U('menu-servicos-0-abrir', 'Clique no ícone “Serviços
 const ABRIR_PERFIL = U('menu-perfil-0-abrir', 'Clique no ícone de perfil, no canto superior direito.');
 const IR_ATENDIMENTO = [ABRIR_SERVICOS, U('menu-servicos-atendimento', 'No menu que abriu, clique em “Atendimento”.')];
 
+// Começo das rotas do corredor da esquerda (Atende+, Coordenação e Biblioteca)
+const ENTRAR_NA_UNA = { foto: 'assets/fotos/4andar-entrada.jpg', texto: 'Entre na Una pela entrada do 4º andar e passe pela catraca.' };
+const CORREDOR_ESQUERDA = { foto: 'assets/fotos/4andar-corredor-biblioteca.jpg', texto: 'Vire à esquerda e siga por este corredor (o mesmo da biblioteca).' };
+const ATENDE_MAIS = 'assets/fotos/4andar-atende-mais.jpg';
+
 window.WIKI_CONTEUDO = {
   localizacao: [
     {
@@ -76,7 +81,23 @@ window.WIKI_CONTEUDO = {
           ],
           buscas: ['cac', 'cad', 'candidato', 'vestibular', 'matricula', 'quero estudar na una', 'atendimento'] },
         { id: 'napi', titulo: 'NAPI – Apoio psicopedagógico e inclusão', resumo: 'Apoio a estudantes, adaptações de prova e atendimento especializado.', buscas: ['napi', 'aee', 'inclusao', 'psicopedagogico', 'adaptacao', 'conversar com alguém', 'estou passando por um momento difícil', 'preciso de apoio emocional', 'tenho TDAH ou autismo'] },
-        { id: 'coordenacao', titulo: 'Coordenação de curso', resumo: 'Onde falar com a coordenação do seu curso.', buscas: ['coordenador', 'coordenacao'] }
+        { id: 'atende-mais', titulo: 'Atende+ (atendimento ao aluno)', resumo: 'Espaço de atendimento presencial da Una.',
+          onde: '4º andar • corredor da esquerda, antes da biblioteca', foto: ATENDE_MAIS,
+          rota: [
+            ENTRAR_NA_UNA,
+            CORREDOR_ESQUERDA,
+            { foto: ATENDE_MAIS, texto: 'Chegou! O Atende+ é a sala de vidro com a faixa roxa “atende+”, antes de chegar na biblioteca.' }
+          ],
+          buscas: ['atende', 'atende mais', 'atende+', 'espaco atende', 'atendimento presencial', 'falar com alguem', 'duvida', 'ajuda'] },
+        { id: 'coordenacao', titulo: 'Coordenação de curso', resumo: 'Onde falar com a coordenação do seu curso. Fica do lado do Atende+.',
+          onde: '4º andar • corredor da esquerda, do lado do Atende+', foto: 'assets/fotos/4andar-coordenacao.jpg',
+          rota: [
+            ENTRAR_NA_UNA,
+            CORREDOR_ESQUERDA,
+            { foto: ATENDE_MAIS, texto: 'Procure o Atende+ (a sala com a faixa roxa). A coordenação fica do lado.' },
+            { foto: 'assets/fotos/4andar-coordenacao.jpg', texto: 'Chegou! É esta porta de vidro, com a plaquinha “coordenação” na parede.' }
+          ],
+          buscas: ['coordenador', 'coordenadora', 'coordenacao', 'falar com o coordenador'] }
       ]
     },
     {
