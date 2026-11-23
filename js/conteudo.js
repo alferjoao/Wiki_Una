@@ -43,6 +43,15 @@ const CORREDOR_ESQUERDA = { foto: 'assets/fotos/4andar-corredor-biblioteca.jpg',
 const ATENDE_MAIS = 'assets/fotos/4andar-atende-mais.jpg';
 const PASSAR_SALAS_423 = { foto: 'assets/fotos/4andar-corredor-salas-423-424.jpg', texto: 'Siga reto pelo corredor, passando pelas salas 423 e 424.' };
 const BANHEIROS_CORREDOR = 'assets/fotos/4andar-banheiros-corredor-feminino-pne.jpg';
+const ROTA_BANHEIROS_4_FUNDO = [
+  ENTRAR_NA_UNA,
+  CORREDOR_ESQUERDA,
+  { foto: 'assets/fotos/4andar-corredor-apos-biblioteca.jpg', texto: 'Siga reto pelo corredor, passando pela biblioteca.' },
+  { foto: 'assets/fotos/4andar-corredor-vermelho-cadeiras.jpg', texto: 'Continue pelo corredor da parede vermelha, com as cadeiras.' },
+  { foto: 'assets/fotos/4andar-corredor-parede-madeira.jpg', texto: 'Vá até o fim, onde fica a parede de madeira.' },
+  { foto: 'assets/fotos/4andar-corredor-mesas.jpg', texto: 'Na parede de madeira, vire à esquerda e siga pelo corredor das mesas.' },
+  { foto: 'assets/fotos/4andar-banheiros-fundo.jpg', texto: 'Chegou! Feminino à esquerda, com bebedouro, e masculino à direita. A porta do meio é a sala de resíduos, não é banheiro.' }
+];
 const ROTA_BANHEIROS_4_CORREDOR = [
   ENTRAR_NA_UNA,
   CORREDOR_ESQUERDA,
@@ -77,11 +86,12 @@ window.WIKI_CONTEUDO = {
     {
       id: 'banheiros', nome: 'Banheiros', icone: '🚻',
       itens: [
-        { id: 'banheiro-masc-fem', titulo: 'Banheiros do 4º andar', resumo: 'Masculino e feminino em dois lugares: no início da Una e no corredor da biblioteca. Os dois têm bebedouro.',
-          onde: '4º andar • no início da Una (corredor da direita) e no corredor da biblioteca (à esquerda)', foto: 'assets/fotos/4andar-banheiros-inicio.jpg',
+        { id: 'banheiro-masc-fem', titulo: 'Banheiros do 4º andar', resumo: 'Masculino e feminino em três lugares: no início da Una, no corredor da biblioteca e no fundo do andar. Todos têm bebedouro.',
+          onde: '4º andar • início da Una (corredor da direita), corredor da biblioteca e fundo do andar (depois da parede de madeira)', foto: 'assets/fotos/4andar-banheiros-inicio.jpg',
           rotas: [
             { nome: 'Opção 1: no início da Una', passos: ROTA_BANHEIROS_4_INICIO },
-            { nome: 'Opção 2: no corredor da biblioteca', passos: ROTA_BANHEIROS_4_CORREDOR }
+            { nome: 'Opção 2: no corredor da biblioteca', passos: ROTA_BANHEIROS_4_CORREDOR },
+            { nome: 'Opção 3: no fundo do andar', passos: ROTA_BANHEIROS_4_FUNDO }
           ],
           buscas: ['wc', 'toalete', 'sanitario', 'preciso ir ao banheiro', 'bebedouro', 'agua'] },
         { id: 'banheiros-5', titulo: 'Banheiros do 5º andar', resumo: 'Unissex, feminino/masculino e PNE, do lado esquerdo do auditório.',
