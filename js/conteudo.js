@@ -39,6 +39,16 @@ const ABRIR_SERVICOS = U('menu-servicos-0-abrir', 'Clique no ícone “Serviços
 const ABRIR_PERFIL = U('menu-perfil-0-abrir', 'Clique no ícone de perfil, no canto superior direito.');
 const IR_ATENDIMENTO = [ABRIR_SERVICOS, U('menu-servicos-atendimento', 'No menu que abriu, clique em “Atendimento”.')];
 
+// Aba Projetos: caminhos no uLife até a Academia de Futuros Profissionais (AFP) e a Extensão
+const ABRIR_AFP = [
+  U('menu-afp-0-abrir', 'Entre no uLife e clique no ícone “Academia de Futuros Profissionais” (a maleta, na barra da esquerda).'),
+  U('menu-afp-portal', 'No menu que abriu, clique em “Portal Academia de Futuros Profissionais”. O portal abre com o mesmo login.')
+];
+const AFP_INOVACAO = [...ABRIR_AFP, U('afp-menu-inovacao', 'No menu da esquerda do portal, clique em “Inovação & Empreendedorismo”.')];
+const IR_HUB = texto => [...AFP_INOVACAO, U('afp-inovacao-hub', texto)];
+const IR_NEST = texto => [...AFP_INOVACAO, U('afp-inovacao-nest', texto)];
+const IR_EXTENSAO = [ABRIR_CURSO, U('menu-curso-extensao', 'No menu que abriu, clique em “Extensão”. A plataforma abre em outra página, com o mesmo login.')];
+
 // Começo das rotas do corredor da esquerda (Atende+, Coordenação e Biblioteca)
 const ENTRAR_NA_UNA = { foto: 'assets/fotos/4andar-entrada.jpg', texto: 'Entre na Una pela entrada do 4º andar e passe pela catraca.' };
 const CORREDOR_ESQUERDA = { foto: 'assets/fotos/4andar-corredor-biblioteca.jpg', texto: 'Vire à esquerda e siga por este corredor (o mesmo da biblioteca).' };
@@ -391,5 +401,354 @@ window.WIKI_CONTEUDO = {
           passos: ['Acesse office.com.', 'Entre com seu e-mail @ulife.com.br.', 'Use on-line ou instale os aplicativos.'] }
       ]
     }
+  ],
+
+  // Projetos. Levantado no uLife e no site una.br em 24/11/2026 (veja assets/prints/ulife-rotas/PROJETOS.md).
+  // desc = frase da categoria · onde = caminho no uLife/site · links = sites oficiais (abrem em outra aba)
+  // selos = etiquetas do card: horas (o que ganha), quem (quem pode), inscricao (quando abre)
+  projetos: [
+    {
+      id: 'disciplina', nome: 'Na sua disciplina', icone: '📐',
+      desc: 'Projetos que fazem parte das suas UCs. O professor avisa a turma e orienta.',
+      itens: [
+        { id: 'projeto-a3', titulo: 'Projeto A3', resumo: 'A avaliação de projeto de cada UC, feita em equipe e apresentada no fim do semestre.',
+          selos: { quem: 'Todas as UCs', inscricao: 'Todo semestre' },
+          onde: 'Aulas → Minhas UCs → abra a disciplina (as orientações vêm do professor)',
+          rotas: NO_ULIFE([
+            ABRIR_AULAS,
+            U('menu-aulas-minhas-ucs', 'No menu que abriu, clique em “Minhas UCs”.'),
+            U('ucs-abrir-disciplina', 'Em “Unidades Curriculares”, clique na disciplina. As orientações do A3 ficam no conteúdo e nos avisos do professor.')
+          ]),
+          passos: [
+            'No começo do semestre, o professor explica o tema do A3 e como as equipes serão formadas.',
+            'Monte a equipe e combine com o professor o problema que vocês vão resolver.',
+            'Acompanhe as entregas e orientações dentro da disciplina, em Minhas UCs.',
+            'Apresente o projeto na data marcada. As datas da A3 estão na aba Calendário Acadêmico.'
+          ],
+          dica: 'Algumas UCs fazem o A3 pelo Ânima Hub (UC Hub) ou pelo Ânima Nest (UC Nest). Aí o projeto também dá 80 horas de extensão.',
+          buscas: ['a3', 'projeto integrador', 'projeto da disciplina', 'projeto em grupo', 'avaliacao de projeto', 'apresentacao do projeto', 'equipe'] },
+        { id: 'uc-hub', titulo: 'UC Hub (A3 com o Ânima Hub)', resumo: 'O A3 vira um projeto de inovação com protótipo e pitch, junto com alunos de outros cursos.',
+          selos: { horas: '80 h de extensão', quem: 'UCs convidadas', inscricao: 'O professor avisa' },
+          onde: 'O professor avisa se a sua UC é UC Hub. Entregas no WAY HUB.',
+          rotas: NO_ULIFE(IR_HUB('Clique em “Acessar o Ânima Hub”. No site do Hub, abra “UC Hub”: lá estão o guia e o link do WAY HUB.')),
+          passos: [
+            'Se o professor conectar a disciplina ao Hub, ele avisa a turma.',
+            'Cadastre-se no WAY HUB (mesmo login do uLife) e entre na sua equipe.',
+            'Entregas: pré-projeto, canvas adaptado, protótipos de telas, pitch e relatório final.',
+            'As entregas podem valer na A3, conforme o professor definir.'
+          ],
+          dica: 'O Hub não muda a nota do professor nem a ementa da UC.',
+          links: [{ url: 'https://www.animahub.com.br/uc-hub', texto: 'Saiba mais sobre a UC Hub' }, { url: 'https://www.animahub.com.br/materiais', texto: 'Modelos de pitch, canvas e SWOT' }],
+          buscas: ['uc hub', 'a3 hub', 'pitch', 'canvas', 'prototipo', 'mvp'] },
+        { id: 'uc-nest', titulo: 'UC Nest (A3 empreendedor)', resumo: 'O A3 vira uma proposta de negócio, com workshops e mentorias do Ânima Nest.',
+          selos: { horas: '80 h de extensão', quem: 'UCs convidadas', inscricao: 'Semestral' },
+          onde: 'Academia de Futuros Profissionais → Inovação & Empreendedorismo → Acessar o Ânima Nest',
+          rotas: NO_ULIFE(IR_NEST('Clique em “Acessar o Ânima Nest”. No site do Nest, abra “UC Nest” para ler o edital e se inscrever.')),
+          passos: [
+            'Algumas UCs são convidadas para o Nest. Se o professor aderir, ele avisa a turma.',
+            'Leia o edital e faça a inscrição da equipe no site do Nest.',
+            'Em cerca de 8 semanas: workshops, 2 Imersões Empreendedoras (aulas com convidados) e tutorias opcionais pelo Teams.',
+            'Os melhores projetos vão para a Final Nest.'
+          ],
+          dica: 'Exemplos de UCs Nest: Design de Interfaces e Realidades Imersivas, Exploração Digital e Fundamentos Tecnológicos, Projeto de graduação e Práticas profissionais.',
+          links: [{ url: 'https://www.animanest.com.br/uc-nest', texto: 'Página da UC Nest' }],
+          buscas: ['nest', 'anima nest', 'uc nest', 'empreendedorismo', 'startup', 'negocio', 'ideia de negocio', 'abrir empresa'] },
+        { id: 'engajamento-social', titulo: 'Projeto de Engajamento Social (Vida & Carreira)', resumo: 'Desafio social proposto pelo professor tutor na UC Vida & Carreira, a porta de entrada do curso.',
+          selos: { quem: 'Calouros', inscricao: 'Na UC Vida & Carreira' },
+          passos: [
+            'Vida & Carreira é a UC do início do curso, com acompanhamento de um professor tutor.',
+            'Nela, a turma recebe um desafio de engajamento social ligado a temas globais e aos interesses dos alunos.',
+            'Vocês planejam e fazem uma ação real para a comunidade.'
+          ],
+          links: [{ url: 'https://www.una.br/nosso-curriculo/vida-e-carreira/', texto: 'Vida & Carreira no site da Una' }],
+          buscas: ['vida e carreira', 'engajamento social', 'projeto de vida', 'tutor', 'calouro', 'primeiro periodo'] }
+      ]
+    },
+    {
+      id: 'extensao', nome: 'Extensão e impacto social', icone: '🌱',
+      desc: 'Projetos com a comunidade. Abertos a todos os cursos e contam horas para o diploma.',
+      itens: [
+        { id: 'extensao-o-que-e', titulo: 'O que é extensão (e quantas horas preciso)', resumo: 'É obrigatória: no mínimo 10% da carga horária do curso. Em Engenharia de Software são 320 horas.',
+          selos: { horas: '10% do curso', quem: 'Todos os cursos' },
+          onde: 'Curso → Extensão → Visão Geral',
+          rotas: NO_ULIFE([
+            ...IR_EXTENSAO,
+            U('extensao-visao-geral', 'Em “Visão Geral” você vê quanto das horas de extensão já fez e quanto falta.')
+          ]),
+          passos: [
+            'Extensão é onde você aplica o que aprende em projetos com impacto real na comunidade.',
+            'É requisito para o diploma (regra do MEC): pelo menos 10% da carga horária do curso. Ex.: curso de 3.600 h = 360 h de extensão.',
+            'Contam horas: cursos de extensão, projetos de extensão e outras atividades.',
+            'Em Curso → Extensão → Visão Geral você vê o % já feito, as horas cursadas e as que faltam.'
+          ],
+          dica: 'Ânima Hub, Ânima Nest e UC Hub também dão horas de extensão.',
+          links: [{ url: 'https://www.una.br/sou-estudante/extensao-universitaria/', texto: 'Extensão no site da Una' }],
+          buscas: ['extensao', 'horas de extensao', 'quantas horas de extensao', 'extensao obrigatoria', 'projeto de extensao', 'curso de extensao', 'comunidade'] },
+        { id: 'extensao-inscrever', titulo: 'Me inscrever em um projeto de extensão', resumo: 'As vagas abrem a cada semestre na plataforma de Extensão do uLife.',
+          selos: { quem: 'Todos os cursos', inscricao: 'Semestral' },
+          onde: 'Curso → Extensão → Matrícula',
+          rotas: NO_ULIFE([
+            ...IR_EXTENSAO,
+            U('extensao-matricula', 'No card “Matrícula”, clique em “Ir para Matrícula” e escolha um curso ou projeto com inscrição aberta.'),
+            U('extensao-historico', 'Depois de se inscrever, acompanhe em “Ver Histórico” (matrículas efetivadas e inscrições submetidas).')
+          ]),
+          dica: 'Fora do período aparece “Neste momento não temos inscrições abertas”. O calendário de extensão está no site da Una.',
+          buscas: ['inscrever extensao', 'matricula extensao', 'vagas de extensao', 'participar de projeto', 'historico de extensao'] },
+        { id: 'hub-sociais', titulo: 'Jovem Tech, Mulheres Tech e SOS RS', resumo: 'Projetos sociais do Ânima Hub em que alunos ensinam tecnologia e ajudam a comunidade.',
+          selos: { quem: 'Ecossistema Ânima' },
+          passos: [
+            'Jovem Tech: ensina tecnologia e programação para jovens; já passou por mais de 15 favelas em 3 estados.',
+            'Mulheres Tech: letramento digital para trabalhadoras domésticas, com aulas dadas por alunos.',
+            'SOS RS / Salva RS: app de geolocalização que ligou voluntários a pessoas atingidas pelas enchentes do Rio Grande do Sul.'
+          ],
+          links: [{ url: 'https://www.animahub.com.br/a%C3%A7%C3%B5es', texto: 'Ações e eventos do Hub' }],
+          buscas: ['jovem tech', 'mulheres tech', 'sos rs', 'projeto social', 'voluntario', 'voluntariado', 'ensinar programacao'] },
+        { id: 'incentivo-cultura', titulo: 'Patrocínio para projetos culturais', resumo: 'A Una patrocina projetos culturais pela Lei de Incentivo à Cultura, por edital.',
+          selos: { quem: 'Quem tem projeto aprovado', inscricao: 'Por edital' },
+          passos: [
+            'A Una usa parte dos impostos para patrocinar projetos culturais (leis federais, estaduais ou municipais).',
+            'Se você tem um projeto cultural aprovado para captação, pode concorrer nos editais de cultura da Una.',
+            'O edital traz prazos, critérios e áreas de interesse.'
+          ],
+          dica: 'Exemplos já apoiados: Cine Cipó, Embaúba Play e MIBH.',
+          links: [{ url: 'https://www.una.br/servicos-a-comunidade/lei-de-incentivo-a-cultura/', texto: 'Editais de cultura da Una' }],
+          buscas: ['cultura', 'lei de incentivo', 'patrocinio', 'arte', 'musica', 'cinema', 'teatro', 'projeto cultural'] }
+      ]
+    },
+    {
+      id: 'inovacao', nome: 'Inovação e empreendedorismo', icone: '💡',
+      desc: 'Para quem quer criar soluções, testar ideias ou abrir o próprio negócio.',
+      itens: [
+        { id: 'hub-squads', titulo: 'Squads do Ânima Hub', resumo: 'Equipes de alunos de vários cursos resolvendo problemas reais de empresas parceiras.',
+          selos: { horas: '100 h ext. + 40 h pesquisa', quem: 'Todos os cursos', inscricao: 'Semestral' },
+          onde: 'Academia de Futuros Profissionais → Inovação & Empreendedorismo → Acessar o Ânima Hub',
+          rotas: NO_ULIFE(IR_HUB('Clique em “Acessar o Ânima Hub”. No site do Hub, vá em “Inscreva-se” para ler o edital e se inscrever.')),
+          passos: [
+            'O Hub é uma rede com mais de 110 laboratórios de inovação. Cada squad junta alunos de cursos diferentes (TI, saúde, direito, engenharia…).',
+            'A squad trabalha num desafio real de uma empresa parceira, com métodos ágeis e pesquisa.',
+            'Leia o edital e se inscreva na página “Inscreva-se” do site do Hub.',
+            'As entregas são feitas na plataforma WAY HUB (login igual ao do uLife).'
+          ],
+          links: [{ url: 'https://www.animahub.com.br/inscreva-se', texto: 'Inscrição no Ânima Hub' }, { url: 'https://www.animahub.com.br/squads', texto: 'Ver as squads' }],
+          buscas: ['hub', 'anima hub', 'squad', 'inovacao', 'laboratorio de inovacao', 'desafio de empresa', 'way hub'] },
+        { id: 'casa-una', titulo: 'Casa Una (hub de inovação da Una)', resumo: 'Espaço aberto para alunos, professores, empresas e startups criarem soluções juntos.',
+          selos: { quem: 'Todos os cursos', inscricao: 'Veja a programação' },
+          passos: [
+            'A Casa Una é o hub de inovação da Una, um espaço de “ocupação aberta e orientada por problemas”.',
+            'Ela trabalha eixos como empregabilidade, impacto social, habilidades tech, saúde e bem-estar e inovação aberta.',
+            'Acompanhe a programação de eventos e o Programa Residentes no site.'
+          ],
+          links: [{ url: 'https://www.una.br/servicos-a-comunidade/casa-una/', texto: 'Casa Una no site da Una' }],
+          buscas: ['casa una', 'hub da una', 'espaco de inovacao', 'startup', 'residentes', 'coworking'] },
+        { id: 'nest-acelera', titulo: 'Nest Acelera', resumo: 'Pré-aceleração para quem já tem uma ideia de negócio e quer tirá-la do papel.',
+          selos: { horas: '80 h de extensão', quem: 'Todos os cursos', inscricao: 'Semestral' },
+          onde: 'Academia de Futuros Profissionais → Inovação & Empreendedorismo → Acessar o Ânima Nest',
+          rotas: NO_ULIFE(IR_NEST('Clique em “Acessar o Ânima Nest”. No site do Nest, abra “Nest Acelera” para ler o edital e se inscrever.')),
+          passos: [
+            'Leia o edital e inscreva seu projeto no período de inscrições.',
+            'Faça os workshops: canvas do modelo de negócios, plano de negócios e simulador financeiro.',
+            'Os modelos vêm em PDF ou no Canva, com vídeos explicando cada um.'
+          ],
+          dica: 'A jornada completa do Nest dá certificado, além das horas de extensão.',
+          links: [{ url: 'https://www.animanest.com.br/nest-acelera', texto: 'Página do Nest Acelera' }],
+          buscas: ['nest acelera', 'aceleradora', 'pre aceleracao', 'plano de negocios', 'modelo de negocio', 'empreender'] },
+        { id: 'shark-hub', titulo: 'Shark Hub (competição de projetos)', resumo: 'Mostra de inovação em que as melhores squads apresentam para uma banca.',
+          selos: { quem: 'Squads do Hub' },
+          onde: 'Academia de Futuros Profissionais → Início → Eventos',
+          rotas: NO_ULIFE([
+            ...ABRIR_AFP,
+            U('afp-eventos', 'Na página inicial do portal, desça até “Eventos”. Lá aparecem as datas da semifinal e da final do Shark Hub.')
+          ]),
+          passos: [
+            'As squads que mais se destacam no semestre vão para a semifinal e depois para a final.',
+            'A final é híbrida: presencial em uma unidade e transmitida no YouTube.',
+            'A final do Shark Hub 10 foi na Una Aimorés, em 17/09/2026.'
+          ],
+          links: [{ url: 'https://www.animahub.com.br/shark-hub', texto: 'Página do Shark Hub' }],
+          buscas: ['shark hub', 'shark', 'competicao', 'premiacao', 'banca', 'final'] },
+        { id: 'nest-premiados', titulo: 'Projetos premiados da Una', resumo: 'Pulse Care, Pontua Eco e Facul Driver: projetos de alunos da Una que ganharam no Nest.',
+          selos: { quem: 'Para se inspirar' },
+          passos: [
+            'Pulse Care – Una Betim – 2º lugar na UC Nest 2025/2.',
+            'Pontua Eco – Una Betim – 2º lugar na UC Nest 2025/1.',
+            'Facul Driver – Una Contagem – 3º lugar na UC Nest 2025/1.'
+          ],
+          dica: 'As apresentações das finais estão gravadas na Vitrine do Ânima Nest.',
+          links: [{ url: 'https://www.animanest.com.br/vitrine/momento_nest', texto: 'Vencedores do Nest' }],
+          buscas: ['premiado', 'vencedor', 'exemplo de projeto', 'pulse care', 'pontua eco', 'facul driver', 'final nest'] }
+      ]
+    },
+    {
+      id: 'pesquisa', nome: 'Pesquisa científica', icone: '🔬',
+      desc: 'Para quem gosta de investigar um tema a fundo, com orientação de um professor.',
+      itens: [
+        { id: 'pro-ciencia', titulo: 'Iniciação científica (Pró-Ciência)', resumo: 'Pesquise um tema do seu curso com um professor pesquisador, por até 12 meses.',
+          selos: { horas: 'Até 12 meses', quem: 'Alunos de graduação', inscricao: 'Por edital' },
+          passos: [
+            'O Pró-Ciência é o programa de iniciação científica da Ânima.',
+            'Os projetos abrem por edital, duram um semestre e podem ser prorrogados por mais seis meses com relatório de atividades.',
+            'Você pesquisa sob a supervisão de um professor pesquisador.',
+            'Pesquisas com pessoas passam pelo Comitê de Ética em Pesquisa (CEP).'
+          ],
+          dica: 'A iniciação científica ajuda muito em intercâmbio e pós-graduação. As squads do Ânima Hub também dão 40 h de pesquisa.',
+          links: [{ url: 'https://www.una.br/nosso-curriculo/iniciacao-cientifica/', texto: 'Pró-Ciência e editais' }, { url: 'https://pesquisaic.animaeducacao.com.br/', texto: 'Portal de pesquisa' }],
+          buscas: ['iniciacao cientifica', 'ic', 'pro ciencia', 'pesquisa', 'pesquisador', 'cientifico', 'artigo', 'orientador'] },
+        { id: 'runa', titulo: 'Publicar trabalhos no RUNA', resumo: 'Repositório da Ânima com artigos, TCCs e pesquisas de alunos. Você também pode enviar os seus.',
+          selos: { quem: 'Todos os cursos', inscricao: 'Prazo do seu curso' },
+          passos: [
+            'Acesse o RUNA e entre com seu e-mail e senha.',
+            'Clique em “Meu Espaço”: você vai para a área do seu curso.',
+            'Clique no “+” e envie o documento em PDF. Atenção ao prazo de submissão.',
+            'Esqueceu a senha? Use “redefinir senha” e confira o e-mail (inclusive o spam).'
+          ],
+          dica: 'Tem estudos de caso, artigos, monografias, relatórios de pesquisa e teses. Ótimo para buscar referências e exemplos de TCC.',
+          links: [{ url: 'https://repositorio.animaeducacao.com.br/', texto: 'Acessar o RUNA' }, { url: 'https://portaldeperiodicos.animaeducacao.com.br/', texto: 'Portal de Periódicos Ânima' }],
+          buscas: ['runa', 'repositorio', 'tcc', 'monografia', 'publicar artigo', 'trabalho de conclusao', 'periodicos'] }
+      ]
+    },
+    {
+      id: 'internacional', nome: 'Internacional e idiomas', icone: '🌍',
+      desc: 'Intercâmbio, cursos de férias no exterior e idiomas com desconto. Cuidado do International Office.',
+      itens: [
+        { id: 'intercambio', titulo: 'Intercâmbio acadêmico', resumo: 'Estude 1 ou 2 semestres em uma universidade parceira no exterior.',
+          selos: { quem: 'Todos os cursos', inscricao: 'Abril e setembro' },
+          passos: [
+            'Os editais abrem duas vezes por ano, em abril e em setembro, na página “Inscrições Abertas” do International Office.',
+            'Leia o edital e mande os documentos pelo link indicado, no prazo. Comprovantes de iniciação científica e prêmios contam.',
+            'O coordenador do curso aprova seu plano de estudos.',
+            'Planeje os gastos: moradia, alimentação, seguro-saúde, passagens e visto ficam por sua conta.'
+          ],
+          dica: 'Às vezes saem bolsas (Santander, CAPES, Erasmus…), sem data fixa. Elas aparecem na mesma página.',
+          links: [{ url: 'https://www.una.br/sobre/internacional/', texto: 'International Office da Una' }],
+          buscas: ['intercambio', 'estudar fora', 'exterior', 'internacional', 'international office', 'mobilidade', 'outro pais'] },
+        { id: 'curta-duracao', titulo: 'Programas de férias no exterior', resumo: 'Cursos de idioma, visitas técnicas e módulos internacionais de até 4 semanas.',
+          selos: { quem: 'Comunidade Ânima', inscricao: 'Por edital' },
+          passos: [
+            'Acontecem nas férias (janeiro e julho) e duram no máximo 4 semanas.',
+            'São abertos a alunos, ex-alunos, professores, colaboradores e dependentes.',
+            'A inscrição segue o edital de cada programa, na página do International Office.'
+          ],
+          dica: 'Exemplo recente: “Vivências práticas na França”, com edital para graduação.',
+          links: [{ url: 'https://www.una.br/sobre/internacional/', texto: 'Ver programas abertos' }],
+          buscas: ['curso de ferias', 'visita tecnica', 'viagem', 'curso no exterior', 'franca', 'curta duracao'] },
+        { id: 'idiomas', titulo: 'Idiomas com desconto (Programa Autodidata)', resumo: 'Projeto criado por estudantes para aprender idiomas com descontos e editais de proficiência.',
+          selos: { quem: 'Alunos da Una', inscricao: 'Desconto por e-mail' },
+          passos: [
+            'O Programa Autodidata foi criado por estudantes para estudantes e reúne descontos em escolas de idiomas.',
+            'Tem opções de japonês (Aliança Cultural Brasil-Japão), mandarim (Instituto Confúcio), alemão (Goethe) e a plataforma LingoPass.',
+            'O International Office também abre editais de testes de proficiência, como o TOEFL.'
+          ],
+          dica: 'Para pedir o desconto, normalmente é preciso enviar um comprovante de matrícula (veja como emitir na aba Ambiente virtual).',
+          links: [{ url: 'https://cnatd.my.canva.site/programa-autodidata', texto: 'Programa Autodidata' }, { url: 'https://www.una.br/sobre/internacional/', texto: 'Editais de proficiência' }],
+          buscas: ['idioma', 'ingles', 'espanhol', 'japones', 'mandarim', 'alemao', 'toefl', 'autodidata', 'lingua estrangeira'] }
+      ]
+    },
+    {
+      id: 'carreira', nome: 'Carreira e mercado', icone: '💼',
+      desc: 'Projetos com empresas e conteúdos para dar o primeiro passo na profissão.',
+      itens: [
+        { id: 'duale', titulo: 'Duale (projetos com empresas)', resumo: 'Projetos e desafios com empresas reais, com foco em conseguir emprego.',
+          onde: 'Academia de Futuros Profissionais → Duale',
+          rotas: NO_ULIFE([
+            ...ABRIR_AFP,
+            U('afp-menu-duale', 'No menu da esquerda do portal, clique em “Duale”.'),
+            U('afp-duale', 'Em “Programas Duale”, veja as opções e clique na que te interessa.')
+          ]),
+          passos: [
+            'Você atua em projetos e desafios propostos por empresas parceiras.',
+            'Programas: Aceleradora Profissional Duale, Unidade Curricular Duale, Duale Atemporal e Curso Duale.',
+            'Também prepara para processos seletivos exclusivos dessas empresas.'
+          ],
+          dica: 'Na mesma Academia de Futuros Profissionais tem vagas, estágios e um simulador de entrevistas (3 por mês).',
+          buscas: ['duale', 'empresa', 'empregabilidade', 'mercado de trabalho', 'estagio', 'vaga', 'carreira', 'emprego'] },
+        { id: 'mentorias', titulo: 'Mentorias ao vivo (Vida & Carreira)', resumo: 'Lives semanais com líderes de mercado. Cada uma dá certificado de 5 horas.',
+          selos: { horas: '5 h por live', quem: 'Todos os cursos', inscricao: 'Toda semana' },
+          passos: [
+            'Toda semana tem live com profissionais e líderes de mercado.',
+            'Cada live dá um certificado de 5 horas, que vale como atividade complementar.',
+            'Perdeu alguma? As gravações desde 2021 ficam na plataforma Vida & Carreira.'
+          ],
+          dica: 'Depois, poste o certificado como atividade complementar (veja o passo a passo na aba Ambiente virtual).',
+          links: [{ url: 'https://www.una.br/nosso-curriculo/vida-e-carreira/', texto: 'Mentorias Vida & Carreira' }],
+          buscas: ['mentoria', 'live', 'palestra online', 'lider de mercado', 'soft skills', 'networking'] }
+      ]
+    }
+  ]
+};
+
+/**
+ * Aba Projetos – ferramentas (contador de horas, inscrições e jornada).
+ * Tudo aqui tem fonte. Conferido no uLife e nos sites oficiais em 24/11/2026.
+ * Ao atualizar, troque "conferido" e as datas.
+ */
+window.WIKI_PROJETOS = {
+  conferido: '2026-11-24',
+
+  // Contador de horas de extensão
+  extensao: {
+    regra: 'No mínimo 10% da carga horária total do curso (Resolução CNE/CES nº 7/2018).',
+    fonteRegra: { texto: 'una.br – Extensão Universitária', url: 'https://www.una.br/sou-estudante/extensao-universitaria/' },
+    // horas exigidas que vimos no uLife (Curso → Extensão → Histórico: cursadas + a cursar)
+    cursos: [{ nome: 'Engenharia de Software', horas: 320, fonte: 'uLife → Curso → Extensão → Histórico' }],
+    // projetos que dão horas de extensão, com o valor que aparece no site oficial
+    projetos: [
+      { id: 'hub-squads', nome: 'Squads do Ânima Hub', horas: 100, fonte: 'animahub.com.br/inscreva-se' },
+      { id: 'uc-hub', nome: 'UC Hub', horas: 80, fonte: 'animahub.com.br/uc-hub' },
+      { id: 'uc-nest', nome: 'UC Nest', horas: 80, fonte: 'animanest.com.br/os-programas' },
+      { id: 'nest-acelera', nome: 'Nest Acelera', horas: 80, fonte: 'animanest.com.br/os-programas' }
+    ]
+  },
+
+  // Situação das inscrições. tipo:
+  //   'encerrado' / 'em-breve' → vale até "validoAte"; depois disso a wiki mostra "Confira as datas"
+  //   'evento'   → datas: [['AAAA-MM-DD', 'nome', 'HH:MM' (horário de Brasília)]]; mostra o próximo
+  //   'janela'   → meses (1–12) em que os editais costumam abrir
+  //   'info'     → texto fixo (sem data)
+  inscricoes: {
+    'uc-nest': { tipo: 'encerrado', texto: 'Inscrições 2026.2 encerradas', validoAte: '2026-12-31', fonte: { texto: 'animanest.com.br', url: 'https://www.animanest.com.br/inscri%C3%A7%C3%B5es' } },
+    'nest-acelera': { tipo: 'encerrado', texto: 'Inscrições 2026.2 encerradas', validoAte: '2026-12-31', fonte: { texto: 'animanest.com.br', url: 'https://www.animanest.com.br/inscri%C3%A7%C3%B5es' } },
+    'hub-squads': { tipo: 'encerrado', texto: 'Encerradas: squads de 2026.2 já formadas', validoAte: '2026-12-31', fonte: { texto: 'animahub.com.br', url: 'https://www.animahub.com.br/inscreva-se' } },
+    'extensao-inscrever': { tipo: 'encerrado', texto: 'Sem inscrições abertas no momento', validoAte: '2026-12-31', fonte: { texto: 'uLife → Curso → Extensão → Matrícula' } },
+    'pro-ciencia': { tipo: 'em-breve', texto: 'Novo edital: “em breve”', validoAte: '2026-12-31', fonte: { texto: 'una.br – Iniciação Científica', url: 'https://www.una.br/nosso-curriculo/iniciacao-cientifica/' } },
+    'shark-hub': { tipo: 'evento', datas: [['2026-12-09', 'Semifinal Shark Hub 11', '19:00']], fonte: { texto: 'uLife → Academia de Futuros Profissionais → Eventos' } },
+    'nest-premiados': { tipo: 'evento', datas: [['2026-11-25', 'Final Nest', '19:00']], fonte: { texto: 'uLife → Academia de Futuros Profissionais → Eventos' } },
+    'intercambio': { tipo: 'janela', meses: [4, 9], texto: 'Editais abrem em abril e setembro', fonte: { texto: 'una.br – International Office', url: 'https://www.una.br/sobre/internacional/' } },
+    'curta-duracao': { tipo: 'info', texto: 'Por edital (programas em janeiro e julho)', fonte: { texto: 'una.br – International Office', url: 'https://www.una.br/sobre/internacional/' } },
+    'incentivo-cultura': { tipo: 'info', texto: 'Por edital de cultura', fonte: { texto: 'una.br – Lei de Incentivo à Cultura', url: 'https://www.una.br/servicos-a-comunidade/lei-de-incentivo-a-cultura/' } },
+    'uc-hub': { tipo: 'info', texto: 'O professor avisa a turma', fonte: { texto: 'animahub.com.br/uc-hub', url: 'https://www.animahub.com.br/uc-hub' } },
+    'projeto-a3': { tipo: 'info', texto: 'Todo semestre, em cada UC', fonte: { texto: 'una.br – Guia do aluno (A1, A2 e A3)', url: 'https://www.una.br/sou-estudante/' } },
+    'mentorias': { tipo: 'info', texto: 'Lives toda semana', fonte: { texto: 'una.br – Vida & Carreira', url: 'https://www.una.br/nosso-curriculo/vida-e-carreira/' } }
+  },
+
+  // Jornada: o que aproveitar em cada fase. Cada fase diz de onde veio a informação.
+  jornada: [
+    { fase: 'Começo do curso', icone: '🌱',
+      fonte: 'una.br – Vida & Carreira é “a porta de entrada do aluno” nos cursos',
+      itens: [
+        { id: 'engajamento-social', texto: 'Projeto de Engajamento Social, na UC Vida & Carreira' },
+        { id: 'mentorias', texto: 'Mentorias ao vivo com certificado' }
+      ] },
+    { fase: 'Todo semestre', icone: '🔁',
+      fonte: 'una.br – Guia do aluno (A1, A2 e A3) · uLife → Extensão (“próximo período de inscrições”)',
+      itens: [
+        { id: 'projeto-a3', texto: 'Projeto A3 em cada UC' },
+        { id: 'extensao-inscrever', texto: 'Inscrições de extensão, no período aberto' },
+        { id: 'uc-hub', texto: 'UC Hub ou UC Nest, se a sua UC participar' }
+      ] },
+    { fase: 'Quando quiser, ao longo do curso', icone: '🧭',
+      fonte: 'Editais e páginas oficiais de cada programa (Hub, Nest, Pró-Ciência, International Office)',
+      itens: [
+        { id: 'hub-squads', texto: 'Squads do Ânima Hub' },
+        { id: 'nest-acelera', texto: 'Nest Acelera, se você tem uma ideia de negócio' },
+        { id: 'pro-ciencia', texto: 'Iniciação científica (Pró-Ciência)' },
+        { id: 'intercambio', texto: 'Intercâmbio (editais em abril e setembro)' },
+        { id: 'idiomas', texto: 'Idiomas com desconto' }
+      ] },
+    { fase: 'Antes de se formar', icone: '🎓',
+      fonte: 'una.br – a extensão é requisito para o diploma · RUNA é onde os trabalhos dos alunos são enviados',
+      itens: [
+        { id: 'extensao-o-que-e', texto: 'Fechar as horas de extensão (mínimo de 10% do curso)' },
+        { id: 'runa', texto: 'Publicar seu trabalho no RUNA, no prazo do curso' }
+      ] }
   ]
 };

@@ -49,7 +49,23 @@ const casos = [
   ['sala 501', 'lab-501'],
   ['falar com o coordenador do curso', 'secretaria'],
   ['word e excel de graça', 'office-teams'],
-  ['entregar trabalho', 'enviar-atividade']
+  ['entregar trabalho', 'enviar-atividade'],
+  // aba Projetos
+  ['projeto integrador', 'projeto-a3'],
+  ['quero abrir uma startup', 'uc-nest'],
+  ['quantas horas de extensao preciso', 'extensao-o-que-e'],
+  ['como participo de uma squad', 'hub-squads'],
+  ['iniciacao cientifica', 'pro-ciencia'],
+  ['quero fazer pesquisa com um professor', 'pro-ciencia'],
+  ['quero estudar fora do brasil', 'intercambio'],
+  ['curso de ingles com desconto', 'idiomas'],
+  ['onde publico meu tcc', 'runa'],
+  ['lives de mentoria', 'mentorias'],
+  ['espaco de inovacao da una', 'casa-una'],
+  ['quero ser voluntario', 'hub-sociais'],
+  ['shark hub', 'shark-hub'],
+  ['projeto com empresa de verdade', 'duale'],
+  ['exemplos de projetos premiados', 'nest-premiados']
 ];
 
 let falhas = 0;

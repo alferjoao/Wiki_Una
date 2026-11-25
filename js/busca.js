@@ -60,7 +60,10 @@ window.WikiBusca = (function () {
     [['direito', 'advogado', 'juridico'], 'nucleo juridico direito'],
     [['jornalismo', 'publicidade', 'foto', 'filmar', 'video', 'podcast'], 'estudio comunicacao'],
     [['entrada', 'catraca', 'carteirinha', 'chegar', 'portaria'], 'entrada catraca'],
-    [['coordenador', 'coordenadora', 'coordenacao'], 'coordenacao curso']
+    [['coordenador', 'coordenadora', 'coordenacao'], 'coordenacao curso'],
+    [['empreender', 'empreendedorismo', 'startup', 'negocio', 'empresa propria'], 'nest empreendedorismo negocio'],
+    [['inovacao', 'inovar', 'squad', 'pesquisa', 'cientifica'], 'hub inovacao squad pesquisa'],
+    [['integrador', 'projeto', 'projetos'], 'projeto a3 extensao']
   ];
 
   // "laboratórios" e "laboratorio" viram a mesma raiz

@@ -1294,6 +1294,238 @@ body {
   background: #FFFBEB; border: 1px solid #FDE68A; font-size: 0.84rem; color: #78350F;
 }
 .guia-aviso { margin-top: 0.85rem; font-size: 0.76rem; color: var(--una-text-dim); }
+/* Links para sites oficiais (aba Projetos) */
+.guia-links { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.9rem; }
+.guia-link {
+  display: inline-flex; align-items: center; padding: 0.45rem 0.8rem; border-radius: 999px;
+  border: 1px solid #DDD6FE; background: #F5F3FF; color: #6D28D9;
+  font-size: 0.82rem; font-weight: 600; text-decoration: none;
+}
+.guia-link:hover, .guia-link:focus-visible { background: #EDE9FE; border-color: #7C3AED; }
+
+/* Adesivos de fundo: só na aba Projetos (assets/adesivos/) */
+#content-projetos .section-card { position: relative; isolation: isolate; overflow: hidden; }
+/* camada 1: adesivos espalhados pelo fundo todo (padrão que se repete) */
+#content-projetos .section-card::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  opacity: 0.22;
+  background: url('../assets/adesivos/padrao.svg') 0 0 / 420px auto repeat;
+}
+/* camada 2: adesivos de destaque no canto do título */
+#content-projetos .section-card::after {
+  content: ''; position: absolute; top: 0.3rem; right: 1rem; width: 12rem; height: 6.5rem;
+  z-index: -1; pointer-events: none;
+  background:
+    url('../assets/adesivos/foguete.svg') right 0 top 0 / 100px no-repeat,
+    url('../assets/adesivos/selo-a3.svg') right 7rem top 0.6rem / 66px no-repeat;
+}
+/* os cards ficam levemente translúcidos para os adesivos aparecerem por trás */
+#content-projetos .guia-col { background: rgba(255, 255, 255, 0.86); backdrop-filter: blur(2px); }
+#content-projetos .guia-columns.is-cards .guia-item { background: rgba(255, 255, 255, 0.92); }
+#content-projetos .guia-columns.is-cards .guia-item:hover { background: #fff; }
+#content-projetos .section-header,
+#content-projetos .guia-endereco { position: relative; padding-right: 13rem; }
+@media (max-width: 900px) {
+  #content-projetos .section-card::before { background-size: 300px auto; }
+  #content-projetos .section-card::after { width: 5rem; height: 5rem; background-size: 70px, 0; }
+  #content-projetos .section-header,
+  #content-projetos .guia-endereco { padding-right: 5.5rem; }
+}
+
+/* Ferramentas da aba Projetos: inscrições, horas de extensão e jornada (js/projetos.js) */
+.proj-tools { margin-bottom: 1.1rem; }
+.proj-tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.proj-tab {
+  display: inline-flex; align-items: center; gap: 0.45rem; cursor: pointer;
+  padding: 0.6rem 1rem; border-radius: 12px; font: inherit; font-size: 0.88rem; font-weight: 700;
+  border: 1.5px solid var(--una-border); background: rgba(255, 255, 255, 0.92); color: var(--una-text);
+  transition: var(--transition);
+}
+.proj-tab:hover { border-color: var(--primary-purple); color: var(--primary-purple-dark); }
+.proj-tab[aria-selected="true"] {
+  background: linear-gradient(135deg, #7C3AED, #6D28D9); border-color: transparent; color: #fff;
+  box-shadow: 0 6px 16px rgba(124, 58, 237, 0.25);
+}
+.proj-tab:focus-visible { outline: 2px solid var(--primary-purple); outline-offset: 2px; }
+.proj-painel {
+  margin-top: 0.7rem; padding: 1rem 1.1rem; border-radius: var(--radius-lg);
+  border: 1px solid var(--una-border); background: rgba(255, 255, 255, 0.94);
+  animation: guiaIn 240ms ease both;
+}
+.proj-painel h4 { font-size: 0.85rem; font-weight: 700; color: var(--una-text); margin: 0.2rem 0 0.5rem; }
+.proj-intro { font-size: 0.84rem; color: var(--una-text-muted); margin-bottom: 0.8rem; }
+.proj-fonte { font-size: 0.72rem; color: var(--una-text-dim); margin-top: 0.7rem; }
+.proj-fonte a, .proj-status-linha a { color: var(--primary-purple-dark); }
+.proj-vazio { font-size: 0.82rem; color: var(--una-text-muted); }
+.proj-aviso { font-size: 0.78rem; color: var(--una-text-muted); margin-top: 0.7rem; }
+.proj-link { color: var(--primary-purple-dark); font-weight: 600; text-decoration: none; font-size: 0.84rem; }
+.proj-link:hover, .proj-link:focus-visible { text-decoration: underline; }
+
+/* Selo de situação da inscrição */
+.proj-status {
+  display: inline-block; font-size: 0.68rem; font-weight: 700; line-height: 1.5;
+  padding: 0.05rem 0.5rem; border-radius: 999px; background: #F3F4F6; color: #374151;
+}
+.guia-item-text > .proj-status { align-self: flex-start; margin-top: 0.35rem; }
+.proj-status.is-aberto { background: #DCFCE7; color: #166534; }
+.proj-status.is-evento { background: #E0E7FF; color: #3730A3; }
+.proj-status.is-previsto { background: #FEF3C7; color: #92400E; }
+.proj-status.is-fechado { background: #FEE2E2; color: #991B1B; }
+.proj-status.is-confira { background: #F3F4F6; color: #374151; }
+.proj-status.is-horas { background: #ECFDF5; color: #047857; }
+.proj-status-linha { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem; margin: -0.4rem 0 0.9rem; }
+.proj-status-linha small { font-size: 0.72rem; color: var(--una-text-dim); }
+
+/* 1. Inscrições agora */
+.proj-insc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 0.7rem; }
+.proj-insc-col { border: 1px solid var(--una-border); border-radius: 12px; padding: 0.7rem 0.8rem; background: #fff; }
+.proj-insc-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+.proj-insc-col li { display: flex; flex-direction: column; align-items: flex-start; gap: 0.15rem; }
+
+/* 2. Horas de extensão */
+.proj-horas-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 0.8rem; }
+.proj-campo { display: flex; flex-direction: column; gap: 0.25rem; }
+.proj-campo-label { font-size: 0.8rem; font-weight: 700; color: var(--una-text); }
+.proj-campo input {
+  font: inherit; font-size: 0.95rem; padding: 0.55rem 0.7rem; border-radius: 10px;
+  border: 1.5px solid var(--una-border); background: #fff; color: var(--una-text);
+}
+.proj-campo input:focus { outline: none; border-color: var(--primary-purple); box-shadow: 0 0 0 3px var(--primary-purple-subtle); }
+.proj-campo small { font-size: 0.72rem; color: var(--una-text-dim); }
+.proj-horas-res { margin-top: 1rem; }
+.proj-horas-resumo { font-size: 0.92rem; color: var(--una-text); margin-bottom: 0.45rem; }
+.proj-horas-resumo strong { color: var(--primary-purple-dark); font-size: 1.05rem; }
+.proj-barra { height: 12px; border-radius: 999px; background: var(--primary-purple-subtle); overflow: hidden; margin-bottom: 0.9rem; }
+.proj-barra span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #22C55E, #7C3AED); transition: width 300ms ease; }
+.proj-horas-lista { list-style: none; display: flex; flex-direction: column; gap: 0.45rem; }
+.proj-horas-lista li { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+.proj-cobre { font-size: 0.74rem; color: var(--una-text-muted); }
+
+/* 3. Jornada no curso */
+.proj-jornada { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 0.7rem; counter-reset: fase; }
+.proj-fase { position: relative; border: 1px solid var(--una-border); border-radius: 12px; padding: 0.8rem; background: #fff; }
+.proj-fase-head { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
+.proj-fase-head h4 { margin: 0; }
+.proj-fase-num {
+  width: 2rem; height: 2rem; border-radius: 50%; display: grid; place-items: center; flex: none;
+  background: var(--primary-purple-light); font-size: 1rem;
+}
+.proj-fase ul { list-style: none; display: flex; flex-direction: column; gap: 0.45rem; }
+.proj-fase li { display: flex; flex-direction: column; align-items: flex-start; gap: 0.15rem; }
+.proj-fase .proj-fonte { margin-top: 0.6rem; }
+@media (min-width: 1280px) {
+  /* setinha entre as fases (quando as 4 cabem numa linha) */
+  .proj-jornada { grid-template-columns: repeat(4, 1fr); }
+  .proj-fase:not(:last-child)::after {
+    content: '→'; position: absolute; right: -0.62rem; top: 1.1rem; z-index: 1;
+    width: 1.1rem; height: 1.1rem; border-radius: 50%; display: grid; place-items: center;
+    font-size: 0.7rem; background: var(--primary-purple); color: #fff;
+  }
+}
+
+/* --- Projetos: acessibilidade e itens novos --- */
+/* Contraste AA (4,5:1): o cinza claro padrão (#94A3B8) fica só nas outras abas */
+#content-projetos .proj-fonte,
+#content-projetos .proj-campo small,
+#content-projetos .proj-status-linha small,
+#content-projetos .guia-col-desc,
+#guiaDialog .proj-status-linha small { color: #64748B; }
+#content-projetos .proj-tab { min-height: 44px; }              /* área de toque mínima */
+#content-projetos a:focus-visible,
+#content-projetos button:focus-visible,
+#guiaDialog .proj-fav:focus-visible,
+#guiaDialog .proj-agenda:focus-visible { outline: 3px solid #7C3AED; outline-offset: 2px; }
+.proj-painel:focus-visible { outline: 3px solid #7C3AED; outline-offset: 2px; }
+
+/* Aviso de dados antigos */
+.proj-desatualizado {
+  margin-bottom: 0.8rem; padding: 0.7rem 0.9rem; border-radius: 12px; font-size: 0.84rem;
+  background: #FFFBEB; border: 1px solid #FDE68A; color: #78350F;
+}
+/* Mensagem rápida (salvo, removido, baixado) */
+.proj-anuncio {
+  min-height: 0; margin: 0; font-size: 0.8rem; font-weight: 600; color: #166534;
+  opacity: 0; transition: opacity 200ms ease;
+}
+.proj-anuncio.is-visivel { opacity: 1; margin-top: 0.5rem; }
+
+/* Contador: erros e botão limpar */
+.proj-horas-topo { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+.proj-limpar, .proj-remover {
+  flex: none; font: inherit; font-size: 0.8rem; font-weight: 600; cursor: pointer;
+  padding: 0.4rem 0.8rem; min-height: 36px; border-radius: 10px;
+  border: 1.5px solid var(--una-border); background: #fff; color: var(--una-text);
+}
+.proj-limpar:hover, .proj-remover:hover { border-color: var(--primary-purple); color: var(--primary-purple-dark); }
+.proj-campo-erro { font-size: 0.74rem; font-weight: 600; color: #B91C1C; min-height: 0; }
+.proj-campo-erro:empty { display: none; }
+.proj-campo-erro.is-aviso { color: #92400E; }
+.proj-campo input[aria-invalid="true"] { border-color: #DC2626; box-shadow: 0 0 0 3px #FEE2E2; }
+
+/* Favoritos ⭐ */
+.guia-columns.is-cards .guia-list li.has-fav { position: relative; }
+.guia-columns.is-cards li.has-fav .guia-item { padding-right: 2.6rem; }
+.proj-fav.is-card {
+  position: absolute; top: 0.4rem; right: 0.4rem; width: 36px; height: 36px; border-radius: 50%;
+  display: grid; place-items: center; cursor: pointer; font-size: 1.15rem; line-height: 1;
+  border: 0; background: transparent; color: #A16207;
+}
+.proj-fav.is-card:hover { background: #FEF9C3; }
+.proj-fav[aria-pressed="true"] { color: #CA8A04; }
+.proj-acoes-dialog { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+.proj-fav.is-texto, .proj-agenda {
+  font: inherit; font-size: 0.84rem; font-weight: 600; cursor: pointer; min-height: 40px;
+  padding: 0.5rem 0.9rem; border-radius: 999px; border: 1.5px solid #FDE68A; background: #FFFBEB; color: #854D0E;
+}
+.proj-agenda { border-color: #C7D2FE; background: #EEF2FF; color: #3730A3; }
+.proj-fav.is-texto[aria-pressed="true"] { background: #FEF08A; }
+.proj-agenda.is-pequeno { font-size: 0.72rem; padding: 0.2rem 0.6rem; min-height: 32px; margin-top: 0.15rem; }
+.proj-fav-lista { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+.proj-fav-lista li {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.6rem;
+  padding: 0.7rem 0.8rem; border: 1px solid var(--una-border); border-radius: 12px; background: #fff;
+}
+.proj-fav-txt { display: flex; flex-direction: column; align-items: flex-start; gap: 0.2rem; min-width: 0; flex: 1 1 240px; }
+.proj-fav-acoes { display: flex; gap: 0.4rem; align-items: center; }
+
+/* Menos movimento para quem pediu isso no sistema */
+@media (prefers-reduced-motion: reduce) {
+  #content-projetos *, #content-projetos *::before, #content-projetos *::after {
+    animation: none !important; transition: none !important;
+  }
+}
+
+/* Layout em cards (aba Projetos): uma faixa por categoria, cards lado a lado */
+.guia-columns.is-cards { column-width: auto; display: flex; flex-direction: column; gap: 1rem; }
+.guia-columns.is-cards .guia-col { display: block; margin: 0; }
+.guia-col-desc { padding: 0.6rem 1rem 0; font-size: 0.8rem; color: var(--una-text-muted); }
+.guia-columns.is-cards .guia-list {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 0.7rem; padding: 0.75rem 1rem 1rem;
+}
+.guia-columns.is-cards .guia-list li { display: flex; }
+.guia-columns.is-cards .guia-item {
+  height: 100%; padding: 0.85rem 0.9rem; gap: 4px;
+  border: 1px solid var(--una-border); border-radius: 12px; background: #fff;
+}
+.guia-columns.is-cards .guia-item:hover {
+  transform: translateY(-2px); background: #fff;
+  border-color: var(--primary-purple); box-shadow: 0 6px 18px rgba(124, 58, 237, 0.12);
+}
+.guia-columns.is-cards .guia-item-title { font-size: 0.9rem; }
+.guia-columns.is-cards .guia-item-resumo { font-size: 0.78rem; }
+.guia-selos { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.5rem; }
+.guia-selo {
+  font-size: 0.68rem; font-weight: 600; line-height: 1.5;
+  padding: 0.05rem 0.5rem; border-radius: 999px; background: #F3F4F6; color: #374151;
+}
+.guia-selo.is-horas { background: #ECFDF5; color: #047857; }
+.guia-selo.is-quem { background: var(--primary-purple-subtle); color: var(--primary-purple-dark); }
+.guia-selo.is-inscricao { background: #FEF3C7; color: #92400E; }
+.guia-dialog-body > .guia-selos { margin: -0.25rem 0 0.9rem; }
+@media (max-width: 640px) {
+  .guia-columns.is-cards .guia-list { grid-template-columns: 1fr; padding: 0.6rem; }
+}
 
 @media (max-width: 640px) {
   .guia-columns { grid-template-columns: 1fr; }

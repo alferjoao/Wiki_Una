@@ -309,23 +309,27 @@
             </div>
             <div>
               <h2 class="section-heading-title">Projetos & Extensão Universitária</h2>
-              <p class="section-heading-subtitle">Projetos Integradores, Iniciação Científica, TCC e Startups</p>
+              <p class="section-heading-subtitle">Projetos da disciplina, extensão, inovação, pesquisa, intercâmbio e carreira – o que é e como participar</p>
             </div>
           </div>
-          
-          <div class="info-subcards-grid">
-            <div class="subcard-box">
-              <h4>🚀 Projeto Integrador (A3)</h4>
-              <p>Soluções reais desenvolvidas em equipes multidisciplinares para problemas da comunidade.</p>
+
+          <p class="guia-endereco">🧭 <strong>Cada card mostra:</strong> ⏱️ o que você ganha · 👥 quem pode participar · 🗓️ quando abre a inscrição.<br>
+            <span>A maioria abre inscrição uma vez por semestre. Informações do uLife e do site una.br, conferidas em 24/11/2026.</span></p>
+
+          <!-- Ferramentas: inscrições, horas de extensão e jornada (js/projetos.js) -->
+          <div class="proj-tools" id="projTools"></div>
+
+          <div class="guia" data-guia="projetos" data-layout="cards">
+            <div class="guia-search">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="search" placeholder="O que você procura? Ex.: horas de extensão, startup, A3" aria-label="Buscar projetos" autocomplete="off">
+              <button type="button" class="guia-clear" hidden aria-label="Limpar busca">✕</button>
+              <button type="button" class="ia-chip" aria-live="polite"></button>
             </div>
-            <div class="subcard-box">
-              <h4>💡 Hub de Inovação Una</h4>
-              <p>Incubação de projetos tecnológicos, mentorias com o mercado e desafios de empreendedorismo.</p>
-            </div>
-            <div class="subcard-box">
-              <h4>📄 Repositório da Wiki Una</h4>
-              <p>Acervo colaborativo de artigos, códigos-fonte e resumos acadêmicos produzidos pelos alunos.</p>
-            </div>
+            <div class="guia-cats" role="toolbar" aria-label="Filtrar por categoria"></div>
+            <p class="guia-count" aria-live="polite"></p>
+            <div class="guia-columns"></div>
+            <p class="guia-empty" hidden>Nada encontrado. Tente escrever de outro jeito ou escolha uma categoria acima.</p>
           </div>
         </div>
       </section>
@@ -873,6 +877,7 @@
   </script>
   <script src="js/conteudo.js"></script>
   <script src="js/busca.js"></script>
+  <script src="js/projetos.js"></script>
   <script src="js/guias.js"></script>
   <script src="js/calendario.js"></script>
 </body>

@@ -8,7 +8,7 @@
   const DATA = window.WIKI_CONTEUDO;
   if (!DATA) return;
 
-  const TAB_NAMES = { localizacao: 'Localização', ambiente: 'Ambiente virtual' };
+  const TAB_NAMES = { localizacao: 'Localização', ambiente: 'Ambiente virtual', projetos: 'Projetos' };
   const dialog = document.getElementById('guiaDialog');
 
   const Busca = window.WikiBusca;
@@ -125,6 +125,45 @@
     });
   }
 
+  /* Selos do card (aba Projetos): o que ganha, quem pode e quando abre */
+  const SELOS = [['horas', '⏱️'], ['quem', '👥'], ['inscricao', '🗓️']];
+  function criarSelos(item) {
+    if (!item.selos) return null;
+    const box = document.createElement('span');
+    box.className = 'guia-selos';
+    SELOS.forEach(([tipo, icone]) => {
+      if (!item.selos[tipo]) return;
+      const s = document.createElement('span');
+      s.className = `guia-selo is-${tipo}`;
+      s.textContent = `${icone} ${item.selos[tipo]}`;
+      box.appendChild(s);
+    });
+    return box;
+  }
+
+  /* Situação da inscrição (aba Projetos, calculada pela data de hoje em js/projetos.js) */
+  function criarStatus(item, comFonte) {
+    const st = window.WikiProjetos && window.WikiProjetos.statusDe(item);
+    if (!st) return null;
+    if (!comFonte && st.cls === 'info') return null; // no card, o selo 🗓️ já diz isso
+    const s = document.createElement('span');
+    s.className = `proj-status is-${st.cls}`;
+    s.textContent = st.label;
+    if (!comFonte || !st.fonte) return s;
+    const p = document.createElement('p');
+    p.className = 'proj-status-linha';
+    const f = document.createElement('small');
+    f.append(' Fonte: ');
+    if (st.fonte.url) {
+      const a = document.createElement('a');
+      a.href = st.fonte.url; a.target = '_blank'; a.rel = 'noopener';
+      a.textContent = st.fonte.texto;
+      f.append(a);
+    } else f.append(st.fonte.texto);
+    p.append(s, f);
+    return p;
+  }
+
   /* ---------------- Janela de detalhes ---------------- */
   const LOCAIS = window.WIKI_LOCAIS || [];
 
@@ -147,6 +186,10 @@
     resumo.textContent = item.resumo || '';
 
     body.append(tag, title, resumo);
+    const selosDialog = criarSelos(item);
+    if (selosDialog) body.appendChild(selosDialog);
+    const statusDialog = criarStatus(item, true);
+    if (statusDialog) body.appendChild(statusDialog);
 
     // Foto (ou aviso de que ainda está sendo tirada)
     const foto = document.createElement('div');
@@ -171,6 +214,13 @@
       const strong = document.createElement('strong');
       strong.textContent = 'Onde fica: ';
       onde.append(strong, item.onde || 'local em levantamento.');
+      body.appendChild(onde);
+    } else if (tab === 'projetos' && item.onde) {
+      const onde = document.createElement('p');
+      onde.className = 'guia-onde';
+      const strong = document.createElement('strong');
+      strong.textContent = 'Onde no uLife: ';
+      onde.append(strong, item.onde);
       body.appendChild(onde);
     }
 
@@ -230,7 +280,7 @@
       }
       const ol = document.createElement('ol');
       // prints de tela aparecem inteiros; fotos do campus podem ser recortadas
-      ol.className = tab === 'ambiente' ? 'guia-rota is-print' : 'guia-rota';
+      ol.className = tab === 'localizacao' ? 'guia-rota' : 'guia-rota is-print';
       const lista = passos.map((passo, i) => ({ src: passo.foto, legenda: `${nome} – passo ${i + 1}: ${passo.texto}` }));
       passos.forEach((passo, i) => {
         const li = document.createElement('li');
@@ -253,7 +303,8 @@
     if (item.passos && item.passos.length) {
       const h = document.createElement('h4');
       h.className = 'guia-dialog-sub';
-      h.textContent = 'Passo a passo';
+      // com rota de prints acima, a lista de texto explica o programa
+      h.textContent = rotas.length ? 'Como funciona' : 'Passo a passo';
       const ol = document.createElement('ol');
       ol.className = 'guia-passos';
       item.passos.forEach(p => {
@@ -271,11 +322,37 @@
       body.appendChild(dica);
     }
 
+    // Sites oficiais (abrem em outra aba)
+    if (item.links && item.links.length) {
+      const box = document.createElement('div');
+      box.className = 'guia-links';
+      item.links.forEach(({ url, texto }) => {
+        const a = document.createElement('a');
+        a.className = 'guia-link';
+        a.href = url;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.textContent = `${texto} ↗`;
+        box.appendChild(a);
+      });
+      body.appendChild(box);
+    }
+
     if (item.revisado === false) {
       const aviso = document.createElement('p');
       aviso.className = 'guia-aviso';
       aviso.textContent = 'Passo a passo em revisão: os nomes dos menus podem mudar um pouco no app uLife.';
       body.appendChild(aviso);
+    }
+
+    // aba Projetos: adicionar à agenda (se tem evento) e salvar em "Meus projetos"
+    if (tab === 'projetos' && window.WikiProjetos) {
+      const acoes = document.createElement('div');
+      acoes.className = 'proj-acoes-dialog';
+      const ag = window.WikiProjetos.botaoAgenda(item);
+      const fav = window.WikiProjetos.botaoFavorito(item, 'texto');
+      [ag, fav].forEach(b => b && acoes.appendChild(b));
+      if (acoes.children.length) body.appendChild(acoes);
     }
 
     // Compartilhar: manda o link direto deste item
@@ -332,6 +409,15 @@
   }
   window.addEventListener('hashchange', openFromHash);
 
+  // Abre um item direto (usado pelas ferramentas da aba Projetos, em js/projetos.js)
+  window.wikiAbrirItem = (tab, id) => {
+    const entry = index.find(e => e.tab === tab && e.item.id === id);
+    if (!entry) return false;
+    if (dialog.open) dialog.close();
+    openItem(entry, false);
+    return true;
+  };
+
   dialog?.querySelector('.guia-dialog-close')?.addEventListener('click', () => dialog.close());
   // Clique fora do cartão fecha (ESC já é nativo do <dialog>)
   dialog?.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
@@ -369,6 +455,8 @@
       return b;
     });
     const comFoto = tab === 'localizacao'; // lugares sempre mostram miniatura (ou o espaço dela)
+    // data-layout="cards": cada categoria vira uma faixa com os itens em cards lado a lado
+    if (root.dataset.layout === 'cards') columns.classList.add('is-cards');
 
     function draw() {
       const q = input.value.trim();
@@ -411,6 +499,13 @@
         n.className = 'guia-col-count';
         n.textContent = itens.length;
         head.append(icon, name, n);
+        col.appendChild(head);
+        if (cat.desc) {
+          const desc = document.createElement('p');
+          desc.className = 'guia-col-desc';
+          desc.textContent = cat.desc;
+          col.appendChild(desc);
+        }
 
         const ul = document.createElement('ul');
         ul.className = 'guia-list';
@@ -446,6 +541,10 @@
           const txt = document.createElement('span');
           txt.className = 'guia-item-text';
           txt.append(t, r);
+          const selos = criarSelos(item);
+          if (selos) txt.appendChild(selos);
+          const status = criarStatus(item, false);
+          if (status) txt.appendChild(status);
           btn.append(txt);
           if (local && Busca.pertoDe(item, local.id)) {
             const selo = document.createElement('span');
@@ -455,10 +554,15 @@
           }
           btn.addEventListener('click', () => openItem({ tab, cat, item }, false, local));
           li.appendChild(btn);
+          // aba Projetos: estrela para salvar em "Meus projetos" (fora do botão do card)
+          if (tab === 'projetos' && window.WikiProjetos) {
+            const fav = window.WikiProjetos.botaoFavorito(item);
+            if (fav) { li.classList.add('has-fav'); li.appendChild(fav); }
+          }
           ul.appendChild(li);
         });
 
-        col.append(head, ul);
+        col.appendChild(ul);
         columns.appendChild(col);
       });
 

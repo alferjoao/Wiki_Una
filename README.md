@@ -1,86 +1,125 @@
-# 🎓 Wiki Una - Sistema de Autenticação e Portal de Acesso
+# 🎓 Wiki Una – Guia do uLife e do campus
 
-Plataforma colaborativa de conhecimento e artigos acadêmicos para estudantes, professores e colaboradores da **Una / Ecossistema Ânima**.
+Wiki feita por alunos de Engenharia de Software da **Una (Ecossistema Ânima)** para ajudar a entender o **uLife** (o ambiente virtual da faculdade), achar os lugares no campus e aproveitar os projetos da Una.
 
----
-
-## 🚀 Funcionalidades Principais
-
-- **Acesso Institucional Estrito**: Validação em tempo real do e-mail acadêmico oficial com terminação obrigatória `@ulife.com.br`.
-- **Fluxo Completo de Autenticação**:
-  - **Login (Entrar)** com e-mail institucional e senha.
-  - **Criar Conta (Cadastro)** com Nome, E-mail `@ulife.com.br`, Curso/Unidade, Senha e Confirmação.
-- **Redirecionamento para Canvas em Branco (`dashboard.html`)**: Ao entrar no sistema, o usuário é direcionado para uma página em branco com barra mínima e botão de logout, oferecendo total liberdade para criação da Wiki.
-- **Persistência Local (`localStorage`)**: Usuários cadastrados são salvos localmente no navegador e podem realizar login imediatamente sem necessidade de configuração complexa de backend.
-- **Atalho de Avaliação Rápida**: Botão *"Preencher Demo"* para correções e apresentações em sala de aula (credenciais pré-configuradas).
+O site é **100% estático** (HTML, CSS e JavaScript puro, sem servidor) e foi construído seguindo as **10 heurísticas de usabilidade de Jakob Nielsen**.
 
 ---
 
-## 🧠 Aplicação das 10 Heurísticas de Usabilidade de Jakob Nielsen
+## 🚀 Como executar
 
-O projeto foi construído desde o primeiro elemento respeitando os princípios de design de interação e usabilidade de Nielsen:
+1. Dê um duplo clique em `index.html` (ou abra com o navegador).
+2. Clique em **Preencher Demo** e em **Entrar**.
+3. Use as abas da barra lateral.
 
-| # | Heurística | Implementação na Wiki Una |
+Opcional, com servidor local (recomendado para o botão "Compartilhar"):
+
+```bash
+python -m http.server 8000
+```
+
+Depois abra `http://localhost:8000`.
+
+---
+
+## 🧭 O que tem em cada aba
+
+| Aba | O que faz |
+|---|---|
+| **Localização** | Banheiros, auditório, laboratórios, secretaria, NAPI, biblioteca… com **rota em fotos** do 4º e 5º andar do Centerminas e busca “perto de” (ex.: *banheiro perto da biblioteca*). |
+| **Ambiente virtual** | Passo a passo do **uLife** com **prints marcados em vermelho**: aulas, notas, provas, certificados, documentos, financeiro e acesso. |
+| **Calendário Acadêmico** | Calendário 2026 por modalidade e cidade, com avaliações, prazos e feriados (dos PDFs oficiais). |
+| **Projetos** | Projetos da Una e da Ânima em cards por categoria, com passo a passo em print, selos e ferramentas (detalhes abaixo). |
+| **Ajuda e Suporte** | Onde pedir atendimento e dicas de uso da wiki. |
+
+**Busca:** a busca da barra lateral (atalho `/`) entende sinônimos, erros de digitação e frases (“perdi a prova”). Há também uma busca com IA opcional, que roda no próprio navegador.
+
+---
+
+## 🧩 Aba Projetos (parte do nosso grupo)
+
+- **20 projetos em 6 categorias:** Na sua disciplina, Extensão e impacto social, Inovação e empreendedorismo, Pesquisa científica, Internacional e idiomas, Carreira e mercado.
+- **Selos em cada card:** ⏱️ o que você ganha · 👥 quem pode participar · 🗓️ quando abre · situação da inscrição (aberta, encerrada, evento…).
+- **Passo a passo com print do uLife** nos projetos acessados por ele (Extensão, Academia de Futuros Profissionais, Hub, Nest, Duale, A3).
+- **Ferramentas:**
+  - 🗓️ **Inscrições agora** – a situação de cada projeto, calculada pela data de hoje;
+  - ⏱️ **Horas de extensão** – contador com a regra oficial (mínimo de 10% do curso), validação dos campos e quanto cada projeto cobre;
+  - 🧭 **Jornada no curso** – o que aproveitar em cada fase, com a fonte de cada informação;
+  - ⭐ **Meus projetos** – favoritos salvos no navegador;
+  - 📅 **Adicionar à agenda** – baixa um arquivo `.ics` (Google Agenda, Outlook, celular) para os eventos com data.
+- **Aviso de dados antigos:** se a data de conferência passar de 4 meses, a aba avisa para conferir no uLife.
+- **Adesivos de fundo** com o tema da aba (só nela).
+
+**Regra do conteúdo: nada inventado.** Tudo veio do uLife (conferido com login de aluno) ou dos sites oficiais. A fonte aparece em cada card e em cada ferramenta.
+
+---
+
+## 🧠 Heurísticas de Nielsen na wiki
+
+| # | Heurística | Onde aparece |
 |---|---|---|
-| **1** | **Visibilidade do status do sistema** | Indicador de carregamento (*spinner*) nos botões ao submeter, feedback visual imediato em tempo real ao digitar e sistema de notificações *Toast* com barra de status. |
-| **2** | **Correspondência entre o sistema e o mundo real** | Terminologia acadêmica familiar da Una (RA, `@ulife.com.br`, unidades), linguagem clara em português e ícones universais. |
-| **3** | **Controle do usuário e liberdade** | Alternância fluida entre as abas *Entrar* e *Criar Conta*, botões de revelação/ocultação de senha (olho), tecla `Esc` para fechar janelas e botão de logout visível. |
-| **4** | **Consistência e padrões** | Cores oficiais da Wiki Una (roxo/violeta e azul marinho), posicionamento padrão dos campos e convenções da web. |
-| **5** | **Prevenção de erros** | Validação antes do envio que impede domínios diferentes de `@ulife.com.br`, sugestão dinâmica em 1 clique para auto-completar o domínio e bloqueio de senhas fracas. |
-| **6** | **Reconhecimento em vez de memorização** | Rótulos (*labels*) sempre visíveis acima dos campos, checklist visual de requisitos de senha que vai ficando verde conforme o usuário digita. |
-| **7** | **Flexibilidade e eficiência de uso** | Navegação por teclado (`Tab`, `Enter`), botão de demonstração rápida (*Preencher Demo*) e foco automático no primeiro campo. |
-| **8** | **Design estético e minimalista** | Layout limpo, card translúcido estilo *glassmorphism*, fundo com ondas suaves em 4 tons de roxo, priorizando a tarefa de entrada. |
-| **9** | **Ajudar os usuários a reconhecer, diagnosticar e recuperar de erros** | Mensagens de erro construtivas e descritivas (ex: *"O e-mail precisa terminar com @ulife.com.br. Ex: seu.nome@ulife.com.br"*). |
-| **10** | **Ajuda e documentação** | Alerta visual explicando a exclusividade do domínio institucional, modais de *Esqueci Minha Senha*, *Termos de Uso* e guia interativo das 10 Heurísticas. |
+| 1 | Visibilidade do status do sistema | Selos de situação da inscrição, barra de progresso das horas, contador de resultados da busca, “conferido em…”, aviso de dados antigos, mensagens de “salvo/removido/baixado”. |
+| 2 | Correspondência com o mundo real | Nomes iguais aos do uLife (“Curso → Extensão”, “Minhas UCs”), fotos reais do campus e prints reais. |
+| 3 | Controle e liberdade | Desfazer favorito, botão **Limpar** no contador, `Esc` fecha janelas, botão Voltar do celular fecha o card. |
+| 4 | Consistência e padrões | Mesmo modelo de card, selo e passo a passo em todas as abas; cores com significado fixo (verde = horas, vermelho = encerrado…). |
+| 5 | Prevenção de erros | Contador recusa número negativo ou absurdo e avisa quando as horas passam do exigido; datas vencidas viram “confira as datas”. |
+| 6 | Reconhecimento em vez de memorização | Print com o lugar do clique marcado, caminho “Onde no uLife” sempre visível, favoritos em “Meus projetos”. |
+| 7 | Flexibilidade e eficiência | Atalho `/` para buscar, setas do teclado nas abas de ferramentas, busca com frases, links diretos para compartilhar. |
+| 8 | Estética e minimalismo | Cards limpos, informação em camadas (resumo no card, detalhes ao abrir). |
+| 9 | Ajudar a reconhecer e corrigir erros | Mensagens de erro no próprio campo, em linguagem simples (“não pode ser negativo”). |
+| 10 | Ajuda e documentação | Aba Ajuda, textos curtos explicando cada ferramenta, link para a fonte oficial. |
+
+**Acessibilidade (WCAG):** contraste mínimo de 4,5:1 nos textos da aba Projetos, foco visível, área de toque de 44 px nas abas, `aria-live` para avisos, padrão de abas do WAI-ARIA e respeito ao “reduzir movimento” do sistema.
 
 ---
 
-## 🎨 Identidade Visual e Design Minimalista
-
-O design da plataforma foi atualizado para uma estética **ultra clean e minimalista**, inspirada na identidade oficial da **Wiki Una**:
-
-- **Logo Oficial Integrada**: Logotipo com o livro de páginas abertas (azul marinho e degradê roxo/violeta) posicionado no `<head>` do site (favicon) e no topo do card central.
-- **Paleta de Cores Oficial**:
-  - **Roxo / Violeta Elétrico (`#7C3AED` a `#6D28D9`)**: Ações primárias, botões em degradê, estados ativos e focos.
-  - **Azul Marinho Profundo (`#0B132B`)**: Tipografia principal, contrastes nítidos e bordas estruturais.
-  - **Background Dinâmico em Ondas Diagonais (4 Tons de Roxo)**:
-    - *Tom 1 (#1A092E)*: Roxo profundo noturno de base.
-    - *Tom 2 (#3B1366 a #581C87)*: Roxo ameixa médio.
-    - *Tom 3 (#6B21A8 a #7C3AED)*: Roxo vibrante oficial da logo.
-    - *Tom 4 (#8B5CF6 a #A855F7)*: Roxo lavanda iluminado.
-  - **Card com Efeito Glassmorphism Translúcido e Alto Contraste**: Card com fundo roxo translúcido e desfoque de fundo (`backdrop-filter: blur(28px)`), tipografia em branco puro e lavanda de alta visibilidade, e campos com transparência e destaque violeta.
-
----
-
-## 📁 Estrutura de Arquivos
+## 📁 Estrutura de arquivos
 
 ```text
-wikiuna/
-├── index.html                  # Página de login/cadastro com card transparente e logo
-├── dashboard.html              # Página em branco pós-login (canvas livre para criação da Wiki)
+Wiki_Una-main/
+├── index.html              # Login e cadastro (e-mail @ulife.com.br)
+├── dashboard.html          # A wiki (abas, busca, janelas)
 ├── css/
-│   └── style.css               # Estilo clean baseado nas cores da logo (Navy & Violet)
+│   ├── style.css           # Estilo do login
+│   └── dashboard.css       # Estilo da wiki
 ├── js/
-│   └── app.js                  # Lógica de validações, estados de erro, persistência e autenticação
+│   ├── app.js              # Login, cadastro e validações
+│   ├── conteudo.js         # TODO o conteúdo da wiki (edite aqui) + dados da aba Projetos
+│   ├── busca.js            # Busca por significado (e IA opcional)
+│   ├── guias.js            # Cards, colunas, janela de detalhes e fotos
+│   ├── projetos.js         # Ferramentas da aba Projetos
+│   └── calendario.js       # Calendário acadêmico
 ├── assets/
-│   ├── logo.png                # Imagem oficial transparente da logo Wiki Una (512x512)
-│   └── favicon.png             # Ícone otimizado para o navegador (<head>)
-└── README.md                   # Documentação do projeto acadêmico
+│   ├── fotos/              # Fotos do campus (rotas)
+│   ├── prints/ulife-passos/# Prints do uLife com o clique marcado
+│   ├── prints/ulife-rotas/ # ROTAS.md e PROJETOS.md (levantamento com fontes)
+│   └── adesivos/           # Adesivos da aba Projetos
+├── tests/
+│   ├── busca.test.js       # Testes da busca
+│   └── projetos.test.js    # Testes da aba Projetos
+└── ROTEIRO-APRESENTACAO.md # Roteiro de demonstração
 ```
 
 ---
 
-## 💻 Como Executar
+## ✅ Testes
 
-A página é 100% autônoma e não necessita de nenhuma instalação pesada. Você pode executá-la de três formas:
-
-### Opção 1: Abrir diretamente no navegador
-Dê um duplo clique no arquivo `index.html` ou clique com o botão direito e escolha *"Abrir com Google Chrome"*.
-
-### Opção 2: Servidor local com Python
-No terminal, na pasta do projeto:
 ```bash
-python3 -m http.server 8000
+node tests/busca.test.js
+node tests/projetos.test.js
 ```
-Depois, abra `http://localhost:8000` no seu navegador.
 
+---
+
+## ✏️ Como atualizar o conteúdo
+
+- **Textos, passos e prints:** `js/conteudo.js` (o topo do arquivo explica cada campo).
+- **Datas e inscrições da aba Projetos:** bloco `window.WIKI_PROJETOS` no fim de `js/conteudo.js`. Troque também o campo `conferido` para a data em que você conferiu.
+- **Prints novos:** salve em `assets/prints/ulife-passos/` sem dados pessoais (nome, RA, notas).
+
+---
+
+## ⚠️ Limitações
+
+- O login é só uma demonstração: os usuários ficam salvos no navegador (`localStorage`), sem servidor e sem criptografia.
+- Datas e inscrições mudam a cada semestre: a wiki mostra a data de conferência e avisa quando ela fica antiga, mas a fonte oficial é sempre o uLife.
